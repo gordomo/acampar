@@ -1,0 +1,356 @@
+$(window).on("scroll",function(){
+
+	if ($(window).scrollTop() > $(".navbar-default").position().top)
+  {
+    	$(".navbar-default").addClass("navbar-fixed-top");
+      //$(".navbar-brand img").attr("src","img/logos/LogoHorizontal.png");
+      //$(".navbar-brand img").css("width", "85px");
+    }
+    else
+    {
+     	 $(".navbar-default").removeClass("navbar-fixed-top");
+      // $(".navbar-brand img").attr("src","img/logos/logo.png");
+       //$(".navbar-brand img").removeAttr('style');
+    }
+});
+
+$('.navbar-toggle').click(function(){
+
+    $('.collapse').toggle('fast');
+
+});
+
+$('.imagenesCirculares').hover(function(){
+
+    $(this).find('h3').addClass('noDisplay');
+
+},function(){
+
+    $(this).find('h3').removeClass('noDisplay');
+
+});
+
+$(function() {
+  $('a[href*="#"]:not([href="#"])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+      if (target.length) {
+        $('html, body').animate({
+          scrollTop: target.offset().top
+        }, 1000);
+        return false;
+      }
+    }
+  });
+});
+
+$('#trekking').click(function(){
+	$('.desplegable-ciclo').hide();
+	$('.desplegable-ciclo-individual').hide();
+	$('.desplegable-cabalgatas').hide();
+	$('.desplegable-cabalgatas-individual').hide();
+    $('.desplegable-trekking').show('slow');
+
+    $('html, body').animate({
+          scrollTop: $('.desplegable-trekking').offset().top - 100
+    }, 1000);
+});
+
+$('#ciclo').click(function(){
+	$('.desplegable-trekking').hide();
+	$('.desplegable-trekking-individual').hide();
+	$('.desplegable-cabalgatas').hide();
+	$('.desplegable-cabalgatas-individual').hide();
+    $('.desplegable-ciclo').show('slow');
+
+    $('html, body').animate({
+          scrollTop: $('.desplegable-ciclo').offset().top - 100
+    }, 1000);
+});
+
+$('#cabalgatas').click(function(){
+	$('.desplegable-trekking').hide();
+	$('.desplegable-trekking-individual').hide();
+	$('.desplegable-ciclo').hide();
+	$('.desplegable-ciclo-individual').hide();
+    $('.desplegable-cabalgatas').show('slow');
+
+    $('html, body').animate({
+          scrollTop: $('.desplegable-cabalgatas').offset().top - 100
+    }, 1000);
+});
+
+$('.desplegadas').click(function()
+{
+	$('.btn-submit').button('reset');
+    $('#mensaje_contacto').html('');
+    $('#form-consulta')[0].reset();
+
+	id_categoria = this.id;
+
+	$.ajax({
+		url: "includes/controller_ajax.php",
+		type: "POST",
+		data: {option : 'get_info_categoria', id_categoria : id_categoria},
+		dataType: "json",
+		success: function(data){
+			if(data.result){
+				$("#categoria").val(id_categoria);
+
+				$(".desplegadas-individual > h3").html(data.categoria.nombre);
+				$(".desplegable-individual > div").removeClass();
+				$('.desplegable-individual').show('fast');
+				$('html, body').animate({
+					  scrollTop: $('.desplegable-individual').offset().top - 100
+				}, 1000);
+
+				switch(data.categoria.id_tour){
+					case 1:
+						$(".img-info").html("<div align='center'><img src='"+data.categoria.foto+"' class='img-responsive' width='400px' /></div>");
+						$(".info").html(data.categoria.desc);
+						$(".desplegable-individual > div").addClass("desplegable-ciclo-individual");
+						$(".desplegable-ciclo-individual").show('fast');
+					break;
+
+					case 2:
+						$(".img-info").html("");
+						$(".info").html("");
+						$.ajax({
+							url: "includes/controller_ajax.php",
+							type: "POST",
+							data: {option : 'get_categorias_inf', cat_superior : id_categoria},
+							dataType: "json",
+							success: function(data){
+								$.each( data.categorias, function( i, val ) {
+									$(".info").append( "<li class='alert alert-success subcat-trekking' id='"+val.id+"'>" + val.nombre + "</li>" );
+								});
+								$(".info").append("<hr/><div class='img-cat-trekking' align='center'></div><div class='info-cat-trekking'></div>");
+							}
+						});
+
+						$(".desplegable-individual > div").addClass("desplegable-trekking-individual");
+						$(".desplegable-trekking-individual").show('fast');
+					break;
+
+					case 3:
+						$(".img-info").html("<div align='center'><img src='"+data.categoria.foto+"' class='img-responsive' width='400px' /></div>");
+						$(".info").html(data.categoria.desc);
+						$(".desplegable-individual > div").addClass("desplegable-cabalgatas-individual");
+						$(".desplegable-cabalgatas-individual").show('fast');
+					break;
+				}
+			}else{
+				alert(data.mensaje);
+			}
+		}
+	});
+});
+
+$(document).on('click', "li.subcat-trekking", function()
+{
+	$('.btn-submit').button('reset');
+    $('#mensaje_contacto').html('');
+    $('#form-consulta')[0].reset();
+	$(".img-cat-trekking").html('');
+	$(".info-cat-trekking").html('');
+
+	id_categoria = this.id;
+
+	$.ajax({
+		url: "includes/controller_ajax.php",
+		type: "POST",
+		data: {option : 'get_info_categoria', id_categoria : id_categoria},
+		dataType: "json",
+		success: function(data){
+			if(data.result){
+				$("#categoria").val(id_categoria);
+
+				$(".img-cat-trekking").html("<img src='"+data.categoria.foto+"' class='img-responsive' width='400px' />");
+				$(".info-cat-trekking").html(data.categoria.desc);
+				$('html, body').animate({
+					  scrollTop: $('.info-cat-trekking').offset().top - 100
+				}, 1000);
+			}
+		}
+	});
+});
+
+$('.btn-submit').click(function(){
+    $(this).button('Enviando..');
+    $.ajax({
+        type: "POST",
+        url: "includes/controller_ajax.php",
+        data: {
+            "option":"enviar_consulta",
+            "nombre": $('#nombre').val(),
+            "email": $('#email').val(),
+            "phone": $('#phone').val(),
+            "consulta": $('#consulta').val(),
+            "categoria": $('#categoria').val()
+        },
+        dataType:'json',
+        success: function(data)
+        {
+            $('.btn-submit').button('reset');
+            if(data.result){
+                $('#mensaje_contacto').html("<div class='mail-success-cat'>"+data.mensaje+"</div>");
+                $('#form-consulta')[0].reset();
+            }else{
+                $('#mensaje_contacto').html("<div class='mail-error-cat'>"+data.mensaje+"</div>");
+            }
+        },
+        error: function(data)
+        {
+            $('.btn-submit').button('reset');
+            $('#mensaje_contacto').html("<div class='mail-error-cat'>"+data.mensaje+"</div>");
+        }
+    });
+});
+
+$('.btn-submit-consulta').click(function(){
+    $(this).button('Enviando..');
+    $.ajax({
+        type: "POST",
+        url: "includes/controller_ajax.php",
+        data: {
+            "option":"enviar_consulta_index",
+            "nombre": $('#name').val(),
+            "email": $('#email_cons').val(),
+            "phone": $('#phone_cons').val(),
+            "consulta": $('#message').val()
+        },
+        dataType:'json',
+        success: function(data)
+        {
+            $('.btn-submit-consulta').button('reset');
+            if(data.result){
+                $('#success').html("<div class='mail-success'>"+data.mensaje+"</div>");
+                $('#contactForm')[0].reset();
+            }else{
+                $('#success').html("<div class='mail-error'>"+data.mensaje+"</div>");
+            }
+        },
+        error: function(data)
+        {
+            $('.btn-submit-consulta').button('reset');
+            $('#success').html("<div class='mail-error'>"+data.mensaje+"</div>");
+        }
+    });
+});
+
+
+$(".nav-meses ul li a").click(function(e) {
+    e.preventDefault();
+    $(".nav-meses ul li a").each(function() {
+		$(this).removeClass("active");
+    });
+	$(this).addClass("active");
+});
+
+$('.nav-meses ul li a').click(function()
+{
+	$(".fechas").html("");
+	$.getJSON("calendario/"+this.id+".json", function(data) {
+		$.each( data, function( i, val ) {
+			$(".fechas").append("<div class='row vertical-align'><div class='col-md-1 text-left'><i class='fa fa-calendar'></i></div><div class='col-md-3 text-left texto'>"+i+"</div><div class='col-md-8 text-left'>"+val+"</div></div><hr/>");
+		});
+	}).fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "Request Failed: " + err );
+	});
+});
+
+$(document).ready(function(){
+	var d = new Date();
+	var month = d.getMonth()+1;
+	$('#mes'+month).addClass('active');
+	$.getJSON("calendario/mes"+month+".json", function(data) {
+		$.each( data, function( i, val ) {
+			$(".fechas").append("<div class='row vertical-align'><div class='col-md-1 text-left'><i class='fa fa-calendar'></i></div><div class='col-md-3 text-left texto'>"+i+"</div><div class='col-md-8 text-left'>"+val+"</div></div><hr/>");
+		});
+	}).fail(function( jqxhr, textStatus, error ) {
+		var err = textStatus + ", " + error;
+		console.log( "Request Failed: " + err );
+	});
+});
+
+
+
+$( function() {
+                /*
+                - how to call the plugin:
+                $( selector ).cbpFWSlider( [options] );
+                - options:
+                {
+                    // default transition speed (ms)
+                    speed : 500,
+                    // default transition easing
+                    easing : 'ease'
+                }
+                - destroy:
+                $( selector ).cbpFWSlider( 'destroy' );
+                */
+
+$( '#cbp-fwslider' ).cbpFWSlider();
+
+});
+
+$(window).load(function(){
+		$('.flexslider').flexslider({
+		  animation: "slide",
+		  animationLoop: false,
+		  itemWidth: 210,
+		  itemMargin: 30,
+		  minItems: 2,
+		  maxItems: 3,
+		  start: function(slider){
+			$('body').removeClass('loading');
+		  }
+		});
+	  });
+
+/*
+ * REMEMBER TO CHANGE TO YOUR APP ID AND CHANGE data-href TO SUIT YOU
+ */
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=ADD YOUR APP ID HERE";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+$(window).bind("load resize", function(){
+  var container_width = $('#container').width();
+    $('#container').html('<div class="fb-like-box" ' +
+    'data-href="https://web.facebook.com/acampartrek/?fref=ts"' +
+    ' data-width="' + container_width + '" data-height="480" data-show-faces="true" ' +
+    'data-stream="true" data-header="true"></div>');
+    FB.XFBML.parse( );
+});
+
+/*$('.desplegable-ciclo').click(function()
+{
+    $('.desplegable-ciclo-individual').show('fast');
+    $('html, body').animate({
+          scrollTop: $('.desplegable-ciclo-individual').offset().top - 100
+    }, 1000);
+});*/
+
+/*$('.desplegable-trekking').click(function()
+{
+	$("#append-li").html("");
+	$.getJSON( "json/"+this.id+".json", function( data ){
+		$.each( data, function( i, val ) {
+			if(i == 'nombre'){
+				$("#apend-h3").html(val);
+			}else{
+				$("#append-li").append( "<li class='alert alert-success'><a href='#'>" + val + "</li>" );
+			}
+		});
+	});
+    $('.desplegable-trekking-individual').show('fast');
+    $('html, body').animate({
+          scrollTop: $('.desplegable-trekking-individual').offset().top - 100
+    }, 1000);
+});*/

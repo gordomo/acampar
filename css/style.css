@@ -1,0 +1,678 @@
+body{
+background: #fff;
+font-family: 'Product Sans', Arial, sans-serif;
+}
+
+/*****************************/
+/******* Header ELEMENT ******/
+/*****************************/
+
+section#slider{
+background-color: #F3F3F3;
+
+}
+
+/******** Nav *************/
+
+.navbar{
+  margin-bottom: 0px;
+}
+
+.navbar-default {
+	background: #fff;
+	border-color: transparent;
+	border-radius: 0px;
+  padding: 50px;
+}
+
+/*.navbar-fixed-top{
+	-webkit-transition: padding .3s;
+    -moz-transition: padding .3s;
+    transition: padding .3s;
+    padding: 0px !important;
+}*/
+
+.navbar-nav>li>a:hover {
+    color: #fe7800 !important;
+    border-bottom: 2px solid #fe7800;
+
+}
+
+.navbar-brand
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+}
+
+@media (max-width: 991px) {
+ 
+ .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+        border: none;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+    .navbar-nav>li>a:hover {
+  
+     border-bottom: none;
+   }
+    .navbar-text {
+        float: none;
+        margin: 15px 0;
+    }
+    /* since 3.1.0 */
+    .navbar-collapse.collapse.in { 
+        display: block!important;
+    }
+    .collapsing {
+        overflow: hidden!important;
+    }
+}
+/******** Fin nav *************/
+
+section#empresa {
+    position: relative;
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+ background-color: #F3F3F3;
+}
+
+section#facebook {
+    width: 100%;
+    height: auto;
+    background-image: url(../img/face1.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+     padding-top: 80px;
+    padding-bottom: 80px;
+}
+section#satelital {
+       position: relative;
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+/********Carousel*************/
+
+#carousel-example-generic{
+	width: 100%;
+}
+ .carousel-inner .item img{
+    width: 100%;
+	height: auto;
+}
+
+ .carousel-caption h3{
+  font-size: 50px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #fff;
+}
+ .carousel-caption h4{
+  font-size: 15px;
+  font-weight: 200;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/********FIN Carousel*************/
+
+
+/*****************************/
+/******* Seccion ELEMENT ******/
+/*****************************/
+
+section h2.section-heading {
+    font-size: 40px;
+
+    margin-bottom: 15px;
+    margin-top: 55px;
+    font-weight: 700;
+    color: #fe7800;
+}
+section h3.section-subheading {
+    font-size: 16px;
+    color: #555;
+    text-transform: none;
+    font-style: italic;
+    font-weight: 400;
+    margin-bottom: 75px;
+}
+
+/******** Tours *************/
+
+#tour{
+    width: 100%;
+    height: auto;
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+	margin-bottom: 40px;
+}
+
+#tour .icon img{
+	width: 250px;
+	height: 250px;
+	margin: 0 auto;
+	margin-bottom: 30px;
+}
+.border1 img{
+ 	border: 30px solid aquamarine;
+ }
+ .border2 img{
+ 	border: 30px solid orange;
+ }
+ .border3 img{
+ 	border: 30px solid violet;
+ }
+
+.botonRedondo{
+    height: 250px;
+    width: 250px;
+    margin: 0 auto;
+    border-radius: 100%;
+}
+.botonRedondo:hover{
+    background-color: orange;
+    -webkit-transition: background .9s;
+    -moz-transition: background .9s;
+    transition: background .9s;
+}
+.botonRedondo .fa-stack{
+    padding-top: 15px;
+}
+.meses-div{
+    text-align: center;
+}
+/******** fwslider *************/
+
+.cbp-fwslider {
+  position: relative;
+  margin: 0 0 10px;
+  overflow: hidden;
+  padding: 40px 0 60px;
+}
+
+.cbp-fwslider ul {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  list-style-type: none;
+}
+
+.cbp-fwslider ul li {
+  transform: translateZ(0);
+  float: left;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.cbp-fwslider ul li > a,
+.cbp-fwslider ul li > div {
+  display: block;
+  text-align: center;
+  outline: none;
+}
+
+.cbp-fwslider ul li > a img {
+  border: none;
+  display: block;
+  margin: 0 auto;
+  max-width: 75%;
+}
+
+.cbp-fwslider nav span {
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 100px;
+  color: orange;
+  font-size: 80px;
+  text-align: center;
+  margin-top: -50px;
+  line-height: 100px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.cbp-fwslider nav span:hover {
+  #background: aquamarine;
+}
+
+.cbp-fwslider nav span.cbp-fwnext {
+  right: 0px;
+}
+
+.cbp-fwslider nav span.cbp-fwprev {
+  left: 0px;
+}
+
+.cbp-fwdots {
+  position: absolute;
+  bottom: 0px;
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+}
+
+.cbp-fwdots span {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: #ddd;
+  margin: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.cbp-fwdots span:hover {
+  background: #999;
+}
+
+.cbp-fwdots span.cbp-fwcurrent {
+  background: orange;
+  box-shadow: 0 0 0 2px orange;
+  transition: box-shadow 0.2s ease-in-out;
+}
+/******** FIN fwslider *************/
+
+/******** Contacto *************/
+
+section#contacto {
+    background-color: #222;
+    background-image: url(../img/map-image.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-bottom: 30px;
+
+}
+
+section#contacto .form-group {
+    margin-bottom: 25px;
+}
+
+section#contacto .form-group input, section#contact .form-group textarea {
+    padding: 20px;
+}
+
+section#contacto .form-group input.form-control {
+    height: auto;
+}
+section#contacto .text-danger {
+    color: #e74c3c;
+}
+
+.btn-xl {
+    color: #fff;
+    background-color: orange;
+    border-color: orange;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-radius: 3px;
+    font-size: 18px;
+    padding: 20px 40px;
+}
+
+.mail-success{
+	color:#00DD07;
+	font-size:20px;
+	padding:30px;
+}
+
+.mail-error{
+	color:#FF0000;
+	font-size:25px;
+  font-weight: 700;
+	padding:30px;
+  text-transform: uppercase;
+}
+
+/******** FIN Contacto *************/
+
+/******** Calendario **************/
+
+section#calendario{
+    background-color: #F3F3F3;
+}
+.fechas{
+    margin-top: 55px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.fechas .fa-calendar{
+    font-size: 60px;
+}
+.fechas .numero{
+    font-size: 40px;
+}
+.fechas .logoCal{
+    width: 5%;
+}
+.fechas .texto{
+    font-size: 40px;
+}
+.fechas .cuerpo{
+    width: 85%;
+}
+.fechas .cuerpo table{
+    width: 100%;
+    text-align: left;
+}
+.tablaFechas{
+    border-bottom: 1px solid black;
+}
+.fechas hr{
+    background-color:#000;
+    height:1px;
+}
+
+.nav-meses ul {
+    float: left;
+    list-style: none;
+}
+.nav-meses li {
+    float:left;
+    margin: 5px;
+    border-radius:4px;
+}
+.nav-meses a {
+    float:left;
+    padding: .5em 1.1em;
+    text-decoration: none;
+    color: #fff;
+    background: #286090;
+    border-radius: 4px;
+}
+.nav-meses a:hover, nav a:focus {
+    outline: 0;
+    color: #fff;
+    background: #449D44;
+}
+.nav-meses ul li a.active {
+    color: #fff;
+    background: #449D44;
+}
+
+/******** Footer *************/
+
+footer {
+    padding: 25px 0;
+    text-align: center;
+    background-color: orange;
+}
+
+footer span.copyright {
+    line-height: 40px;
+    text-transform: uppercase;
+    text-transform: none;
+     color: black;
+}
+
+ul.social-buttons {
+    margin-bottom: 0;
+}
+
+ul.social-buttons li a {
+    display: block;
+    background-color: #222;
+    height: 40px;
+    width: 40px;
+    border-radius: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    color: #fff;
+    outline: 0;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+footer ul.quicklinks {
+    margin-bottom: 0;
+    line-height: 40px;
+    text-transform: uppercase;
+    text-transform: none;
+    color: white;
+}
+footer ul.quicklinks a{
+
+    color: #63b135;
+}
+section#contacto .form-control:focus {
+    border-color: orange;
+    box-shadow: none;
+}
+
+
+/******** FIN Footer *************/
+
+#tour{
+    padding-bottom: 45px;
+}
+
+.fondoVerde{
+    background-color: rgba(0, 128, 0, 0.65);
+}
+
+.fondoNaranja{
+    background-color: rgba(255, 165, 0, 0.65);
+}
+
+.fondoVioleta{
+    background-color: rgba(238, 130, 238, 0.65);
+}
+
+
+.imagenesCirculares{
+    height: 240px;
+    width: 240px;
+    border-radius: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 8px solid #fff;
+    cursor: pointer;
+}
+
+.imagenesCirculares h3{
+    top: 45%;
+    margin: 0;
+    padding-top: 100px;
+    text-transform: uppercase;
+    color: white;
+    cursor: pointer;
+}
+
+.noDisplay{
+    display: none;
+}
+
+.fondoVioleta:hover{
+    background-image: url('../img/icon1.jpg');
+    background-size: cover;
+}
+.fondoNaranja:hover{
+    background-image: url('../img/icon.jpg');
+    background-size: cover;
+}
+.fondoVerde:hover{
+    background-image: url('../img/icon2.jpg');
+    background-size: cover;
+}
+
+.desplegable-trekking{
+    display: none;
+}
+
+.desplegable-ciclo{
+    display: none;
+}
+
+.desplegable-cabalgatas{
+    display: none;
+}
+
+.desplegable-trekking .desplegadas{
+    background-color: rgba(255, 165, 0, 0.9);
+    height: 240px;
+    width: 240px;
+    border-radius: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 8px solid #fff;
+    cursor: pointer;
+}
+
+.desplegable-ciclo .desplegadas{
+    background-color: rgba(0, 128, 0, 0.65);
+    height: 240px;
+    width: 240px;
+    border-radius: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 8px solid #fff;
+    cursor: pointer;
+}
+
+.desplegable-cabalgatas .desplegadas{
+    background-color: rgba(238, 130, 238, 0.65);
+    height: 240px;
+    width: 240px;
+    border-radius: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 8px solid #fff;
+    cursor: pointer;
+}
+
+.desplegable-trekking-individual{
+    display: none;
+}
+
+.desplegable-ciclo-individual{
+	display: none;
+}
+
+.desplegable-cabalgatas-individual{
+	display: none;
+}
+
+.desplegable-individual{
+	display: none;
+}
+
+.desplegadas h3{
+    top: 45%;
+    margin: 0;
+    padding-top: 100px;
+    text-transform: uppercase;
+    color: white;
+    cursor: pointer;
+    -webkit-transition: font-size 1s; /* Safari */
+    transition: font-size 1s;
+}
+
+.desplegadas:hover h3{
+    font-size: 28px;
+
+}
+
+.desplegable-trekking-individual .desplegadas-individual {
+    background-color: rgba(255, 165, 0, 0.8);
+    height: 240px;
+    width: 240px;
+    border-radius: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 8px solid #fff;
+    cursor: pointer;
+}
+
+.desplegable-ciclo-individual .desplegadas-individual{
+	background-color: rgba(0, 128, 0, 0.65);
+    height: 240px;
+    width: 240px;
+    border-radius: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 8px solid #fff;
+    cursor: pointer;
+}
+
+.desplegable-cabalgatas-individual .desplegadas-individual{
+	background-color: rgba(238, 130, 238, 0.65);
+    height: 240px;
+    width: 240px;
+    border-radius: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 8px solid #fff;
+    cursor: pointer;
+}
+
+.desplegadas-individual h3{
+    top: 45%;
+    margin: 0;
+    padding-top: 100px;
+    text-transform: uppercase;
+    color: white;
+    cursor: pointer;
+    -webkit-transition: font-size 1s; /* Safari */
+    transition: font-size 1s;
+}
+
+.subcat-trekking{
+	cursor: pointer;
+}
+
+.mail-success-cat{
+	color:#00DD07;
+	padding-bottom:5px;
+}
+
+.mail-error-cat{
+	color:#FF0000;
+	padding-bottom:5px;
+}
+
+.vertical-align{
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width:400px)
+{
+    .carousel-caption h3 {
+        font-size: 30px;
+    }
+    .carousel-caption h4 {
+        font-weight: 700;
+    }
+}
