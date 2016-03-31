@@ -71,7 +71,7 @@ include_once 'includes/functions.php';
 	</ul>
     <ul class="nav navbar-nav navbar-right">
 		<li>
-			<a href="/yocanto/index.html" target="_blanck" >Posta Yacanto</a>
+			<a href="yacanto/index.html" target="_self" >Posta Yacanto</a>
 		</li>
 		<li>
 			<a class="page-scroll" href="#calendario">Calendario</a>
@@ -353,9 +353,18 @@ include_once 'includes/functions.php';
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div id="container" style="width:100%;">
-                        <div class="fb-page" data-href="https://web.facebook.com/acampartrek/?fref=ts" data-tabs="timeline" data-width="292" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://web.facebook.com/acampartrek/?fref=ts"><a href="https://web.facebook.com/acampartrek/?fref=ts">Acampar Trek</a></blockquote></div></div>
+                            <div id="fb-root">
+                                <div class="fb-page" data-href="https://www.facebook.com/acampartrek/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/acampartrek/"><a href="https://www.facebook.com/acampartrek/">Acampar Trek</a></blockquote></div></div>
+                            </div>
+                            <script>(function(d, s, id) {
+                              var js, fjs = d.getElementsByTagName(s)[0];
+                              if (d.getElementById(id)) return;
+                              js = d.createElement(s); js.id = id;
+                              js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.5&appId=571843789627462";
+                              fjs.parentNode.insertBefore(js, fjs);
+                            }(document, 'script', 'facebook-jssdk'));</script>
                         </div>
-             </div>
+                    </div>
                 </div>
             </div>
        </section>
@@ -382,9 +391,6 @@ include_once 'includes/functions.php';
             <div class="row ">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Seguimiento Satelital</h2>
-               
-              
-               
              </div>
               </div>
               <div class="row ">

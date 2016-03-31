@@ -313,21 +313,21 @@ $(window).load(function(){
 /*
  * REMEMBER TO CHANGE TO YOUR APP ID AND CHANGE data-href TO SUIT YOU
  */
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=ADD YOUR APP ID HERE";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-$(window).bind("load resize", function(){
-  var container_width = $('#container').width();
-    $('#container').html('<div class="fb-like-box" ' +
-    'data-href="https://web.facebook.com/acampartrek/?fref=ts"' +
-    ' data-width="' + container_width + '" data-height="480" data-show-faces="true" ' +
-    'data-stream="true" data-header="true"></div>');
-    FB.XFBML.parse( );
-});
+//(function(d, s, id) {
+//  var js, fjs = d.getElementsByTagName(s)[0];
+//  if (d.getElementById(id)) return;
+//  js = d.createElement(s); js.id = id;
+//  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=ADD YOUR APP ID HERE";
+//  fjs.parentNode.insertBefore(js, fjs);
+//}(document, 'script', 'facebook-jssdk'));
+//$(window).bind("load resize", function(){
+//  var container_width = $('#container').width();
+//    $('#container').html('<div class="fb-like-box" ' +
+//    'data-href="https://web.facebook.com/acampartrek/?fref=ts"' +
+//    ' data-width="' + container_width + '" data-height="480" data-show-faces="true" ' +
+//    'data-stream="true" data-header="true"></div>');
+//    FB.XFBML.parse( );
+//});
 
 /*$('.desplegable-ciclo').click(function()
 {
