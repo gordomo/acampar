@@ -2,145 +2,145 @@
 
 include_once 'psl-config.php';
 
-function getTours($mysqli){
+function getTours($mysqli) {
     $result = 'false';
     $tours = array();
     $error_msg = '';
     $prep_stmt = "SELECT id, nombre, class_css, id_css FROM tours";
     $stmt = $mysqli->prepare($prep_stmt);
-    if ($stmt){
+    if ($stmt) {
         $stmt->execute();
         $stmt->bind_result($id_tour, $nombre, $class_css, $id_css);
-        while($stmt->fetch()){
-            $tours[] = array('id'=>$id_tour, 'nombre'=>$nombre, 'class_css'=>$class_css, 'id_css'=>$id_css);
+        while ($stmt->fetch()) {
+            $tours[] = array('id' => $id_tour, 'nombre' => $nombre, 'class_css' => $class_css, 'id_css' => $id_css);
         }
         $result = 'true';
-    }else{
+    } else {
         $error_msg .= '* Error de base de datos.';
     }
-    
+
     $stmt->close();
-    
+
     $retorno = array('result' => $result, 'tours' => $tours, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getCategorias($mysqli, $id_tour='', $cat_superior=''){
-	$result = 'false';
+function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
+    $result = 'false';
     $categorias = array();
-    
-	if($id_tour != ''){
-		$prep_stmt = "SELECT id, nombre FROM categorias WHERE id_tour=? AND cat_superior=0";
-		$stmt = $mysqli->prepare($prep_stmt);
-		if ($stmt){
-			$stmt->bind_param("i", $id_tour);
-			$stmt->execute();
-			$stmt->bind_result($id_cat, $nombre);
-			while($stmt->fetch()){
-				$categorias[] = array('id'=>$id_cat, 'nombre'=>$nombre);
-			}
-			$result = 'true';
-		}else{
-			$error_msg .= '* Error de base de datos.';
-		}
-		
-		$stmt->close();
-	}elseif($cat_superior != ''){
-		$prep_stmt = "SELECT id, nombre FROM categorias WHERE cat_superior=?";
-		$stmt = $mysqli->prepare($prep_stmt);
-		if ($stmt){
-			$stmt->bind_param("i", $cat_superior);
-			$stmt->execute();
-			$stmt->bind_result($id_cat, $nombre);
-			while($stmt->fetch()){
-				$categorias[] = array('id'=>$id_cat, 'nombre'=>$nombre);
-			}
-			$result = 'true';
-		}else{
-			$error_msg .= '* Error de base de datos.';
-		}
-		
-		$stmt->close();
-	}else{
-		$prep_stmt = "SELECT id, nombre, id_tour, cat_superior FROM categorias";
-		$stmt = $mysqli->prepare($prep_stmt);
-		if ($stmt){
-			$stmt->execute();
-			$stmt->bind_result($id_cat, $nombre, $id_tour, $cat_superior);
-			while($stmt->fetch()){
-				$categorias[] = array('id'=>$id_cat, 'nombre'=>$nombre, 'id_tour'=>$id_tour, 'cat_superior'=>$cat_superior);
-			}
-			$result = 'true';
-		}else{
-			$error_msg .= '* Error de base de datos.';
-		}
-		
-		$stmt->close();
-	}
-    
+    $error_msg = '';
+
+    if ($id_tour != '') {
+        $prep_stmt = "SELECT id, nombre FROM categorias WHERE id_tour=? AND cat_superior=0";
+        $stmt = $mysqli->prepare($prep_stmt);
+        if ($stmt) {
+            $stmt->bind_param("i", $id_tour);
+            $stmt->execute();
+            $stmt->bind_result($id_cat, $nombre);
+            while ($stmt->fetch()) {
+                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre);
+            }
+            $result = 'true';
+        } else {
+            $error_msg .= '* Error de base de datos.';
+        }
+
+        $stmt->close();
+    } elseif ($cat_superior != '') {
+        $prep_stmt = "SELECT id, nombre FROM categorias WHERE cat_superior=?";
+        $stmt = $mysqli->prepare($prep_stmt);
+        if ($stmt) {
+            $stmt->bind_param("i", $cat_superior);
+            $stmt->execute();
+            $stmt->bind_result($id_cat, $nombre);
+            while ($stmt->fetch()) {
+                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre);
+            }
+            $result = 'true';
+        } else {
+            $error_msg .= '* Error de base de datos.';
+        }
+
+        $stmt->close();
+    } else {
+        $prep_stmt = "SELECT id, nombre, id_tour, cat_superior FROM categorias";
+        $stmt = $mysqli->prepare($prep_stmt);
+        if ($stmt) {
+            $stmt->execute();
+            $stmt->bind_result($id_cat, $nombre, $id_tour, $cat_superior);
+            while ($stmt->fetch()) {
+                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre, 'id_tour' => $id_tour, 'cat_superior' => $cat_superior);
+            }
+            $result = 'true';
+        } else {
+            $error_msg .= '* Error de base de datos.';
+        }
+
+        $stmt->close();
+    }
+
     $retorno = array('result' => $result, 'categorias' => $categorias, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getInfoCategoria($mysqli, $id_categoria){
-	$result = 'false';
-	$error_msg = '';
-	$categoria = array();
-	
-	$prep_stmt = "SELECT id, nombre, foto, descripcion_corta, descripcion, coordenadas, id_tour, cat_superior FROM categorias WHERE id=?";
-	$stmt = $mysqli->prepare($prep_stmt);
-	if ($stmt){
-		$stmt->bind_param("i", $id_categoria);
-		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($id_cat, $nombre, $foto, $descripcion_corta, $descripcion, $coordenadas, $id_tour, $cat_superior);
-		$stmt->fetch();
-		$categoria = array('id'=>$id_cat, 'nombre'=>$nombre, 'foto'=>$foto, 'desc_corta'=>$descripcion_corta, 'desc'=>$descripcion, 'coordenadas'=>$coordenadas, 'id_tour'=>$id_tour, 'cat_superior'=>$cat_superior);
-		
-		$result = 'true';
-	}else{
-		$error_msg .= '* Error de base de datos.';
-	}
-	
-	$stmt->close();
-	
-	$retorno = array('result' => $result, 'categoria' => $categoria, 'mensaje' => $error_msg);
-    
+function getInfoCategoria($mysqli, $id_categoria) {
+    $result = 'false';
+    $error_msg = '';
+    $categoria = array();
+
+    $prep_stmt = "SELECT id, nombre, foto, descripcion_corta, descripcion, coordenadas, id_tour, cat_superior FROM categorias WHERE id=?";
+    $stmt = $mysqli->prepare($prep_stmt);
+    if ($stmt) {
+        $stmt->bind_param("i", $id_categoria);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($id_cat, $nombre, $foto, $descripcion_corta, $descripcion, $coordenadas, $id_tour, $cat_superior);
+        $stmt->fetch();
+        $categoria = array('id' => $id_cat, 'nombre' => $nombre, 'foto' => $foto, 'desc_corta' => $descripcion_corta, 'desc' => $descripcion, 'coordenadas' => $coordenadas, 'id_tour' => $id_tour, 'cat_superior' => $cat_superior);
+
+        $result = 'true';
+    } else {
+        $error_msg .= '* Error de base de datos.';
+    }
+
+    $stmt->close();
+
+    $retorno = array('result' => $result, 'categoria' => $categoria, 'mensaje' => $error_msg);
+
     return $retorno;
 }
 
-
-function getEstadosUsers($mysqli){
+function getEstadosUsers($mysqli) {
     $error_msg = '';
     $estados = array();
-    
+
     $prep_stmt = "SELECT id, estado FROM estado_usuarios";
     $stmt = $mysqli->prepare($prep_stmt);
     if ($stmt) {
         $stmt->execute();
         $stmt->bind_result($id_estado, $estado);
-        while($stmt->fetch()){
+        while ($stmt->fetch()) {
             $estados[] = array($id_estado, $estado);
         }
         $result = 'true';
-    }else{
+    } else {
         $result = 'false';
         $error_msg .= '* Error de base de datos.<br/>';
     }
-    
+
     $stmt->close();
-    
+
     $retorno = array('result' => $result, 'estados' => $estados, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getEstadoUser($mysqli, $id_user){
+function getEstadoUser($mysqli, $id_user) {
     $error_msg = '';
     $result = '';
-    
+
     $prep_stmt = "SELECT estado FROM usuarios WHERE id = ? LIMIT 1";
     $stmt = $mysqli->prepare($prep_stmt);
     if ($stmt) {
@@ -148,59 +148,59 @@ function getEstadoUser($mysqli, $id_user){
         $stmt->execute();
         $stmt->bind_result($estado);
         $result = 'true';
-    }else{
+    } else {
         $result = 'false';
         $error_msg .= 'Error de base de datos';
     }
-    
+
     $stmt->close();
-    
+
     $retorno = array('result' => $result, 'estado' => $estado, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function setSlider($mysqli, $url, $url_thumb, $texto, $link, $id_sitio=0, $id_slider=''){
+function setSlider($mysqli, $url, $url_thumb, $texto, $link, $id_sitio = 0, $id_slider = '') {
     $result = 'false';
-    
-    if(isset($id_slider) && $id_slider != ''){
+
+    if (isset($id_slider) && $id_slider != '') {
         $query_upd = "UPDATE sliders SET url=?, url_thumb=?, texto=?, link=?, id_sitio=? WHERE id=?";
         $stmt_upd = $mysqli->prepare($query_upd);
-        if($stmt_upd){
+        if ($stmt_upd) {
             $stmt_upd->bind_param('sssssd', $url, $url_thumb, $texto, $link, $id_sitio, $id_slider);
-            if(!$stmt_upd->execute()){
+            if (!$stmt_upd->execute()) {
                 $error_msg .= 'El slider no pudo ser modificado';
-            }else{
+            } else {
                 $result = 'true';
                 $error_msg .= 'Slider modificado con exito';
             }
-        }else{
+        } else {
             $error_msg .= 'Error de base de datos';
         }
         $stmt_upd->close();
-    }else{
+    } else {
         if ($insert_stmt = $mysqli->prepare("INSERT INTO sliders (url, url_thumb, texto, link, id_sitio) VALUES (?, ?, ?, ?, ?)")) {
             $insert_stmt->bind_param('sssss', $url, $url_thumb, $texto, $link, $id_sitio);
             // Execute the prepared query.
             if (!$insert_stmt->execute()) {
-                $error_msg .= 'El slider no pudo ser agregado.'.$insert_stmt->error;
-            }else{
+                $error_msg .= 'El slider no pudo ser agregado.' . $insert_stmt->error;
+            } else {
                 $result = 'true';
                 $error_msg .= 'Slider agregado con exito!!';
             }
-        }else{
+        } else {
             $error_msg .= '* Hubo un error al intentar agregar el slider';
         }
     }
-    
+
     $retorno = array('result' => $result, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getSliders($mysqli, $id_slider=''){
+function getSliders($mysqli, $id_slider = '') {
     $error_msg = '';
-    if(isset($id_slider) && $id_slider != ''){
+    if (isset($id_slider) && $id_slider != '') {
         $prep_stmt = "SELECT url, url_thumb, texto, link FROM sliders WHERE id = ?";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
@@ -209,15 +209,15 @@ function getSliders($mysqli, $id_slider=''){
             $stmt->bind_result($url, $url_thumb, $texto, $link);
             $stmt->fetch();
             $slider = array($url, $url_thumb, $texto, $link);
-            
+
             $result = 'true';
-        }else{
+        } else {
             $result = 'false';
             $error_msg .= '* Error de base de datos.<br/>';
         }
 
         $stmt->close();
-    }else{
+    } else {
         $slider = array();
 
         $prep_stmt = "SELECT * FROM sliders";
@@ -225,29 +225,29 @@ function getSliders($mysqli, $id_slider=''){
         if ($stmt) {
             $stmt->execute();
             $stmt->bind_result($id, $url, $url_thumb, $texto, $link, $id_sitio);
-            while($stmt->fetch()){
+            while ($stmt->fetch()) {
                 $slider[] = array($id, $url, $url_thumb, $texto, $link, $id_sitio);
             }
             $result = 'true';
-        }else{
+        } else {
             $result = 'false';
             $error_msg .= '* Error de base de datos.<br/>';
         }
 
         $stmt->close();
     }
-    
+
     $retorno = array('result' => $result, 'slider' => $slider, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function removeSlider($mysqli, $id_slider){
+function removeSlider($mysqli, $id_slider) {
     $result = 'false';
     $id_slider = filter_var($id_slider, FILTER_VALIDATE_INT);
     if (!filter_var($id_slider, FILTER_VALIDATE_INT)) {
         $error_msg .= '* El slider no es válido o no existe';
-    }else{
+    } else {
         $stmt = $mysqli->prepare("SELECT url, url_thumb FROM sliders WHERE id = ? LIMIT 1");
         if ($stmt) {
             $stmt->bind_param('i', $id_slider);
@@ -255,40 +255,40 @@ function removeSlider($mysqli, $id_slider){
             $stmt->store_result();
             $stmt->bind_result($url, $url_thumb);
             $stmt->fetch();
-            
+
             if ($stmt->num_rows >= 1) {
                 $stmt_del = $mysqli->prepare("DELETE FROM sliders WHERE id=?");
-                if($stmt_del){
+                if ($stmt_del) {
                     $stmt_del->bind_param('i', $id_slider);
-                    if(!$stmt_del->execute()){
+                    if (!$stmt_del->execute()) {
                         $error_msg .= '* No se pudo eliminar el slider';
-                    }else{
-                        if(file_exists("../".$url)){
-                            unlink("../".$url);
+                    } else {
+                        if (file_exists("../" . $url)) {
+                            unlink("../" . $url);
                         }
-                        if(file_exists("../".$url_thumb)){
-                            unlink("../".$url_thumb);
+                        if (file_exists("../" . $url_thumb)) {
+                            unlink("../" . $url_thumb);
                         }
                         $result = 'true';
                     }
                 }
-            }else{
+            } else {
                 $error_msg .= '* El slider no existe';
             }
-        }else{
+        } else {
             $error_msg .= '* No se pudo seleccionar el slider para ser eliminado';
         }
     }
-    
+
     $retorno = array('result' => $result, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getNovedades($mysqli, $id_nov=''){
+function getNovedades($mysqli, $id_nov = '') {
     $result = 'false';
     $error_msg = '';
-    if(isset($id_nov) && $id_nov != ''){
+    if (isset($id_nov) && $id_nov != '') {
         $prep_stmt = "SELECT imagen, imagen2, imagen3, titulo, descripcion, fecha, link FROM novedades WHERE id = ?";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
@@ -296,15 +296,15 @@ function getNovedades($mysqli, $id_nov=''){
             $stmt->execute();
             $stmt->bind_result($imagen, $imagen2, $imagen3, $titulo, $descripcion, $fecha, $link);
             $stmt->fetch();
-            $novedades = array('imagen'=>$imagen, 'imagen2'=>$imagen2, 'imagen3'=>$imagen3, 'titulo'=>$titulo, 'descripcion'=>$descripcion, 'fecha'=>$fecha, 'link'=>$link);
-            
+            $novedades = array('imagen' => $imagen, 'imagen2' => $imagen2, 'imagen3' => $imagen3, 'titulo' => $titulo, 'descripcion' => $descripcion, 'fecha' => $fecha, 'link' => $link);
+
             $result = 'true';
-        }else{
+        } else {
             $error_msg .= '* Error de base de datos.<br/>';
         }
 
         $stmt->close();
-    }else{
+    } else {
         $novedades = array();
 
         $prep_stmt = "SELECT id, imagen, imagen2, imagen3, titulo, descripcion, fecha, link, estado, autor, categoria FROM novedades";
@@ -312,26 +312,26 @@ function getNovedades($mysqli, $id_nov=''){
         if ($stmt) {
             $stmt->execute();
             $stmt->bind_result($id, $imagen, $imagen2, $imagen3, $titulo, $descripcion, $fecha, $link, $estado, $autor, $categoria);
-            while($stmt->fetch()){
-                $novedades[] = array('id'=>$id, 'imagen'=>$imagen, 'imagen2'=>$imagen2, 'imagen3'=>$imagen3, 'titulo'=>$titulo, 'descripcion'=>$descripcion, 'fecha'=>$fecha, 'link'=>$link, 'estado'=>$estado, 'autor'=>$autor, 'categoria'=>$categoria);
+            while ($stmt->fetch()) {
+                $novedades[] = array('id' => $id, 'imagen' => $imagen, 'imagen2' => $imagen2, 'imagen3' => $imagen3, 'titulo' => $titulo, 'descripcion' => $descripcion, 'fecha' => $fecha, 'link' => $link, 'estado' => $estado, 'autor' => $autor, 'categoria' => $categoria);
             }
             $result = 'true';
-        }else{
+        } else {
             $error_msg .= '* Error de base de datos.<br/>';
         }
 
         $stmt->close();
     }
-    
+
     return $novedades;
 }
 
-function removeNovedad($mysqli, $id_novedad){
+function removeNovedad($mysqli, $id_novedad) {
     $result = 'false';
     $id_novedad = filter_var($id_novedad, FILTER_VALIDATE_INT);
     if (!filter_var($id_novedad, FILTER_VALIDATE_INT)) {
         $error_msg .= '* La novedad no es válida o no existe';
-    }else{
+    } else {
         $stmt = $mysqli->prepare("SELECT imagen, imagen2, imagen3 FROM novedades WHERE id = ? LIMIT 1");
         if ($stmt) {
             $stmt->bind_param('i', $id_novedad);
@@ -339,95 +339,95 @@ function removeNovedad($mysqli, $id_novedad){
             $stmt->store_result();
             $stmt->bind_result($imagen, $imagen2, $imagen3);
             $stmt->fetch();
-            
+
             if ($stmt->num_rows >= 1) {
                 $stmt_del = $mysqli->prepare("DELETE FROM novedades WHERE id=?");
-                if($stmt_del){
+                if ($stmt_del) {
                     $stmt_del->bind_param('i', $id_novedad);
-                    if(!$stmt_del->execute()){
+                    if (!$stmt_del->execute()) {
                         $error_msg .= '* No se pudo eliminar la novedad';
-                    }else{
-                        if(file_exists("../images/novedades/".$imagen)){
-                            unlink("../images/novedades/".$imagen);
+                    } else {
+                        if (file_exists("../images/novedades/" . $imagen)) {
+                            unlink("../images/novedades/" . $imagen);
                         }
-                        if(file_exists("../images/novedades/".$imagen2)){
-                            unlink("../images/novedades/".$imagen2);
+                        if (file_exists("../images/novedades/" . $imagen2)) {
+                            unlink("../images/novedades/" . $imagen2);
                         }
-                        if(file_exists("../images/novedades/".$imagen3)){
-                            unlink("../images/novedades/".$imagen3);
+                        if (file_exists("../images/novedades/" . $imagen3)) {
+                            unlink("../images/novedades/" . $imagen3);
                         }
                         $result = 'true';
                     }
                 }
-            }else{
+            } else {
                 $error_msg .= '* La novedad no existe';
             }
-        }else{
+        } else {
             $error_msg .= '* No se pudo seleccionar la novedad para ser eliminada';
         }
     }
-    
+
     $retorno = array('result' => $result, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function setSitio($mysqli, $id_usuario, $default='', $nombre='', $img_resumen='', $descripcion='', $email='', $direccion='', $latitud='', $longitud='', $telefono='', $id_estado=1, $categorias='', $id_complejo='', $landing=0, $id_sitio=''){
+function setSitio($mysqli, $id_usuario, $default = '', $nombre = '', $img_resumen = '', $descripcion = '', $email = '', $direccion = '', $latitud = '', $longitud = '', $telefono = '', $id_estado = 1, $categorias = '', $id_complejo = '', $landing = 0, $id_sitio = '') {
     $result = 'false';
-    
-    if(isset($id_sitio) && $id_sitio != ''){
+
+    if (isset($id_sitio) && $id_sitio != '') {
         $query_upd = "UPDATE sliders SET url=?, url_thumb=?, texto=?, link=?, id_sitio=? WHERE id=?";
         $stmt_upd = $mysqli->prepare($query_upd);
-        if($stmt_upd){
+        if ($stmt_upd) {
             $stmt_upd->bind_param('sssssd', $url, $url_thumb, $texto, $link, $id_sitio, $id_slider);
-            if(!$stmt_upd->execute()){
+            if (!$stmt_upd->execute()) {
                 $error_msg .= '* El slider no pudo ser modificado.<br/>';
-            }else{
+            } else {
                 $result = 'true';
                 $error_msg .= 'Slider modificado con exito';
             }
-        }else{
+        } else {
             $error_msg .= '* Error de base de datos - 274';
         }
         $stmt_upd->close();
-    }else{
-        if(isset($default) && $default !=''){
-            $nombre='Nuevo Sitio';
-            $img_resumen='../sitos/default/default.jpg';
-            $descripcion='Nuevo sitio web, por favor, modifique el siguiente contenido.';
+    } else {
+        if (isset($default) && $default != '') {
+            $nombre = 'Nuevo Sitio';
+            $img_resumen = '../sitos/default/default.jpg';
+            $descripcion = 'Nuevo sitio web, por favor, modifique el siguiente contenido.';
             $email = '';
             $fecha_alta = date("Y-m-d");
-            $id_estado=1;
-            $id_usuario=$id_usuario;
-            $landing=$landing;
-            $direccion=$latitud=$longitud=$telefono=$fecha_modificacion=$fecha_baja=$categorias=$id_complejo='';
-        }else{
+            $id_estado = 1;
+            $id_usuario = $id_usuario;
+            $landing = $landing;
+            $direccion = $latitud = $longitud = $telefono = $fecha_modificacion = $fecha_baja = $categorias = $id_complejo = '';
+        } else {
             
         }
         if ($insert_stmt = $mysqli->prepare("INSERT INTO sitios SET nombre=?,img_resumen=?,descripcion=?,direccion=?,latitud=?,longitud=?,email=?,telefono=?,fecha_alta=?,fecha_modificacion=?,fecha_baja=?,id_estado=?,id_usuario=?,categorias=?,id_complejo=?,landing=?")) {
-            $insert_stmt->bind_param('ssssssssssssssss', $nombre,$img_resumen,$descripcion,$direccion,$latitud,$longitud,$email,$telefono,$fecha_alta,$fecha_modificacion,$fecha_baja,$id_estado,$id_usuario,$categorias,$id_complejo,$landing);
+            $insert_stmt->bind_param('ssssssssssssssss', $nombre, $img_resumen, $descripcion, $direccion, $latitud, $longitud, $email, $telefono, $fecha_alta, $fecha_modificacion, $fecha_baja, $id_estado, $id_usuario, $categorias, $id_complejo, $landing);
             // Execute the prepared query.
             if (!$insert_stmt->execute()) {
-                $error_msg .= 'El sitio no pudo ser creado.'.$insert_stmt->error;
-            }else{
+                $error_msg .= 'El sitio no pudo ser creado.' . $insert_stmt->error;
+            } else {
                 $result = 'true';
                 $error_msg .= 'Sitio creado con exito!!';
             }
-        }else{
+        } else {
             $error_msg .= 'Hubo un error al intentar crear el sitio';
         }
     }
-    
+
     $retorno = array('result' => $result, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getSitios($mysqli, $id_sitio='', $id_categoria=''){
+function getSitios($mysqli, $id_sitio = '', $id_categoria = '') {
     $sitios = array();
     $result = 'false';
     $error_msg = '';
-    if(isset($id_sitio) && $id_sitio != ''){
+    if (isset($id_sitio) && $id_sitio != '') {
         $prep_stmt = "SELECT nombre, img_resumen, descripcion, direccion, latitud, longitud, email, telefono, fecha_alta, fecha_modificacion, fecha_baja, id_estado, id_usuario, categorias, id_complejo, landing FROM sitios WHERE id = ?";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
@@ -436,18 +436,18 @@ function getSitios($mysqli, $id_sitio='', $id_categoria=''){
             $stmt->store_result();
             $stmt->bind_result($nombre, $img_resumen, $descripcion, $direccion, $latitud, $longitud, $email, $telefono, $fecha_alta, $fecha_modificacion, $fecha_baja, $id_estado, $id_usuario, $categorias, $id_complejo, $landing);
             $stmt->fetch();
-            
+
             $usuario = getUsers($mysqli, $id_usuario);
-            
-            $sitios = array('nombre'=>$nombre, 'img_resumen'=>$img_resumen, 'descripcion'=>$descripcion, 'direccion'=>$direccion, 'latitud'=>$latitud, 'longitud'=>$longitud, 'email'=>$email, 'telefono'=>$telefono, 'fecha_alta'=>$fecha_alta, 'fecha_modificacion'=>$fecha_modificacion, 'fecha_baja'=>$fecha_baja, 'id_estado'=>$id_estado, 'id_usuario'=>$id_usuario, 'usuario'=>$usuario[0]['usuario'], 'categorias'=>$categorias, 'id_complejo'=>$id_complejo, 'landing'=>$landing);
-            
+
+            $sitios = array('nombre' => $nombre, 'img_resumen' => $img_resumen, 'descripcion' => $descripcion, 'direccion' => $direccion, 'latitud' => $latitud, 'longitud' => $longitud, 'email' => $email, 'telefono' => $telefono, 'fecha_alta' => $fecha_alta, 'fecha_modificacion' => $fecha_modificacion, 'fecha_baja' => $fecha_baja, 'id_estado' => $id_estado, 'id_usuario' => $id_usuario, 'usuario' => $usuario[0]['usuario'], 'categorias' => $categorias, 'id_complejo' => $id_complejo, 'landing' => $landing);
+
             $result = 'true';
-            
+
             $stmt->close();
-        }else{
+        } else {
             $error_msg .= '* Error de base de datos.<br/>';
         }
-    }elseif(isset($id_categoria) && $id_categoria != ''){
+    } elseif (isset($id_categoria) && $id_categoria != '') {
         $prep_stmt = "SELECT nombre, img_resumen, descripcion, direccion, latitud, longitud, email, telefono, fecha_alta, fecha_modificacion, fecha_baja, id_estado, id_usuario, categorias, id_complejo, landing FROM sitios WHERE categorias like '%{$id_categoria}%'";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
@@ -456,120 +456,120 @@ function getSitios($mysqli, $id_sitio='', $id_categoria=''){
             $stmt->store_result();
             $stmt->bind_result($nombre, $img_resumen, $descripcion, $direccion, $latitud, $longitud, $email, $telefono, $fecha_alta, $fecha_modificacion, $fecha_baja, $id_estado, $id_usuario, $categorias, $id_complejo, $landing);
             $stmt->fetch();
-            
+
             $usuario = getUsers($mysqli, $id_usuario);
-            
-            $sitios = array('nombre'=>$nombre, 'img_resumen'=>$img_resumen, 'descripcion'=>$descripcion, 'direccion'=>$direccion, 'latitud'=>$latitud, 'longitud'=>$longitud, 'email'=>$email, 'telefono'=>$telefono, 'fecha_alta'=>$fecha_alta, 'fecha_modificacion'=>$fecha_modificacion, 'fecha_baja'=>$fecha_baja, 'id_estado'=>$id_estado, 'id_usuario'=>$id_usuario, 'usuario'=>$usuario[0]['usuario'], 'categorias'=>$categorias, 'id_complejo'=>$id_complejo, 'landing'=>$landing);
-            
+
+            $sitios = array('nombre' => $nombre, 'img_resumen' => $img_resumen, 'descripcion' => $descripcion, 'direccion' => $direccion, 'latitud' => $latitud, 'longitud' => $longitud, 'email' => $email, 'telefono' => $telefono, 'fecha_alta' => $fecha_alta, 'fecha_modificacion' => $fecha_modificacion, 'fecha_baja' => $fecha_baja, 'id_estado' => $id_estado, 'id_usuario' => $id_usuario, 'usuario' => $usuario[0]['usuario'], 'categorias' => $categorias, 'id_complejo' => $id_complejo, 'landing' => $landing);
+
             $result = 'true';
-            
+
             $stmt->close();
-        }else{
+        } else {
             $error_msg .= 'Error de base de datos.';
         }
-    }else{
+    } else {
         $prep_stmt = "SELECT id, nombre, img_resumen, descripcion, direccion, latitud, longitud, email, telefono, fecha_alta, fecha_modificacion, fecha_baja, id_estado, id_usuario, categorias, id_complejo, landing FROM sitios WHERE id_estado<>3";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
             $stmt->execute();
             $stmt->store_result();
             $stmt->bind_result($id, $nombre, $img_resumen, $descripcion, $direccion, $latitud, $longitud, $email, $telefono, $fecha_alta, $fecha_modificacion, $fecha_baja, $id_estado, $id_usuario, $categorias, $id_complejo, $landing);
-            while($stmt->fetch()){
+            while ($stmt->fetch()) {
                 $usuario = getUsers($mysqli, $id_usuario);
                 $estado = getEstadosSitios($mysqli, $id_estado);
-                $sitios[] = array('id'=>$id, 'nombre'=>$nombre, 'img_resumen'=>$img_resumen, 'descripcion'=>$descripcion, 'direccion'=>$direccion, 'latitud'=>$latitud, 'longitud'=>$longitud, 'email'=>$email, 'telefono'=>$telefono, 'fecha_alta'=>$fecha_alta, 'fecha_modificacion'=>$fecha_modificacion, 'fecha_baja'=>$fecha_baja, 'id_estado'=>$id_estado, 'estado'=>$estado['estados'], 'id_usuario'=>$id_usuario, 'usuario'=>$usuario[0]['usuario'], 'categorias'=>$categorias, 'id_complejo'=>$id_complejo, 'landing'=>$landing);
+                $sitios[] = array('id' => $id, 'nombre' => $nombre, 'img_resumen' => $img_resumen, 'descripcion' => $descripcion, 'direccion' => $direccion, 'latitud' => $latitud, 'longitud' => $longitud, 'email' => $email, 'telefono' => $telefono, 'fecha_alta' => $fecha_alta, 'fecha_modificacion' => $fecha_modificacion, 'fecha_baja' => $fecha_baja, 'id_estado' => $id_estado, 'estado' => $estado['estados'], 'id_usuario' => $id_usuario, 'usuario' => $usuario[0]['usuario'], 'categorias' => $categorias, 'id_complejo' => $id_complejo, 'landing' => $landing);
             }
             $result = 'true';
-            
+
             $stmt->close();
-        }else{
+        } else {
             $error_msg .= '* Error de base de datos.<br/>';
         }
     }
-    
+
     return $sitios;
 }
 
-function getSitiosUsuario($mysqli, $id_usuario){
+function getSitiosUsuario($mysqli, $id_usuario) {
     $sitios = array();
     $result = 'false';
     $error_msg = '';
-    
-    if(isset($id_usuario) && $id_usuario != ''){
+
+    if (isset($id_usuario) && $id_usuario != '') {
         $prep_stmt = "SELECT id, nombre, img_resumen, descripcion, direccion, latitud, longitud, email, telefono, fecha_alta, fecha_modificacion, fecha_baja, id_estado, categorias, id_complejo, landing FROM sitios WHERE id_usuario = ?";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
             $stmt->bind_param("i", $id_usuario);
-            if($stmt->execute()){
+            if ($stmt->execute()) {
                 $stmt->store_result();
                 $stmt->bind_result($id, $nombre, $img_resumen, $descripcion, $direccion, $latitud, $longitud, $email, $telefono, $fecha_alta, $fecha_modificacion, $fecha_baja, $id_estado, $categorias, $id_complejo, $landing);
                 $stmt->fetch();
-                
+
                 $estado_sitio = getEstadosSitios($mysqli, $id_estado);
 
-                $sitios[] = array('id'=>$id, 'nombre'=>$nombre, 'img_resumen'=>$img_resumen, 'descripcion'=>$descripcion, 'direccion'=>$direccion, 'latitud'=>$latitud, 'longitud'=>$longitud, 'email'=>$email, 'telefono'=>$telefono, 'fecha_alta'=>$fecha_alta, 'fecha_modificacion'=>$fecha_modificacion, 'fecha_baja'=>$fecha_baja, 'id_estado'=>$id_estado, 'estado'=>$estado_sitio['estados'], 'categorias'=>$categorias, 'id_complejo'=>$id_complejo, 'landing'=>$landing);
+                $sitios[] = array('id' => $id, 'nombre' => $nombre, 'img_resumen' => $img_resumen, 'descripcion' => $descripcion, 'direccion' => $direccion, 'latitud' => $latitud, 'longitud' => $longitud, 'email' => $email, 'telefono' => $telefono, 'fecha_alta' => $fecha_alta, 'fecha_modificacion' => $fecha_modificacion, 'fecha_baja' => $fecha_baja, 'id_estado' => $id_estado, 'estado' => $estado_sitio['estados'], 'categorias' => $categorias, 'id_complejo' => $id_complejo, 'landing' => $landing);
 
                 $result = 'true';
 
                 $stmt->close();
-            }else{
-                $error_msg .= 'No se pudo seleccionar el usuario -'.$stmt->error;
+            } else {
+                $error_msg .= 'No se pudo seleccionar el usuario -' . $stmt->error;
             }
-        }else{
+        } else {
             $error_msg .= 'Error de base de datos';
         }
-    }else{
+    } else {
         $error_msg .= 'No se pudo obtener el listado de sitios del cliente';
     }
-    
-    $retorno = array('result'=>$result, 'sitios'=>$sitios, 'mensaje'=>$error_msg);
-    
+
+    $retorno = array('result' => $result, 'sitios' => $sitios, 'mensaje' => $error_msg);
+
     return $retorno;
 }
 
-function removeSitiosUsuario($mysqli, $id_usuario){
+function removeSitiosUsuario($mysqli, $id_usuario) {
     $result = 'false';
     $id_usuario = filter_var($id_usuario, FILTER_VALIDATE_INT);
     if (!filter_var($id_usuario, FILTER_VALIDATE_INT)) {
         $error_msg .= 'El cliente ingresado no es válido o no existe';
-    }else{
+    } else {
         $stmt = $mysqli->prepare("SELECT id FROM sitios WHERE id_usuario = ?");
         if ($stmt) {
             $stmt->bind_param('i', $id_usuario);
             $stmt->execute();
             $stmt->store_result();
             $stmt->bind_result($id);
-            while($stmt->fetch()){
+            while ($stmt->fetch()) {
                 $fecha_baja = date("Y-m-d");
                 $stmt_del = $mysqli->prepare("UPDATE sitios SET id_estado=3, fecha_baja='{$fecha_baja}' WHERE id=?");
-                if(!$stmt_del){
+                if (!$stmt_del) {
                     $error_msg .= $mysqli->error;
-                }else{
+                } else {
                     $stmt_del->bind_param('i', $id);
-                    if(!$stmt_del->execute()){
+                    if (!$stmt_del->execute()) {
                         $error_msg .= 'No se pudo eliminar el sitio';
-                    }else{
+                    } else {
                         $result = 'true';
                         $stmt_del->close();
                     }
                 }
             }
-        }else{
+        } else {
             $error_msg .= 'No se pudo seleccionar el usuario para eliminar sus sitios';
         }
         $stmt->close();
     }
-    
+
     $retorno = array('result' => $result, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getEstadosSitios($mysqli, $id_estado=''){
+function getEstadosSitios($mysqli, $id_estado = '') {
     $error_msg = '';
     $estados = array();
-    
-    if(isset($id_estado) && $id_estado != ''){
+
+    if (isset($id_estado) && $id_estado != '') {
         $prep_stmt = "SELECT estado FROM estado_sitios WHERE id=?";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
@@ -580,85 +580,85 @@ function getEstadosSitios($mysqli, $id_estado=''){
             $stmt->fetch();
             $estados = $estado;
             $result = 'true';
-        }else{
+        } else {
             $result = 'false';
             $error_msg .= 'Error de base de datos';
         }
         $stmt->close();
-    }else{
+    } else {
         $prep_stmt = "SELECT id, estado FROM estado_sitios";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
             $stmt->execute();
             $stmt->store_result();
             $stmt->bind_result($id_estado, $estado);
-            while($stmt->fetch()){
-                $estados[] = array('id'=>$id_estado, 'estado'=>$estado);
+            while ($stmt->fetch()) {
+                $estados[] = array('id' => $id_estado, 'estado' => $estado);
             }
             $result = 'true';
-        }else{
+        } else {
             $result = 'false';
             $error_msg .= 'Error de base de datos';
         }
         $stmt->close();
     }
-    
+
     $retorno = array('result' => $result, 'estados' => $estados, 'mensaje' => $error_msg);
     return $retorno;
 }
 
-function editarSitioAdm($mysqli, $id_sitio, $categoria, $id_complejo, $id_estado, $eliminar=''){
+function editarSitioAdm($mysqli, $id_sitio, $categoria, $id_complejo, $id_estado, $eliminar = '') {
     $result = 'false';
     $error_msg = '';
-    
-    if(isset($eliminar) && $eliminar != ''){
+
+    if (isset($eliminar) && $eliminar != '') {
         $fecha_baja = date("Y-m-d");
         $query_upd = "UPDATE sitios SET id_estado=3, fecha_baja='{$fecha_baja}' WHERE id=?";
         $stmt_upd = $mysqli->prepare($query_upd);
-        if($stmt_upd){
+        if ($stmt_upd) {
             $stmt_upd->bind_param('d', $id_sitio);
-            if(!$stmt_upd->execute()){
+            if (!$stmt_upd->execute()) {
                 $error_msg .= 'El sitio no pudo ser modificado';
-            }else{
+            } else {
                 $result = 'true';
                 $error_msg .= 'Sitio eliminado';
             }
-        }else{
+        } else {
             $error_msg .= '* Error de base de datos - 786';
         }
         $stmt_upd->close();
-    }else{
+    } else {
         $categorias = json_encode($categoria);
-        if(isset($id_sitio) && $id_sitio != ''){
+        if (isset($id_sitio) && $id_sitio != '') {
             $query_upd = "UPDATE sitios SET categorias=?, id_complejo=?, id_estado=? WHERE id=?";
             $stmt_upd = $mysqli->prepare($query_upd);
-            if($stmt_upd){
+            if ($stmt_upd) {
                 $stmt_upd->bind_param('sssd', $categorias, $id_complejo, $id_estado, $id_sitio);
-                if(!$stmt_upd->execute()){
+                if (!$stmt_upd->execute()) {
                     $error_msg .= 'El sitio no pudo ser modificado';
-                }else{
+                } else {
                     $result = 'true';
                     $error_msg .= 'Sitio modificado con exito';
                 }
-            }else{
+            } else {
                 $error_msg .= 'Error de base de datos';
             }
             $stmt_upd->close();
-        }else{
+        } else {
             $error_msg = 'Error al seleccionar el sitio';
         }
     }
-    
+
     $retorno = array('result' => $result, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
-function getComplejos($mysqli, $id_complejo=''){
+function getComplejos($mysqli, $id_complejo = '') {
     $error_msg = '';
     $complejos = array();
-    
-    if(isset($id_complejo) && $id_complejo != ''){
+
+    if (isset($id_complejo) && $id_complejo != '') {
         $prep_stmt = "SELECT complejo FROM complejos WHERE id=?";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
@@ -669,29 +669,29 @@ function getComplejos($mysqli, $id_complejo=''){
             $stmt->fetch();
             $complejos = $complejo;
             $result = 'true';
-        }else{
+        } else {
             $result = 'false';
             $error_msg .= 'Error de base de datos';
         }
         $stmt->close();
-    }else{
-	$stmt = $mysqli->prepare("SELECT id, complejo FROM complejos");
-	if ($stmt) {
-    	    $stmt->execute();
-    	    $stmt->bind_result($id, $complejo);
-    	    while($stmt->fetch()){
-        	$complejos[] = array('id'=>$id, 'complejo'=>$complejo);
-    	    }
-	    $result = 'true';
-	}else{
-    	    $result = 'false';
-    	    $error_msg .= 'Error de base de datos';
-	}
-	$stmt->close();
+    } else {
+        $stmt = $mysqli->prepare("SELECT id, complejo FROM complejos");
+        if ($stmt) {
+            $stmt->execute();
+            $stmt->bind_result($id, $complejo);
+            while ($stmt->fetch()) {
+                $complejos[] = array('id' => $id, 'complejo' => $complejo);
+            }
+            $result = 'true';
+        } else {
+            $result = 'false';
+            $error_msg .= 'Error de base de datos';
+        }
+        $stmt->close();
     }
-    
+
     $retorno = array('result' => $result, 'complejos' => $complejos, 'mensaje' => $error_msg);
-    
+
     return $retorno;
 }
 
@@ -758,7 +758,7 @@ function login($email, $password, $mysqli) {
 
                     $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
-                    
+
                     $_SESSION['tipo'] = $tipo;
 
                     // Login successful. 
@@ -816,48 +816,8 @@ function checkbrute($user_id, $mysqli) {
     }
 }
 
-function login_check($mysqli) {
-    // Check if all session variables are set 
-    if (isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
-        $user_id = $_SESSION['user_id'];
-        $login_string = $_SESSION['login_string'];
-        $username = $_SESSION['username'];
-
-        // Get the user-agent string of the user.
-        $user_browser = $_SERVER['HTTP_USER_AGENT'];
-
-        if ($stmt = $mysqli->prepare("SELECT password FROM usuarios WHERE id = ? LIMIT 1")) {
-            // Bind "$user_id" to parameter. 
-            $stmt->bind_param('i', $user_id);
-            $stmt->execute();   // Execute the prepared query.
-            $stmt->store_result();
-
-            if ($stmt->num_rows == 1) {
-                // If the user exists get variables from result.
-                $stmt->bind_result($password);
-                $stmt->fetch();
-                $login_check = hash('sha512', $password . $user_browser);
-
-                if ($login_check == $login_string) {
-                    // Logged In!!!! 
-                    return true;
-                } else {
-                    // Not logged in 
-                    return false;
-                }
-            } else {
-                // Not logged in 
-                return false;
-            }
-        } else {
-            // Could not prepare statement
-            header("Location: ../admin/error.php?err=Database error: cannot prepare statement");
-            exit();
-        }
-    } else {
-        // Not logged in 
-        return false;
-    }
+function login_check() {
+    return isset($_SESSION['user_login_checked']) ? $_SESSION['user_login_checked'] : false;
 }
 
 function esc_url($url) {
@@ -867,19 +827,19 @@ function esc_url($url) {
     }
 
     $url = preg_replace('|[^a-z0-9-~+_.?#=!&;,/:%@$\|*\'()\\x80-\\xff]|i', '', $url);
-    
+
     $strip = array('%0d', '%0a', '%0D', '%0A');
     $url = (string) $url;
-    
+
     $count = 1;
     while ($count) {
         $url = str_replace($strip, '', $url, $count);
     }
-    
+
     $url = str_replace(';//', '://', $url);
 
     $url = htmlentities($url);
-    
+
     $url = str_replace('&amp;', '&#038;', $url);
     $url = str_replace("'", '&#039;', $url);
 
@@ -888,5 +848,64 @@ function esc_url($url) {
         return '';
     } else {
         return $url;
+    }
+}
+
+function getCalendario($mysqli, $mes = false) 
+{
+    if($mes)
+    {
+        if ($stmt = $mysqli->prepare("SELECT * FROM calendario WHERE mes=?")) 
+        {
+            /* ligar parámetros para marcadores */
+            $stmt->bind_param("i", $mes);
+
+            /* ejecutar la consulta */
+            if (!$stmt->execute()) {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+
+                return json_encode(array("result" => $result, "mensaje" => $message, "respuesta" => ""));
+            }
+
+            /* ligar variables de resultado */
+            $resultado = $stmt->get_result();
+            $calendario = $resultado->fetch_assoc();
+            /* obtener valor */
+            $stmt->fetch();
+            /* cerrar sentencia */
+            $stmt->close();
+
+            return json_encode(array("result" => "ok", "mensaje" => "ok", "respuesta" => $calendario), true);
+        }
+    }
+    else
+    {
+        if ($stmt = $mysqli->prepare("SELECT * FROM calendario")) 
+        {
+            $calendarios = array();
+            /* ejecutar la consulta */
+            if (!$stmt->execute()) 
+            {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+
+                return json_encode(array("result" => $result, "mensaje" => $message, "respuesta" => ""));
+            }
+
+            /* ligar variables de resultado */
+            $stmt->execute();
+            $stmt->bind_result($id, $mes, $ano, $id_excursiones, $dias);
+            while ($stmt->fetch()) 
+            {
+                $calendarios[] = array("id"=>$id, "mes"=>$mes, "ano"=>$ano, "id_excursiones"=> json_decode($id_excursiones), "dias"=>$dias);
+            }
+            /* obtener valor */
+            $stmt->fetch();
+            /* cerrar sentencia */
+            $stmt->close();
+
+            return $calendarios;
+        }
     }
 }
