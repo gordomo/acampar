@@ -876,7 +876,7 @@ function getCalendario($mysqli, $mes = false)
             /* cerrar sentencia */
             $stmt->close();
 
-            return json_encode(array("result" => "ok", "mensaje" => "ok", "respuesta" => $calendario), true);
+            return $calendario;
         }
     }
     else
@@ -909,3 +909,62 @@ function getCalendario($mysqli, $mes = false)
         }
     }
 }
+
+function getToursFromCategorias($mysqli, $id = false) 
+{
+    if($id)
+    {
+        if ($stmt = $mysqli->prepare("SELECT * FROM categorias WHERE id=?")) 
+        {
+            /* ligar parámetros para marcadores */
+            $stmt->bind_param("i", $id);
+
+            /* ejecutar la consulta */
+            if (!$stmt->execute()) {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+
+                return json_encode(array("result" => $result, "mensaje" => $message, "respuesta" => ""));
+            }
+
+            /* ligar variables de resultado */
+            $resultado = $stmt->get_result();
+            $categorias = $resultado->fetch_assoc();
+            /* obtener valor */
+            $stmt->fetch();
+            /* cerrar sentencia */
+            $stmt->close();
+
+            return $categorias;
+        }
+    }
+    else
+    {
+        if ($stmt = $mysqli->prepare("SELECT * FROM categorias")) 
+        {
+            $categorias = array();
+            /* ejecutar la consulta */
+            if (!$stmt->execute()) 
+            {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+
+                return json_encode(array("result" => $result, "mensaje" => $message, "respuesta" => ""));
+            }
+
+            /* ligar variables de resultado */
+            $stmt->execute();
+            $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $coordenadas, $id_tour, $cat_superior);
+            while ($stmt->fetch()) 
+            {
+                $categorias[] = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "coordenadas"=>$coordenadas, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior);
+            }
+            /* obtener valor */
+            $stmt->fetch();
+            /* cerrar sentencia */
+            $stmt->close();
+
+            return $categorias;
+        }
+    }
+}    

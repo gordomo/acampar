@@ -238,40 +238,61 @@ $('.btn-submit-consulta').click(function () {
     });
 });
 
-
+//calendario
 $(".nav-meses ul li a").click(function (e) {
     e.preventDefault();
     $(".nav-meses ul li a").each(function () {
         $(this).removeClass("active");
+        $("."+$(this).attr('id')).hide();
     });
     $(this).addClass("active");
+    
+    if($("."+$(this).attr('id')).length > 0)
+    {
+        $(".no-event").hide();
+        $("."+$(this).attr('id')).show();
+    }
+    else
+    {
+        $(".no-event").show();
+    }
+    
 });
 
-$('.nav-meses ul li a').click(function ()
-{
-    $(".fechas").html("");
-    $.getJSON("calendario/" + this.id + ".json", function (data) {
-        $.each(data, function (i, val) {
-            $(".fechas").append("<div class='row vertical-align'><div class='col-md-1 text-left'><i class='fa fa-calendar'></i></div><div class='col-md-3 text-left texto'>" + i + "</div><div class='col-md-8 text-left'>" + val + "</div></div><hr/>");
-        });
-    }).fail(function (jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-    });
-});
+//$('.nav-meses ul li a').click(function ()
+//{
+//    $(".fechas").html("");
+//    $.getJSON("calendario/" + this.id + ".json", function (data) {
+//        $.each(data, function (i, val) {
+//            $(".fechas").append("<div class='row vertical-align'><div class='col-md-1 text-left'><i class='fa fa-calendar'></i></div><div class='col-md-3 text-left texto'>" + i + "</div><div class='col-md-8 text-left'>" + val + "</div></div><hr/>");
+//        });
+//    }).fail(function (jqxhr, textStatus, error) {
+//        var err = textStatus + ", " + error;
+//        console.log("Request Failed: " + err);
+//    });
+//});
 
 $(document).ready(function () {
     var d = new Date();
     var month = d.getMonth() + 1;
     $('#mes' + month).addClass('active');
-    $.getJSON("calendario/mes" + month + ".json", function (data) {
-        $.each(data, function (i, val) {
-            $(".fechas").append("<div class='row vertical-align'><div class='col-md-1 text-left'><i class='fa fa-calendar'></i></div><div class='col-md-3 text-left texto'>" + i + "</div><div class='col-md-8 text-left'>" + val + "</div></div><hr/>");
-        });
-    }).fail(function (jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-    });
+    if($('.mes' + month).length > 0)
+    {
+        $(".no-event").hide();
+        $('.mes' + month).show();
+    }
+    else
+    {
+        $(".no-event").show();
+    }
+//    $.getJSON("calendario/mes" + month + ".json", function (data) {
+//        $.each(data, function (i, val) {
+//            $(".fechas").append("<div class='row vertical-align'><div class='col-md-1 text-left'><i class='fa fa-calendar'></i></div><div class='col-md-3 text-left texto'>" + i + "</div><div class='col-md-8 text-left'>" + val + "</div></div><hr/>");
+//        });
+//    }).fail(function (jqxhr, textStatus, error) {
+//        var err = textStatus + ", " + error;
+//        console.log("Request Failed: " + err);
+//    });
 });
 
 

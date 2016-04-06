@@ -33,7 +33,9 @@ include_once 'includes/functions.php';
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-
+        <?php 
+            $calendarios = getCalendario($mysqli);
+        ?>
     </head>
 
     <body>
@@ -340,6 +342,33 @@ include_once 'includes/functions.php';
 
                 <div class="row">
                     <div class="col-md-12 fechas">
+                            <div class='row vertical-align no-event' style="display: none">
+                                <div class='col-md-1 text-left'>
+                                    <i class='fa fa-calendar'></i>
+                                </div>
+                                <div class='col-md-11 text-left texto'>
+                                    No existen eventos para este mes
+                                </div>
+                            </div>
+                        <?php foreach ($calendarios as $calendario){ ?>
+                            <div class='row vertical-align mes<?=$calendario['mes']?>' style="display: none">
+                                <div class='col-md-1 text-left'>
+                                    <i class='fa fa-calendar'></i>
+                                </div>
+                                <div class='col-md-3 text-left texto'>
+                                    <?=$calendario['dias']?>
+                                </div>
+                                <div class='col-md-8 text-left'>
+                                    <?php foreach ($calendario['id_excursiones'] as $id_excursiones) {
+                                        $tour = getToursFromCategorias($mysqli, $id_excursiones);?>
+                                    
+                                        <a href="tour?id=<?=$tour['id']?>"><?=$tour['nombre']?></a>
+                                        <br>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <hr class="mes<?=$calendario['mes']?>" style="display: none">
+                        <?php } ?>
                     </div>
                 </div>
             </div>

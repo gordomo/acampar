@@ -264,7 +264,7 @@ section h3.section-subheading {
 }
 
 .cbp-fwslider nav span:hover {
-  #background: aquamarine;
+  background: aquamarine;
 }
 
 .cbp-fwslider nav span.cbp-fwnext {
@@ -366,6 +366,9 @@ section#calendario{
     margin-top: 55px;
     text-align: center;
     margin-bottom: 20px;
+    min-height: 300px;
+    max-height: 450px;
+    overflow: auto;
 }
 .fechas .fa-calendar{
     font-size: 60px;
