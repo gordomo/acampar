@@ -64,6 +64,17 @@ if ($logged == 'out') {
                                 </div>
                             </div>
                         </div>
+                        <!-- PANEL 2 -->
+                        <div class="col-md-4 mb">
+                            <div class="panel-2 pn">
+                                <div class="panel-2-header">
+                                    <h5>TOURS</h5>
+                                </div>
+                                <div class="centered">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -73,6 +84,9 @@ if ($logged == 'out') {
         <script>
             $('.panel-1').click(function () {
                 location.href = 'calendario-edit.php';
+            });
+             $('.panel-2').click(function () {
+                location.href = 'tours-edit.php';
             });
         </script>
 

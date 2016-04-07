@@ -12,6 +12,12 @@ MAIN SIDEBAR MENU
                     <span>Calendario</span>
                 </a>
             </li>
+            <li class="sub-menu">
+                <a href="tours-edit.php">
+                    <i class="fa fa-bicycle"></i>
+                    <span>Tours</span>
+                </a>
+            </li>
         </ul>
         <!-- sidebar menu end-->
     </div>

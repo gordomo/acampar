@@ -64,13 +64,13 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
 
         $stmt->close();
     } else {
-        $prep_stmt = "SELECT id, nombre, id_tour, cat_superior FROM categorias";
+        $prep_stmt = "SELECT id, `nombre`, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long` FROM categorias";
         $stmt = $mysqli->prepare($prep_stmt);
         if ($stmt) {
             $stmt->execute();
-            $stmt->bind_result($id_cat, $nombre, $id_tour, $cat_superior);
+            $stmt->bind_result($id_cat, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long);
             while ($stmt->fetch()) {
-                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre, 'id_tour' => $id_tour, 'cat_superior' => $cat_superior);
+                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre, 'foto' => $foto, 'desc_corta' => $descripcion_corta, 'desc' => $descripcion, 'id_tour' => $id_tour, 'cat_superior' => $cat_superior, "lat"=>$lat, "long"=>$long);
             }
             $result = 'true';
         } else {
