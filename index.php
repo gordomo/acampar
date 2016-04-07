@@ -380,7 +380,7 @@ include_once 'includes/functions.php';
                     <div class="col-lg-12 text-center">
                         <div id="container" style="width:100%;">
                             <div id="fb-root">
-                                <div class="fb-page" data-href="https://www.facebook.com/acampartrek/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/acampartrek/"><a href="https://www.facebook.com/acampartrek/">Acampar Trek</a></blockquote></div></div>
+                                <div class="fb-page" data-href="https://www.facebook.com/acampartrek/"  data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/acampartrek/"><a href="https://www.facebook.com/acampartrek/">Acampar Trek</a></blockquote></div></div>
                             </div>
                             <script>(function (d, s, id) {
                                     var js, fjs = d.getElementsByTagName(s)[0];
@@ -406,7 +406,7 @@ include_once 'includes/functions.php';
                             que ha logrado reunir, durante más de 20 años de trayectoria, un notable Staff de guías, asistentes y colaboradores que logran transmitir el amor y la
                             pasión por su profesión en cada actividad propuesta, con un trato personal y afectivo.
                         </h3>
-                        <button type="button" class="btn btn-xl btn-submit-consulta">Logísticas y Condiciones</button>
+                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='qsomos/index.html'">Logísticas y Condiciones</button>
                     </div>
 
                 </div>
@@ -426,7 +426,7 @@ include_once 'includes/functions.php';
                         <img class="img-responsive center-block" src="img/spot1.jpg" height="250" width="250">
                     </div>
                     <div class="col-md-4 text-center">
-                        <button type="button" class="btn btn-xl btn-submit-consulta">Seguí el viaje</button>
+                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='seguimiento/index.html'">Seguí el viaje</button>
                     </div>
                     <div class="col-md-4">
                         <img class="img-responsive center-block" src="img/spot2.jpg" height="250" width="250">
@@ -456,6 +456,10 @@ include_once 'includes/functions.php';
                                     </div>
                                     <div class="form-group">
                                         <input type="email" class="form-control" placeholder="Tu Mail | Your Email *" id="email_cons" required data-validation-required-message="Please enter your email address.">
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                      <div class="form-group">
+                                        <input type="email" class="form-control" placeholder=" Confirma Tu Mail | Your Email *" id="email_cons" required data-validation-required-message="Please enter your email address.">
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">
