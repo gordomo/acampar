@@ -333,9 +333,9 @@ switch ($action) {
                         /* cerrar sentencia */
                         $stmt->close();
 
-                        if(file_exists("../".$foto))
+                        if(file_exists("../".$foto) and strpos($foto, "no-image.gif") === false)
                         {
-                            unlink("../".$fotos);
+                            unlink("../".$foto);
                         }
                     }
                 }

@@ -163,21 +163,21 @@ $tours = getTours($mysqli);
                         </div> 
                         <section>
                             <?php foreach ($categorias['categorias'] as $categoria) { ?>
-                                <form id='newEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 32%;float:left;margin: 2px;border: 1px solid;padding: 2px;">
+                                <form id='newEntrada<?= $categoria['id'] ?>' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 32%;float:left;margin: 2px;border: 1px solid;padding: 2px;">
                                     <input type="hidden" value="editCategoria" name="action" id="action">
                                     <input type="hidden" value="<?= $categoria['id'] ?>" name="id" id="id">
-                                    <input type="hidden" value="<?= $categoria['foto'] ?>" name="foto" id="foto">
+                                    <input type="hidden" value="<?= $categoria['foto'] ?>" name="foto" id="foto<?= $categoria['id'] ?>">
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Nombre: </label>
                                         <input type="text" value="<?= $categoria['nombre'] ?>" id="nombre" name="nombre" class="form-control" required="true">
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Imagen: </label>
-                                        <input type="file" accept="file_extension|image"  id="photo" name="photo" autofocus>
+                                        <input type="file" accept="file_extension|image"  id="photo<?= $categoria['id'] ?>" name="photo" autofocus>
                                         <div class="col-md-12" style="padding: 10px; min-height: 400px; max-height: 450px;">
-                                            <img id="imgCat" class="img-responsive" src="../<?= $categoria['foto'] ?>" >
+                                            <img id="imgCat<?= $categoria['id'] ?>" class="img-responsive" src="../<?= $categoria['foto'] ?>" >
                                         </div>
-                                        <button class="btn btn-warning" id="borrarImagen">Borrar Imagen</button>
+                                        <a class="btn btn-warning borrarImagen" id="<?= $categoria['id'] ?>">Borrar Imagen</a>
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Descripción Corta: </label>
@@ -231,12 +231,13 @@ $tours = getTours($mysqli);
         </section>
         <script>
 
-            $("#borrarImagen").click(function(){
-                    
-                    $("#foto").val("");
-                    $("#imgCat").attr("src", "../img/categorias/no-image.gif");
-                    
-                });
+            $(".borrarImagen").click(function()
+            {
+                var id = $(this).attr("id");
+                $("#foto"+id).val("");
+                $("#photo"+id).val("");
+                $("#newEntrada"+id).submit();
+            });
         
                 $(".eliminar").click(function ()
                 {
