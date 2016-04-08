@@ -273,7 +273,36 @@ switch ($action) {
         $categoria = $_POST['categoria'];
         $padre = $_POST['padre'];
         $ruta = (isset($_POST['foto']) && $_POST['foto'] !== '') ? $_POST['foto'] : "img/categorias/no-image.gif";
+        $borrarFoto = (isset($_POST['borrarFoto']) && $_POST['borrarFoto'] !== '') ? $_POST['borrarFoto'] : false;
+        
+        if($borrarFoto)
+        {
+            if ($stmt = $mysqli->prepare("SELECT foto FROM categorias WHERE id=?")) 
+            {
+                /* ligar parámetros para marcadores */
+                $stmt->bind_param("i", $id);
+                /* ejecutar la consulta */
+                if(!$stmt->execute())
+                {
+                    $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                    $result  = "ko";
+                }
 
+                /* ligar variables de resultado */
+                $stmt->bind_result($foto);
+                        
+                /* obtener valor */
+                $stmt->fetch();
+                /* cerrar sentencia */
+                $stmt->close();
+
+                if(file_exists("../".$foto) and strpos($foto, "no-image.gif") === false)
+                {
+                    unlink("../".$foto);
+                }
+            }
+        }
+        
         if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '')
         {
             //if no errors...
