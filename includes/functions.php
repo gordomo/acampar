@@ -26,7 +26,7 @@ function getTours($mysqli) {
     return $retorno;
 }
 
-function getCategorias($mysqli, $id_tour = 0, $cat_superior = 0) {
+function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
     $result = 'ok';
     $categorias = array();
     $error_msg = '';
@@ -35,20 +35,20 @@ function getCategorias($mysqli, $id_tour = 0, $cat_superior = 0) {
 
     $prep_stmt = "SELECT id, nombre, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long` FROM categorias WHERE 1 = 1";
     
-    if ($id_tour != 0) 
+    if ($id_tour != '') 
     {
         $prep_stmt .= " AND id_tour = ?";
         $types[] = "i";
         $values[] = $id_tour;
     }
     
-    if ($cat_superior != 0) 
+    if ($cat_superior != '') 
     {
         $prep_stmt .= " AND cat_superior = ?";
         $types[] = "i";
         $values[] = $cat_superior;
     }
-    
+
     if($stmt = $mysqli->prepare($prep_stmt))
     {
         $bind[] = implode("", $types);
@@ -98,15 +98,15 @@ function getInfoCategoria($mysqli, $id_categoria) {
     $error_msg = '';
     $categoria = array();
 
-    $prep_stmt = "SELECT id, nombre, foto, descripcion_corta, descripcion, coordenadas, id_tour, cat_superior FROM categorias WHERE id=?";
+    $prep_stmt = "SELECT id, nombre, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long` FROM categorias WHERE id=?";
     $stmt = $mysqli->prepare($prep_stmt);
     if ($stmt) {
         $stmt->bind_param("i", $id_categoria);
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($id_cat, $nombre, $foto, $descripcion_corta, $descripcion, $coordenadas, $id_tour, $cat_superior);
+        $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long);
         $stmt->fetch();
-        $categoria = array('id' => $id_cat, 'nombre' => $nombre, 'foto' => $foto, 'desc_corta' => $descripcion_corta, 'desc' => $descripcion, 'coordenadas' => $coordenadas, 'id_tour' => $id_tour, 'cat_superior' => $cat_superior);
+        $categoria = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior, "lat"=>$lat, "long"=>$long);
 
         $result = 'true';
     } else {

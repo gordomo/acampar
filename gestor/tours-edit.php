@@ -133,7 +133,7 @@ $tours = getTours($mysqli);
                                     <div class="col-md-4">
                                         <label class="control-label">Tour padre: </label>
                                         <select id="padre_buscar" name="padre_buscar">
-                                            <option value="0">seleccione una tour para filtrar</option>
+                                            <option value="">seleccione una tour para filtrar</option>
                                                 <?php foreach ($categorias_busqueda['categorias'] as $categoria) { ?>
 
                                                     <option <?php if($categoria['id'] == $padre_buscar){echo "selected";} ?> value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
@@ -144,7 +144,7 @@ $tours = getTours($mysqli);
                                     <div class="col-md-4">
                                         <label class="control-label">Categoría: </label>
                                         <select id="categoria_buscar" name="categoria_buscar">
-                                            <option value="0">seleccione una categoria para filtrar</option>
+                                            <option value="">seleccione una categoria para filtrar</option>
                                             <?php foreach ($tours['tours'] as $tour) { ?>
 
                                                 <option <?php if($tour['id'] == $categoria_buscar){echo "selected";} ?> value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>

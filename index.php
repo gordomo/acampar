@@ -155,8 +155,9 @@ include_once 'includes/functions.php';
                             <hr/>
                             <div class="row">
                                 <?php
-                                $categorias = getCategorias($mysqli, $data['id']);
-                                foreach ($categorias['categorias'] as $id_cat => $data_cat) {
+                                    $categorias = getCategorias($mysqli, $data['id'], "0");
+
+                                    foreach ($categorias['categorias'] as $id_cat => $data_cat) {
                                     ?>
                                     <div class="col-md-4">
                                         <div class="desplegadas" id="<?= $data_cat['id'] ?>">
@@ -182,6 +183,7 @@ include_once 'includes/functions.php';
                                 </div>
                             </div>
                             <div class="col-md-8 alert alert-success">
+                                <div class="link" style="color:#4B4C47"></div>
                                 <div class="img-info" style="color:#4B4C47"></div>
                                 <div class="info" style="color:#4B4C47"></div>
                                 <hr/>
@@ -518,7 +520,6 @@ include_once 'includes/functions.php';
         <script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
 
         <script src="js/main.js"></script>
-
 
     </body>
 

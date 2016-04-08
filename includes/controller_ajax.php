@@ -4,6 +4,15 @@ include_once 'functions.php';
 
 switch ($_POST['option']){
    
+    case "get_categorias_hijas":
+        if(isset($_POST['id_categoria']) && $_POST['id_categoria'] != '')
+        {
+            echo json_encode(getCategorias($mysqli, "", $_POST['id_categoria']), true);
+            exit();
+            
+        }
+    break;
+    
     case "get_info_categoria":
         if(isset($_POST['id_categoria']) && $_POST['id_categoria'] != ''){
             $resultado = getInfoCategoria($mysqli, $_POST['id_categoria']);
