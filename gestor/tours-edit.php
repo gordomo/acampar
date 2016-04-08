@@ -14,9 +14,13 @@ if ($logged == 'out') {
     header("Location: login.php");
     exit();
 }
+$padre_buscar = isset($_GET['padre_buscar']) ? $_GET['padre_buscar'] : '';
+$categoria_buscar = isset($_GET['categoria_buscar']) ? $_GET['categoria_buscar'] : '';
 
-$categorias = getCategorias($mysqli);
-$tour = getTours($mysqli);
+$categorias = getCategorias($mysqli, $categoria_buscar, $padre_buscar);
+$categorias_busqueda = getCategorias($mysqli);
+$tours = getTours($mysqli);
+
 ?>
 
 <!DOCTYPE html>
@@ -87,9 +91,9 @@ $tour = getTours($mysqli);
                                         <div class="form-group">
                                             <label class="col-md-12 control-label">Categoria: </label>
                                             <select id="categoria" name="categoria" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
-                                                <?php foreach ($tour['tours'] as $categoria) { ?>
+                                                <?php foreach ($tours['tours'] as $tour) { ?>
 
-                                                    <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
+                                                    <option value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
 
                                                 <?php } ?>
                                             </select>
@@ -116,15 +120,53 @@ $tour = getTours($mysqli);
                         </div>
                     </div>
 
-                    <div class="row mt form-panel">
+                    <div class="row mt form-panel" id="editor_categorias">
                         <div class="col-md-12">
                             <h4><i class="fa fa-angle-right"></i> Editar Entradas</h4>
-                        </div>        
-                        <section id="editor_grilla_nueva">
+                        </div>
+                        <div class="col-md-12" style="margin-bottom: 15px; margin-top: 50px">
+                            <div class="col-md-2">
+                                <i class="fa fa-angle-right"></i> Buscar 
+                            </div>    
+                            <div class="col-md-10">
+                                <form action="tours-edit.php#editor_categorias" method="GET">
+                                    <div class="col-md-4">
+                                        <label class="control-label">Tour padre: </label>
+                                        <select id="padre_buscar" name="padre_buscar">
+                                            <option value="0">seleccione una tour para filtrar</option>
+                                                <?php foreach ($categorias_busqueda['categorias'] as $categoria) { ?>
+
+                                                    <option <?php if($categoria['id'] == $padre_buscar){echo "selected";} ?> value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
+
+                                                <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Categoría: </label>
+                                        <select id="categoria_buscar" name="categoria_buscar">
+                                            <option value="0">seleccione una categoria para filtrar</option>
+                                            <?php foreach ($tours['tours'] as $tour) { ?>
+
+                                                <option <?php if($tour['id'] == $categoria_buscar){echo "selected";} ?> value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
+
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success">buscar</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="tours-edit.php#editor_categorias" class="btn btn-danger">limpiar</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div> 
+                        <section>
                             <?php foreach ($categorias['categorias'] as $categoria) { ?>
                                 <form id='newEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 32%;float:left;margin: 2px;border: 1px solid;padding: 2px;">
                                     <input type="hidden" value="editCategoria" name="action" id="action">
                                     <input type="hidden" value="<?= $categoria['id'] ?>" name="id" id="id">
+                                    <input type="hidden" value="<?= $categoria['foto'] ?>" name="foto" id="foto">
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Nombre: </label>
                                         <input type="text" value="<?= $categoria['nombre'] ?>" id="nombre" name="nombre" class="form-control" required="true">
@@ -133,31 +175,31 @@ $tour = getTours($mysqli);
                                         <label class=" col-md-12 control-label">Imagen: </label>
                                         <input type="file" accept="file_extension|image"  id="photo" name="photo" autofocus>
                                         <div class="col-md-12" style="padding: 10px; min-height: 400px; max-height: 450px;">
-                                            <?php if($categoria['foto']){?>
-                                                <img class="img-responsive" src="../<?= $categoria['foto'] ?>" >
-                                            <?php } else {?>
-                                                <img class="img-responsive" src="../img/categorias/no-image.gif" >
-                                            <?php } ?>    
-                                        </div>    
+                                            <img id="imgCat" class="img-responsive" src="../<?= $categoria['foto'] ?>" >
+                                        </div>
+                                        <button class="btn btn-warning" id="borrarImagen">Borrar Imagen</button>
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Descripción Corta: </label>
-                                        <input type="text" value="<?=$categoria['foto']?>" id="descCorta" name="descCorta" class="form-control" >
+                                        <input type="text" value="<?=$categoria['descripcion_corta']?>" id="descCorta" name="descCorta" class="form-control" >
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Descripción: </label>
-                                        <input type="text" id="desc" name="desc" class="form-control" >
+                                        <input type="text" value="<?=$categoria['descripcion']?>" id="desc" name="desc" class="form-control" >
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Coordenadas: </label>
-                                        <input type="text" id="coord" name="coord" class="form-control" >
+                                        <label class=" col-md-12 control-label" style="width: 50%; float: left">Latitud: </label>
+                                        <label class=" col-md-12 control-label" style="width: 50%; float: left">Longitud: </label>
+                                        <input type="text" value="<?=$categoria['lat']?>" id="lat" name="lat" class="form-control" style="width: 50%; float: left">
+                                        <input type="text" value="<?=$categoria['long']?>" id="long" name="long" class="form-control" style="width: 50%; float: left; margin-bottom: 10px">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">Categoria: </label>
-                                        <select id="items" name="categoria" style="width: 80%;float: left; margin-right: 10px;margin-bottom: 15px;border-radius: 5px;border-color: #CCCCCC;">
-                                            <?php foreach ($tour['tours'] as $categoria) { ?>
+                                        <select id="categoria" name="categoria" style="width: 80%;float: left; margin-right: 10px;margin-bottom: 15px;border-radius: 5px;border-color: #CCCCCC;">
+                                            <?php foreach ($tours['tours'] as $tour) { ?>
 
-                                                <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
+                                                <option <?php if($categoria['id_tour'] == $tour['id']){echo "selected";}?> value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
 
                                             <?php } ?>
                                         </select>
@@ -166,11 +208,12 @@ $tour = getTours($mysqli);
                                         <label class="col-md-12">Tour Padre: </label>
                                         <select id="padre" name="padre" style="width: 80%;float: left; margin-right: 10px;margin-bottom: 15px;border-radius: 5px;border-color: #CCCCCC;">
                                             <option value="0">Sin Padre - Tour final</option>
-                                            <?php foreach ($categorias['categorias'] as $categoria) { ?>
-
-                                                <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
-
-                                            <?php } ?>
+                                            <?php 
+                                                foreach ($categorias['categorias'] as $categoriaCombo) {
+                                                    if($categoria['id'] != $categoriaCombo['id']){?>
+                                                        <option <?php if($categoriaCombo['id'] == $categoria['cat_superior']){echo "selected";} ?> value="<?= $categoriaCombo['id'] ?>"><?= $categoriaCombo['nombre'] ?></option>
+                                            <?php }
+                                                } ?>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -182,15 +225,19 @@ $tour = getTours($mysqli);
                                 </form>
                             <?php } ?>
                         </section>
+                    </div>
                 </section>
             </section>
         </section>
         <script>
 
-            $(document).ready(function ()
-            {
-                $("#ano").val(new Date().getFullYear());
-
+            $("#borrarImagen").click(function(){
+                    
+                    $("#foto").val("");
+                    $("#imgCat").attr("src", "../img/categorias/no-image.gif");
+                    
+                });
+        
                 $(".eliminar").click(function ()
                 {
                     var answer = confirm("Deseas eliminar este registro?");
@@ -199,23 +246,20 @@ $tour = getTours($mysqli);
                         $.ajax({
                             type: "POST",
                             url: "adminController.php",
-                            data: {id: $(this).attr('id'), action: 'eliminarEntradaCalendario'},
+                            data: {id: $(this).attr('id'), action: 'eliminarEntradaCategorias'},
                             success: function (data)
                             {
                                 if (data.result == 'ok')
                                 {
                                     location.reload();
-                                } else
+                                } 
+                                else
                                 {
                                     alert('error al procesar el requerimiento: ' + data.mensaje);
                                 }
                             },
                             dataType: "json"
                         });
-                    } else
-                    {
-                        // do nothing
                     }
                 });
-            });
         </script>

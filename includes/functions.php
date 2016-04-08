@@ -26,58 +26,66 @@ function getTours($mysqli) {
     return $retorno;
 }
 
-function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
-    $result = 'false';
+function getCategorias($mysqli, $id_tour = 0, $cat_superior = 0) {
+    $result = 'ok';
     $categorias = array();
     $error_msg = '';
+    $types = array();
+    $values = array();
 
-    if ($id_tour != '') {
-        $prep_stmt = "SELECT id, nombre FROM categorias WHERE id_tour=? AND cat_superior=0";
-        $stmt = $mysqli->prepare($prep_stmt);
-        if ($stmt) {
-            $stmt->bind_param("i", $id_tour);
-            $stmt->execute();
-            $stmt->bind_result($id_cat, $nombre);
-            while ($stmt->fetch()) {
-                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre);
-            }
-            $result = 'true';
-        } else {
-            $error_msg .= '* Error de base de datos.';
+    $prep_stmt = "SELECT id, nombre, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long` FROM categorias WHERE 1 = 1";
+    
+    if ($id_tour != 0) 
+    {
+        $prep_stmt .= " AND id_tour = ?";
+        $types[] = "i";
+        $values[] = $id_tour;
+    }
+    
+    if ($cat_superior != 0) 
+    {
+        $prep_stmt .= " AND cat_superior = ?";
+        $types[] = "i";
+        $values[] = $cat_superior;
+    }
+    
+    if($stmt = $mysqli->prepare($prep_stmt))
+    {
+        $bind[] = implode("", $types);
+        foreach ($values as $value)
+        {
+            $bind[] = $value;
         }
-
-        $stmt->close();
-    } elseif ($cat_superior != '') {
-        $prep_stmt = "SELECT id, nombre FROM categorias WHERE cat_superior=?";
-        $stmt = $mysqli->prepare($prep_stmt);
-        if ($stmt) {
-            $stmt->bind_param("i", $cat_superior);
-            $stmt->execute();
-            $stmt->bind_result($id_cat, $nombre);
-            while ($stmt->fetch()) {
-                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre);
-            }
-            $result = 'true';
-        } else {
-            $error_msg .= '* Error de base de datos.';
+        switch (count($bind))
+        {
+            case 1:
+                break;
+            case 2:
+                $stmt->bind_param($bind[0], $bind[1]);
+                break;
+            case 3:
+                $stmt->bind_param($bind[0], $bind[1], $bind[2]);
+                break;
         }
-
-        $stmt->close();
-    } else {
-        $prep_stmt = "SELECT id, `nombre`, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long` FROM categorias";
-        $stmt = $mysqli->prepare($prep_stmt);
-        if ($stmt) {
-            $stmt->execute();
-            $stmt->bind_result($id_cat, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long);
-            while ($stmt->fetch()) {
-                $categorias[] = array('id' => $id_cat, 'nombre' => $nombre, 'foto' => $foto, 'desc_corta' => $descripcion_corta, 'desc' => $descripcion, 'id_tour' => $id_tour, 'cat_superior' => $cat_superior, "lat"=>$lat, "long"=>$long);
-            }
-            $result = 'true';
-        } else {
-            $error_msg .= '* Error de base de datos.';
+        if(!$stmt->execute())
+        {
+            $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+            $result  = "ko";
         }
-
+        
+        $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long);
+        
+        while ($stmt->fetch()) 
+        {
+            $categorias[] = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior, "lat"=>$lat, "long"=>$long);
+        }
+        
         $stmt->close();
+    }
+    else 
+    {
+        $message = "Falló la preparacion: (" . $mysqli->errno . ") " . $mysqli->error;
+        $result  = "ko";
     }
 
     $retorno = array('result' => $result, 'categorias' => $categorias, 'mensaje' => $error_msg);
