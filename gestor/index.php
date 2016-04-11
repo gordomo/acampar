@@ -86,6 +86,28 @@ if ($logged == 'out') {
                                 </div>
                             </div>
                         </div>
+                        <!-- PANEL 4 -->
+                        <div class="col-md-4 mb">
+                            <div class="panel-4 pn">
+                                <div class="panel-4-header">
+                                    <h5>SLIDER SALIDAS</h5>
+                                </div>
+                                <div class="centered">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- PANEL 4 -->
+                        <div class="col-md-4 mb">
+                            <div class="panel-5 pn">
+                                <div class="panel-5-header">
+                                    <h5>SLIDER SALIDAS</h5>
+                                </div>
+                                <div class="centered">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -101,6 +123,12 @@ if ($logged == 'out') {
             });
             $('.panel-3').click(function () {
                 location.href = 'slider-cabecera-edit.php';
+            });
+            $('.panel-4').click(function () {
+                location.href = 'slider-salidas-edit.php';
+            });
+            $('.panel-5').click(function () {
+                location.href = 'noticias-edit.php';
             });
         </script>
 

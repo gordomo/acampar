@@ -1123,7 +1123,7 @@ PANELS CONFIGURATIONS
 
 
 .panel-4 {
-    background: url(../../../assets/images/1.jpg);
+    background: url(../../../img/gestor/index/salidas.jpg);
     text-align: center;
     background-size: cover;
     cursor: pointer;
@@ -1151,30 +1151,31 @@ PANELS CONFIGURATIONS
 }
 
 .panel-5 {
-    background: url(../img/panel_4.jpg) no-repeat center top;
+    background: url(../../../img/gestor/index/noticias.jpg);
     text-align: center;
-    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
 }
 .panel-5 .panel-5-header {
-    background: rgba(0, 47, 134, 0.6);
-    padding: 3px;
-    margin-bottom: 15px;
+	background: rgba(120, 121, 123, 0.6);
+	padding: 3px;
+	margin-bottom: 15px;
 }
 .panel-5 h1 {
-    color: #f2f2f2;
+	color: #f2f2f2;
 }
 .panel-5 h5 {
-    font-weight: 200;
-    margin-top: 10px;
-    color: white;
+	font-weight: 200;
+	margin-top: 10px;
+	color: white;
 }
 .panel-5 footer {
-    color: white;
+	color: white;
 }
 .panel-5 footer h5 {
-    margin-left:10px; 
-    margin-right: 10px;
-    font-weight: 700;
+	margin-left:10px; 
+	margin-right: 10px;
+	font-weight: 700;
 }
 
 .panel-6 {

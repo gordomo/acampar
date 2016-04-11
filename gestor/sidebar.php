@@ -24,6 +24,18 @@ MAIN SIDEBAR MENU
                     <span>Slider Cabecera</span>
                 </a>
             </li>
+            <li class="sub-menu">
+                <a href="slider-salidas-edit.php">
+                    <i class="fa fa-outdent"></i>
+                    <span>Slider Salidas</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+                <a href="noticias-edit.php">
+                    <i class="fa fa-newspaper-o"></i>
+                    <span>Noticias</span>
+                </a>
+            </li>
         </ul>
         <!-- sidebar menu end-->
     </div>

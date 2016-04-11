@@ -15,7 +15,7 @@ if ($logged == 'out') {
     exit();
 }
 
-$sliderCabecera = getSliderCabecera($mysqli, false, true);
+$sliderSalida = getSliderSalidas($mysqli, false, true);
 $categorias = getCategorias($mysqli);
 ?>
 
@@ -53,14 +53,14 @@ $categorias = getCategorias($mysqli);
             <?php include_once 'sidebar.php'; ?>
             <section id="main-content">
                 <section class="wrapper">
-                    <h3><i class="fa fa-angle-right"></i>SLIDER CABECERA</h3>
+                    <h3><i class="fa fa-angle-right"></i>SLIDER PRÓXIMAS SALIDAS</h3>
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
                                 <h4><i class="fa fa-angle-right"></i> Nueva Entrada</h4>
                                 <section id="editor_grilla_nueva">
                                     <form id='newEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php">
-                                        <input type="hidden" value="newSliderHeader" name="action" id="action">
+                                        <input type="hidden" value="newSliderSalidas" name="action" id="action">
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">Titulo: </label>
                                             <input type="text" id="titulo" name="titulo" class="form-control" required="true">
@@ -106,9 +106,9 @@ $categorias = getCategorias($mysqli);
                             <h4><i class="fa fa-angle-right"></i> Editar Entradas</h4>
                         </div>        
                         <section id="editor_grilla_nueva">
-                            <?php foreach ($sliderCabecera['sliders'] as $slider) { ?>
+                            <?php foreach ($sliderSalida['sliders'] as $slider) { ?>
                             <form id='editEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 45%; border: 1px solid; padding: 4px; float: left; margin: 5px">
-                                    <input type="hidden" value="editSliderHeader" name="action" id="action">
+                                    <input type="hidden" value="editSliderSalidas" name="action" id="action">
                                     <input type="hidden" value="<?=$slider['id']?>" name="id_slider" id="id_slider">
                                     <input type="hidden" value="<?=$slider['url']?>" name="foto" id="foto<?=$slider['id']?>">
                                     <div class="form-group">
@@ -167,7 +167,7 @@ $categorias = getCategorias($mysqli);
                         $.ajax({
                             type: "POST",
                             url: "adminController.php",
-                            data: {id: $(this).attr('id'), action: 'eliminarEntradaSliderCabecera'},
+                            data: {id: $(this).attr('id'), action: 'eliminarEntradaSliderSalidas'},
                             success: function (data)
                             {
                                 if (data.result == 'ok')
