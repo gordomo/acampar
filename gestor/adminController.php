@@ -7,7 +7,7 @@ header("Content-Type: text/html;charset=utf-8");
 $action = isset($_POST['action']) ? $_POST['action'] : $_GET['action'];
 
 switch ($action) {
-//    ##############FOTOS INICIO########################
+//    ##############CALENDARIO INICIO########################
     case 'newCalendario':
 
         $result = "ok";
@@ -412,4 +412,299 @@ switch ($action) {
         break;    
         
 //################################## CATEGORIAS FIN #########################################
+//################################## SLIDER HEADER INICIO #########################################
+    case "newSliderHeader":
+        
+        $result  = "ok";
+        $message = "Entrada agregada correctamente";
+        
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
+        $categoria_relacionada = $_POST['categoria_relacionada'];
+        $habilitado = $_POST['habilitado'];
+        
+        if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '')
+        {
+            //if no errors...
+            if(!$_FILES['photo']['error'])
+            {
+                $valid_file = true;
+                //now is the time to modify the future file name and validate the file
+                $new_file_name = strtolower($_FILES['photo']['name']); //rename file
+                $Length = 10;
+                $RandomString = substr(str_shuffle(md5(time())), 0, $Length);
+
+                $new_file_name = $RandomString . "_" .  str_replace(' ', '-', $new_file_name);
+                if($_FILES['photo']['size'] > (6144000)) //can't be larger than 6 MB
+                {
+                    $valid_file = false;
+                    $message = 'Oops!  Your file\'s size is to large.';
+                    $result  = "ko";
+                    header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                    exit();
+                }
+
+                $pos = strpos($_FILES['photo']['type'], "image");
+                if ($pos === FALSE)
+                {
+                    $valid_file = false;
+                    $message = 'Oops!  El archivo no es una imagen.';
+                    $result  = "ko";
+                    header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                    exit();
+                }
+                //if the file has passed the test
+                if($valid_file)
+                {
+                    //move it to where we want it to be
+                    $ruta = '../img/slider_cabecera/'.$new_file_name;
+                    //ruta de los thumbs
+
+                    move_uploaded_file($_FILES['photo']['tmp_name'], $ruta);
+                    
+                    $ruta = substr($ruta, 3);
+                    
+                    // prepare and bind
+                    if ($stmt = $mysqli->prepare("INSERT INTO slider_cabecera (url, habilitado, titulo, descripcion, categoria_id) values (?, ?, ?, ?, ?)")) 
+                    {
+                        $stmt->bind_param("sissi", $ruta, $habilitado, $titulo, $descripcion, $categoria_relacionada);
+
+                        if (!$stmt->execute()) 
+                        {
+                            $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                            $result = "ko";
+                            header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                            exit();
+                        }
+
+                        $stmt->close();
+                    } 
+                    else
+                    {
+                        $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                        $result  = "ko";
+                        header("Location: slider-cabecera.php?result=" . $result . "&mensaje=" . $message);
+                        exit();
+                    }
+                }
+                //if there is an error...
+                else
+                {
+                    //set that to be the returned message
+                    $message = 'Ooops!  Your upload triggered the following error:  invalid file';
+                    $result  = "ko";
+                    header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                    exit();
+                }
+            }
+            //if there is an error...
+            else
+            {
+                //set that to be the returned message
+                $message = 'Ooops!  Your upload triggered the following error:  '.$_FILES['photo']['error'];
+                $result  = "ko";
+                header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                exit();
+            }
+        }
+        else
+        {
+            $result  = "ko";
+            $message = "Ninguna imagen suministrada";
+        }
+        
+        header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+        break;
+        
+    case "eliminarEntradaSliderCabecera":
+        
+        $result  = "ok";
+        $message = "Entrada eliminada correctamente";
+        
+        $id = $_POST['id'];
+        
+        if ($stmt1 = $mysqli->prepare("SELECT url FROM slider_cabecera WHERE id = ?")) 
+        {
+            $stmt1->bind_param("i", $id);
+
+            if (!$stmt1->execute())
+            {
+                $message = "Falló la ejecución: (" . $stmt1->errno . ") " . $stmt1->error;
+                $result = "ko";
+                echo json_encode(array("result"=>$result, "mensaje"=>$message));
+                exit();
+            }
+            
+            $stmt1->bind_result($url);
+            
+            $stmt1->fetch();
+            /* cerrar sentencia */
+            $stmt1->close();
+
+            if(file_exists("../".$url))
+            {
+                unlink("../".$url);
+            }
+            
+            if ($stmt2 = $mysqli->prepare("DELETE FROM slider_cabecera WHERE id = ?")) 
+            {
+                $stmt2->bind_param("s", $id);
+
+                if (!$stmt2->execute())
+                {
+                    $message = "Falló la ejecución: (" . $stmt2->errno . ") " . $stmt2->error;
+                    $result = "ko";
+                    echo json_encode(array("result"=>$result, "mensaje"=>$message));
+                    exit();
+                }
+
+                $stmt2->close();
+            }
+            else
+            {
+                $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                $result = "ko";
+                echo json_encode(array("result"=>$result, "mensaje"=>$message));
+                exit();
+            }
+        }
+        else
+        {
+            $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+            $result = "ko";
+            echo json_encode(array("result"=>$result, "mensaje"=>$message));
+            exit();
+        }
+            
+        echo json_encode(array("result"=>$result, "mensaje"=>$message));
+        exit();
+        
+        break;
+        
+        case "editSliderHeader":
+        
+        $result  = "ok";
+        $message = "Entrada editada correctamente";
+        
+        $id = $_POST['id_slider'];
+        $titulo = $_POST['titulo'];
+        $descripcion = $_POST['descripcion'];
+        $categoria_relacionada = $_POST['categoria_relacionada'];
+        $habilitado = $_POST['habilitado'];
+        $ruta = (isset($_POST['foto']) && $_POST['foto'] !== '') ? $_POST['foto'] : "img/categorias/no-image.gif";
+        
+        if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '')
+        {
+            //if no errors...
+            if(!$_FILES['photo']['error'])
+            {
+                $valid_file = true;
+                //now is the time to modify the future file name and validate the file
+                $new_file_name = strtolower($_FILES['photo']['name']); //rename file
+                $Length = 10;
+                $RandomString = substr(str_shuffle(md5(time())), 0, $Length);
+
+                $new_file_name = $RandomString . "_" .  str_replace(' ', '-', $new_file_name);
+                if($_FILES['photo']['size'] > (6144000)) //can't be larger than 6 MB
+                {
+                    $valid_file = false;
+                    $message = 'Oops!  Your file\'s size is to large.';
+                    $result  = "ko";
+                    header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                    exit();
+                }
+
+                $pos = strpos($_FILES['photo']['type'], "image");
+                if ($pos === FALSE)
+                {
+                    $valid_file = false;
+                    $message = 'Oops!  El archivo no es una imagen.';
+                    $result  = "ko";
+                    header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                    exit();
+                }
+                //if the file has passed the test
+                if($valid_file)
+                {
+                    //move it to where we want it to be
+                    $ruta = '../img/slider_cabecera/'.$new_file_name;
+                    //ruta de los thumbs
+
+                    move_uploaded_file($_FILES['photo']['tmp_name'], $ruta);
+                    
+                    $ruta = substr($ruta, 3);
+                    
+                    if ($stmt1 = $mysqli->prepare("SELECT url FROM slider_cabecera WHERE id = ?")) 
+                    {
+                        $stmt1->bind_param("i", $id);
+
+                        if (!$stmt1->execute())
+                        {
+                            $message = "Falló la ejecución: (" . $stmt1->errno . ") " . $stmt1->error;
+                            $result = "ko";
+                            header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                            exit();
+                        }
+
+                        $stmt1->bind_result($url);
+
+                        $stmt1->fetch();
+                        /* cerrar sentencia */
+                        $stmt1->close();
+                        
+                        if(file_exists("../".$url))
+                        {
+                            unlink("../".$url);
+                        }
+                    }
+                    else
+                    {
+                        $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                        $result = "ko";
+                        header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                        exit();
+                    }
+                }
+                //if there is an error...
+                else
+                {
+                    //set that to be the returned message
+                    $message = 'Ooops!  Your upload triggered the following error:  invalid file';
+                    $result  = "ko";
+                    header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                    exit();
+                }
+            }
+            //if there is an error...
+            else
+            {
+                //set that to be the returned message
+                $message = 'Ooops!  Your upload triggered the following error:  '.$_FILES['photo']['error'];
+                $result  = "ko";
+                header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+                exit();
+            }
+        }
+        
+        // prepare and bind
+        if ($stmt = $mysqli->prepare("UPDATE slider_cabecera SET url = ?, habilitado = ?, titulo = ?, descripcion = ?, categoria_id = ? WHERE id = ?")) 
+        {
+            $stmt->bind_param("sissii", $ruta, $habilitado, $titulo, $descripcion, $categoria_relacionada, $id);
+
+            if (!$stmt->execute()) 
+            {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+            }
+
+            $stmt->close();
+        } 
+        else
+        {
+            $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+            $result  = "ko";
+        }
+        
+        header("Location: slider-cabecera-edit.php?result=" . $result . "&mensaje=" . $message);
+        break;
 }

@@ -18,6 +18,12 @@ MAIN SIDEBAR MENU
                     <span>Tours</span>
                 </a>
             </li>
+            <li class="sub-menu">
+                <a href="slider-cabecera-edit.php">
+                    <i class="fa fa-photo"></i>
+                    <span>Slider Cabecera</span>
+                </a>
+            </li>
         </ul>
         <!-- sidebar menu end-->
     </div>

@@ -75,6 +75,17 @@ if ($logged == 'out') {
                                 </div>
                             </div>
                         </div>
+                        <!-- PANEL 3 -->
+                        <div class="col-md-4 mb">
+                            <div class="panel-3 pn">
+                                <div class="panel-3-header">
+                                    <h5>SLIDER CABECERA</h5>
+                                </div>
+                                <div class="centered">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -87,6 +98,9 @@ if ($logged == 'out') {
             });
              $('.panel-2').click(function () {
                 location.href = 'tours-edit.php';
+            });
+            $('.panel-3').click(function () {
+                location.href = 'slider-cabecera-edit.php';
             });
         </script>
 

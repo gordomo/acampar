@@ -1066,7 +1066,7 @@ PANELS CONFIGURATIONS
 }
 
 .panel-2 {
-    background: url(../../../img/icon1.jpg);
+    background: url(../../../img/gestor/index/tours.jpg);
     text-align: center;
     background-size: cover;
     cursor: pointer;
@@ -1094,7 +1094,7 @@ PANELS CONFIGURATIONS
 }
 
 .panel-3 {
-    background: url(../../../assets/images/6.jpg);
+    background: url(../../../img/gestor/index/slider-cabecera.jpg);
     text-align: center;
     background-size: cover;
     cursor: pointer;

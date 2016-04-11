@@ -93,6 +93,77 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
     return $retorno;
 }
 
+function getSliderCabecera($mysqli, $id_slider = false, $todas = false)
+{
+    
+    $result = 'ok';
+    $sliders = array();
+    $error_msg = '';
+    
+    $types = array();
+    $values = array();
+
+    $prep_stmt = "SELECT id, url, habilitado, titulo, descripcion, categoria_id FROM `slider_cabecera` WHERE 1 = 1";
+    
+    if ($id_slider) 
+    {
+        $prep_stmt .= " AND id = ?";
+        $types[] = "i";
+        $values[] = $id_slider;
+    }
+    
+    if (!$todas)
+    {
+        $prep_stmt .= " AND habilitado = ?";
+        $types[] = "i";
+        $values[] = "1";
+    }
+
+    if($stmt = $mysqli->prepare($prep_stmt))
+    {
+        $bind[] = implode("", $types);
+        foreach ($values as $value)
+        {
+            $bind[] = $value;
+        }
+        switch (count($bind))
+        {
+            case 1:
+                break;
+            case 2:
+                $stmt->bind_param($bind[0], $bind[1]);
+                break;
+            case 3:
+                $stmt->bind_param($bind[0], $bind[1], $bind[2]);
+                break;
+        }
+        if(!$stmt->execute())
+        {
+            $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+            $result  = "ko";
+        }
+        
+        $stmt->bind_result($id, $url, $habilitado, $titulo, $descripcion, $categoria_id);
+        
+        while ($stmt->fetch()) 
+        {
+            $sliders[] = array("id"=>$id, "url"=>$url, "habilitado"=>$habilitado, "titulo"=>$titulo, "descripcion"=>$descripcion, "categoria_id"=>$categoria_id);
+        }
+        
+        $stmt->close();
+    }
+    else 
+    {
+        $message = "Falló la preparacion: (" . $mysqli->errno . ") " . $mysqli->error;
+        $result  = "ko";
+    }
+
+    $retorno = array('result' => $result, 'sliders' => $sliders, 'mensaje' => $error_msg);
+
+    return $retorno;
+    
+}
+
 function getInfoCategoria($mysqli, $id_categoria) {
     $result = 'false';
     $error_msg = '';
