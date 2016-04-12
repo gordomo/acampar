@@ -211,9 +211,20 @@ include_once 'includes/functions.php';
             <div class="container">
                 <div id="cbp-fwslider" class="cbp-fwslider">
                     <ul>
-                        <li><a href="#"><img src="img/slider/slider1.jpg" alt="img01"/></a></li>
-                        <li><a href="#"><img src="img/slider/slider2.jpg" alt="img02"/></a></li>
-
+                        <li>
+                            <img src="img/slider/slider1.jpg" alt="img01"/>
+                            <div class="carousel-caption">
+                                <h3>Titulo</h3>
+                                <h4>Descripcion</h4>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="img/slider/slider2.jpg" alt="img02"/>
+                            <div class="carousel-caption">
+                                <h3>Titulo</h3>
+                                <h4>Descripcion</h4>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

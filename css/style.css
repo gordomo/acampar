@@ -217,7 +217,7 @@ section h3.section-subheading {
   position: relative;
   margin: 0 0 10px;
   overflow: hidden;
-  padding: 40px 0 60px;
+  padding: 40px 0 0;
 }
 
 .cbp-fwslider ul {
@@ -263,9 +263,9 @@ section h3.section-subheading {
   font-weight: 900;
 }
 
-.cbp-fwslider nav span:hover {
+/*.cbp-fwslider nav span:hover {
   background: aquamarine;
-}
+}*/
 
 .cbp-fwslider nav span.cbp-fwnext {
   right: 0px;
@@ -275,7 +275,7 @@ section h3.section-subheading {
   left: 0px;
 }
 
-.cbp-fwdots {
+/*.cbp-fwdots {
   position: absolute;
   bottom: 0px;
   white-space: nowrap;
@@ -728,7 +728,7 @@ section#contacto .form-control:focus {
 
 
 
-ol {
+#tour ol {
     counter-reset: li; /* Initiate a counter */
     list-style: none; /* Remove default numbering */
     *list-style: decimal; /* Keep using default numbering for IE6/7 */
@@ -738,15 +738,15 @@ ol {
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
 }
 
-ol ol {
+#tour ol ol {
     margin: 0 0 0 2em; /* Add some left margin for inner lists */
 }
 
-ol a{
+#tour ol a{
     color:#000
 }
 
-ol a:hover{
+#tour ol a:hover{
     color:#FE7800
 }
 
