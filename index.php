@@ -354,7 +354,7 @@ include_once 'includes/functions.php';
                                     <?php foreach ($calendario['id_excursiones'] as $id_excursiones) {
                                         $tour = getToursFromCategorias($mysqli, $id_excursiones);?>
                                     
-                                        <a href="tour?id=<?=$tour['id']?>"><?=$tour['nombre']?></a>
+                                        <a href="tour.php?id=<?=$tour['id']?>"><?=$tour['nombre']?></a>
                                         <br>
                                     <?php } ?>
                                 </div>

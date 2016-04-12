@@ -389,6 +389,14 @@ section#calendario{
     width: 100%;
     text-align: left;
 }
+.fechas a{
+    font-size: 20px;
+    color: #000;
+}
+.fechas a:hover{
+    color: #fe7800;
+}
+
 .tablaFechas{
     border-bottom: 1px solid black;
 }
