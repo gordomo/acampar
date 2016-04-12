@@ -27,8 +27,8 @@ switch ($_POST['option']){
         echo json_encode($retorno);
     break;
 	
-	case "get_categorias_inf":
-		if(isset($_POST['cat_superior']) && $_POST['cat_superior'] != ''){
+    case "get_categorias_inf":
+	if(isset($_POST['cat_superior']) && $_POST['cat_superior'] != ''){
             $resultado = getCategorias($mysqli, '', $_POST['cat_superior']);
             if($resultado['result'] == 'true'){
                 $retorno = array('result' => true, 'categorias'=>$resultado['categorias']);
@@ -39,7 +39,7 @@ switch ($_POST['option']){
             $retorno = array('result' => false, 'mensaje' => 'Error al seleccionar las categorias');
         }
         echo json_encode($retorno);
-	break;
+    break;
 	
 	case "enviar_consulta":
 		if(isset($_POST['nombre']) && $_POST['nombre'] != '' && isset($_POST['email']) && $_POST['email'] != '' && isset($_POST['phone']) && $_POST['phone'] != ''){

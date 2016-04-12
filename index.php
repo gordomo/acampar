@@ -151,77 +151,56 @@ include_once 'includes/functions.php';
                     //CATEGORIAS DE CADA TOUR
                     foreach ($tours['tours'] as $id => $data) {
                         ?>
-                        <div class="row desplegable-<?= $data['id_css'] ?>">
+                        <div class="row desplegable-<?=$data['id_css'] ?>">
                             <hr/>
+                            <?php
+                            if($data['id'] == '2'){
+                            ?>
                             <div class="row">
+                                <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 40px">
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="9"><img src="img/iconos/aconcagua.png" class="img-responsive" /> Aconcagua</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="11"><img src="img/iconos/champaqui.png" class="img-responsive" /> Champaquí</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="13"><img src="img/iconos/cumbres_argentinas.png" class="img-responsive" /> Cumbres Argentinas</div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 30px">
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="14"><img src="img/iconos/patagonia.png" class="img-responsive" /> Patagonia</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="12"><img src="img/iconos/quebrada_del_condorito.png" class="img-responsive" /> Quebrada del Condorito</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="10"><img src="img/iconos/sendas_incas.png" class="img-responsive" /> Sendas Incas</div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row desplegable-individual">
+                                <div class="col-md-6 col-xs-12 text-center">
+                                    <b></b>
+                                </div>
+                                <div class="col-md-6 col-xs-12 text-left">
+                                    <ol class="circle-list"></ol>
+                                </div>
+                            </div>
+                            <?php
+                            }else{
+                            ?>
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 text-center" style="font: 40px 'trebuchet MS', 'lucida sans';padding: .4em; color:#FE7800"><b><?=ucfirst($data['nombre'])?></b></div>
+                                <div class="col-md-6 col-xs-12 text-left" style="color:#FE7800">
+                                    <ol class="circle-list">
                                 <?php
                                     $categorias = getCategorias($mysqli, $data['id'], "0");
-
                                     foreach ($categorias['categorias'] as $id_cat => $data_cat) {
-                                    ?>
-                                    <div class="col-md-4">
-                                        <div class="desplegadas" id="<?= $data_cat['id'] ?>">
-                                            <h3><?= $data_cat['nombre'] ?></h3>
-                                        </div>
-                                    </div>
-                                    <?php
+                                ?>
+                                        <li><a href="tour.php?id=<?=$data_cat['id']?>"><?=$data_cat['nombre']?></a></li>
+                                <?php
                                 }
                                 ?>
+                                    </ol>
+                                </div>
                             </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                         <?php
                     }
-                    //FIN CATEGORIAS DE CADA TOUR
-                    //INFORMACION DE CADA CATEGORIA
-                    ?>
-                    <div class="row desplegable-individual">
-                        <div>
-                            <hr />
-                            <div class="col-md-4">
-                                <div class="desplegadas-individual">
-                                    <h3></h3>
-                                </div>
-                            </div>
-                            <div class="col-md-8 alert alert-success">
-                                <div class="link" style="color:#4B4C47"></div>
-                                <div class="img-info" style="color:#4B4C47"></div>
-                                <div class="info" style="color:#4B4C47"></div>
-                                <hr/>
-                                <div>
-                                    <h4>Dejanos tu consulta</h4>
-                                    <div id="mensaje_contacto"></div>
-                                    <form class="form-horizontal style-form" id="form-consulta" method="POST">
-                                        <input type="hidden" name="categoria" id="categoria" />
-                                        <div class="form-group">
-                                            <label class="col-sm-2 col-sm-2 control-label">Nombre</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" name="nombre" id="nombre" class="form-control" />
-                                            </div>
-                                            <label class="col-sm-2 col-sm-2 control-label">E-mail</label>
-                                            <div class="col-sm-10">
-                                                <input type="email" name="email" id="email" class="form-control" />
-                                            </div>
-                                            <label class="col-sm-2 col-sm-2 control-label">Telefono</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" name="phone" id="phone" class="form-control" />
-                                            </div>
-                                            <label class="col-sm-2 col-sm-2 control-label">Consulta</label>
-                                            <div class="col-sm-10">
-                                                <textarea name="consulta" id="consulta" class="form-control"></textarea>
-                                            </div>
-                                            <br/>
-                                            <br/>
-                                            <div class="col-sm-12">
-                                                <button type="button" class="btn btn-default pull-right btn-submit">Enviar</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    //FIN INFO DE CADA CATEGORIA
                 } else {
                     echo $tours['mensaje'];
                 }

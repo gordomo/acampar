@@ -82,50 +82,36 @@ $('#cabalgatas').click(function () {
 
 $('.desplegadas').click(function ()
 {
-    $('.btn-submit').button('reset');
-    $('#mensaje_contacto').html('');
-    $('#form-consulta')[0].reset();
-    var h3 = $(this).find("h3").html();
-
-    id_categoria = this.id;
+    $(".desplegable-individual ol").html("");
+    var titulo = $(this).text();
+    var id_categoria = this.id;
+    
     $.ajax({
         url: "includes/controller_ajax.php",
         type: "POST",
         data: {option: 'get_categorias_hijas', id_categoria: id_categoria},
         dataType: "json",
         success: function (data) {
-            
             if (data.result === 'ok') 
             {
-                $("#categoria").val(id_categoria);
-
-                $(".desplegadas-individual > h3").html(h3);
-                $(".desplegable-individual > div").removeClass();
-                $(".desplegable-individual").addClass("desplegable-trekking");
-                $(".desplegadas-individual").addClass("desplegadas");
+                $(".desplegable-individual b").html(titulo);
                 $('.desplegable-individual').show('fast');
                 $('html, body').animate({
-                    scrollTop: $('.desplegable-individual').offset().top - 100
+                    scrollTop: $('.desplegable-individual').offset().top - 200
                 }, 1000);
 
                 $.each(data.categorias, function(i, val)
                 {
-                    $(".link").append("<li class='alert alert-success categoria-link' id='" + val.id + "'>" + val.nombre + "</li>");
-                    $(".img-info").html("<div align='center' class='" + val.id + "' style='display:none'><img src='" + val.foto + "' class='img-responsive' width='400px' /></div>");
-                    $(".info").html("<div align='center' class='" + val.id + "' style='display:none'>" + val.descripcion + "</div>");
+                    $(".desplegable-individual ol").append("<li><a href='tour.php?id=" + val.id + "'>" + val.nombre + "</a></li>");
                 });
-            } 
-            else 
+            }
+            else
             {
-                alert(data.mensaje);
+                console.log(data.mensaje);
             }
         }
     });
 });
-    $(".link").click(function()
-    {
-        $("."+$(this).children('li').attr("id")).show();
-    });
 
 
 $(document).on('click', "li.subcat-trekking", function ()
