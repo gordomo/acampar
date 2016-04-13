@@ -1,9 +1,8 @@
 <?php
-
+header("Content-Type: text/html;charset=utf-8");
 include_once '../includes/db_connect.php';
 include_once '../includes/resizeImage.php';
 
-header("Content-Type: text/html;charset=utf-8");
 $action = isset($_POST['action']) ? $_POST['action'] : $_GET['action'];
 
 switch ($action) {
@@ -117,62 +116,74 @@ switch ($action) {
         $categoria = $_POST['categoria'];
         $padre = $_POST['padre'];
         $ruta = (isset($_POST['foto']) && $_POST['foto'] !== '') ? $_POST['foto'] : "img/categorias/no-image.gif";
+        $rutasExtras = array();
+        $insertedID = 0;
         
-        if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '')
+        foreach ($_FILES as $key => $value) 
         {
-            //if no errors...
-            if(!$_FILES['photo']['error'])
+            if(isset($value['name']) && $value['name'] != '')
             {
-                $valid_file = true;
-                //now is the time to modify the future file name and validate the file
-                $new_file_name = strtolower($_FILES['photo']['name']); //rename file
-                $Length = 10;
-                $RandomString = substr(str_shuffle(md5(time())), 0, $Length);
-
-                $new_file_name = $RandomString . "_" .  str_replace(' ', '-', $new_file_name);
-                if($_FILES['photo']['size'] > (6144000)) //can't be larger than 6 MB
+                //if no errors...
+                if(!$value['error'])
                 {
-                    $valid_file = false;
-                    $message = 'Oops!  Your file\'s size is to large.';
-                    $result  = "ko";
-                    header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
-                }
+                    $valid_file = true;
+                    //now is the time to modify the future file name and validate the file
+                    $new_file_name = strtolower($value['name']); //rename file
+                    $Length = 10;
+                    $RandomString = substr(str_shuffle(md5(time())), 0, $Length);
 
-                $pos = strpos($_FILES['photo']['type'], "image");
-                if ($pos === FALSE)
-                {
-                    $valid_file = false;
-                    $message = 'Oops!  El archivo no es una imagen.';
-                    $result  = "ko";
-                    header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
-                }
-                //if the file has passed the test
-                if($valid_file)
-                {
-                    //move it to where we want it to be
-                    $ruta = '../img/categorias/'.$new_file_name;
-                    //ruta de los thumbs
+                    $new_file_name = $RandomString . "_" .  str_replace(' ', '-', $new_file_name);
+                    if($value['size'] > (6144000)) //can't be larger than 6 MB
+                    {
+                        $valid_file = false;
+                        $message = 'Oops!  Your file\'s size is to large.';
+                        $result  = "ko";
+                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
 
-                    move_uploaded_file($_FILES['photo']['tmp_name'], $ruta);
-                    
-                    $ruta = substr($ruta, 3);
+                    $pos = strpos($value['type'], "image");
+                    if ($pos === FALSE)
+                    {
+                        $valid_file = false;
+                        $message = 'Oops!  El archivo no es una imagen.';
+                        $result  = "ko";
+                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
+                    //if the file has passed the test
+                    if($valid_file)
+                    {
+                        //move it to where we want it to be
+                        $rutaTmp = '../img/categorias/'.$new_file_name;
+                        //ruta de los thumbs
+
+                        move_uploaded_file($value['tmp_name'], $rutaTmp);
+
+                        if($value['name'] == "photo")
+                        {
+                            $ruta = substr($rutaTmp, 3);
+                        }
+                        else
+                        {
+                            $rutasExtras[] = substr($rutaTmp, 3);
+                        }
+                    }
+                    //if there is an error...
+                    else
+                    {
+                        //set that to be the returned message
+                        $message = 'Ooops!  Your upload triggered the following error:  invalid file';
+                        $result  = "ko";
+                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
                 }
                 //if there is an error...
                 else
                 {
                     //set that to be the returned message
-                    $message = 'Ooops!  Your upload triggered the following error:  invalid file';
+                    $message = 'Ooops!  Your upload triggered the following error:  '.$value['error'];
                     $result  = "ko";
                     header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
                 }
-            }
-            //if there is an error...
-            else
-            {
-                //set that to be the returned message
-                $message = 'Ooops!  Your upload triggered the following error:  '.$_FILES['photo']['error'];
-                $result  = "ko";
-                header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
             }
         }
         
@@ -187,7 +198,7 @@ switch ($action) {
                 $result = "ko";
                 header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
             }
-
+            $insertedID = $stmt->insert_id;
             $stmt->close();
         } 
         else
@@ -197,10 +208,87 @@ switch ($action) {
             header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
         }
         
+        if($insertedID)
+        {
+            foreach ($rutasExtras as $rutaExtra)
+            {
+                if ($stmt = $mysqli->prepare("INSERT INTO img_categorias (`url`, `id_categoria`) values (?, ?)")) 
+                {
+                    $stmt->bind_param("si", $rutaExtra, $insertedID);
+
+                    if (!$stmt->execute()) 
+                    {
+                        $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                        $result = "ko";
+                    }
+
+                    $stmt->close();
+                }
+                else
+                {
+                    $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                    $result  = "ko";
+                }
+            }    
+        }
+        
         header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
         break;
     
-    
+    case "borrarFotoExtra":
+        
+        $result = "ok";
+        $message = "Categoria eliminada correctamente";
+        $id = $_POST["id"];
+        
+        if ($stmt = $mysqli->prepare("SELECT url FROM img_categorias WHERE id=?")) 
+        {
+            /* ligar parámetros para marcadores */
+            $stmt->bind_param("i", $id);
+            /* ejecutar la consulta */
+            if(!$stmt->execute())
+            {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result  = "ko";
+            }
+
+            /* ligar variables de resultado */
+            $stmt->bind_result($foto);
+                        
+            /* obtener valor */
+            $stmt->fetch();
+            /* cerrar sentencia */
+            $stmt->close();
+
+            if(file_exists("../".$foto))
+            {
+                unlink("../".$foto);
+            }
+            
+            if ($stmt2 = $mysqli->prepare("DELETE FROM img_categorias WHERE id = ?")) 
+            {
+                $stmt2->bind_param("s", $id);
+
+                if (!$stmt2->execute())
+                {
+                    $message = "Falló la ejecución: (" . $stmt2->errno . ") " . $stmt2->error;
+                    $result = "ko";
+                }
+
+                $stmt2->close();
+            }
+            else
+            {
+                $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                $result = "ko";
+            }
+            
+        }
+        
+        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+        
+        break;
+        
     case 'eliminarEntradaCategorias':
 
         $result = "ok";
@@ -273,11 +361,13 @@ switch ($action) {
         $categoria = $_POST['categoria'];
         $padre = $_POST['padre'];
         $ruta = (isset($_POST['foto']) && $_POST['foto'] !== '') ? $_POST['foto'] : "img/categorias/no-image.gif";
+        $rutasExtras = array();
+        $rutasExtrasNuevas = array();
         $borrarFoto = (isset($_POST['borrarFoto']) && $_POST['borrarFoto'] !== '') ? $_POST['borrarFoto'] : false;
         
         if($borrarFoto)
         {
-            if ($stmt = $mysqli->prepare("SELECT foto FROM categorias WHERE id=?")) 
+            if ($stmt = $mysqli->prepare("SELECT foto FROM categorias WHERE id=?"))
             {
                 /* ligar parámetros para marcadores */
                 $stmt->bind_param("i", $id);
@@ -303,90 +393,151 @@ switch ($action) {
             }
         }
         
-        if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '')
+        foreach ($_FILES as $key => $value) 
         {
-            //if no errors...
-            if(!$_FILES['photo']['error'])
+            if(isset($value['name']) && $value['name'] != '')
             {
-                $valid_file = true;
-                //now is the time to modify the future file name and validate the file
-                $new_file_name = strtolower($_FILES['photo']['name']); //rename file
-                $Length = 10;
-                $RandomString = substr(str_shuffle(md5(time())), 0, $Length);
-
-                $new_file_name = $RandomString . "_" .  str_replace(' ', '-', $new_file_name);
-                if($_FILES['photo']['size'] > (6144000)) //can't be larger than 6 MB
+                //if no errors...
+                if(!$value['error'])
                 {
-                    $valid_file = false;
-                    $message = 'Oops!  Your file\'s size is to large.';
-                    $result  = "ko";
-                    header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
-                }
+                    $valid_file = true;
+                    //now is the time to modify the future file name and validate the file
+                    $new_file_name = strtolower($value['name']); //rename file
+                    $Length = 10;
+                    $RandomString = substr(str_shuffle(md5(time())), 0, $Length);
 
-                $pos = strpos($_FILES['photo']['type'], "image");
-                if ($pos === FALSE)
-                {
-                    $valid_file = false;
-                    $message = 'Oops!  El archivo no es una imagen.';
-                    $result  = "ko";
-                    header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
-                }
-                //if the file has passed the test
-                if($valid_file)
-                {
-                    //move it to where we want it to be
-                    $ruta = '../img/categorias/'.$new_file_name;
-                    //ruta de los thumbs
-
-                    move_uploaded_file($_FILES['photo']['tmp_name'], $ruta);
-                    
-                    $ruta = substr($ruta, 3);
-                    
-                    if ($stmt = $mysqli->prepare("SELECT foto FROM categorias WHERE id=?")) 
+                    $new_file_name = $RandomString . "_" .  str_replace(' ', '-', $new_file_name);
+                    if($value['size'] > (6144000)) //can't be larger than 6 MB
                     {
-                        /* ligar parámetros para marcadores */
-                        $stmt->bind_param("i", $id);
+                        $valid_file = false;
+                        $message = 'Oops!  Your file\'s size is to large.';
+                        $result  = "ko";
+                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
 
-                        /* ejecutar la consulta */
-                        if(!$stmt->execute())
+                    $pos = strpos($value['type'], "image");
+                    if ($pos === FALSE)
+                    {
+                        $valid_file = false;
+                        $message = 'Oops!  El archivo no es una imagen.';
+                        $result  = "ko";
+                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
+                    //if the file has passed the test
+                    if($valid_file)
+                    {
+                        //move it to where we want it to be
+                        $rutaTmp = '../img/categorias/'.$new_file_name;
+                        //ruta de los thumbs
+
+                        move_uploaded_file($value['tmp_name'], $rutaTmp);
+
+                        if($key == "photo")
                         {
-                            $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
-                            $result  = "ko";
+                            $ruta = substr($rutaTmp, 3);
+                            if ($stmt = $mysqli->prepare("SELECT foto FROM categorias WHERE id=?")) 
+                            {
+                                /* ligar parámetros para marcadores */
+                                $stmt->bind_param("i", $id);
+
+                                /* ejecutar la consulta */
+                                if(!$stmt->execute())
+                                {
+                                    $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                                    $result  = "ko";
+                                }
+
+                                /* ligar variables de resultado */
+                                $stmt->bind_result($foto);
+
+                                /* obtener valor */
+                                $stmt->fetch();
+                                /* cerrar sentencia */
+                                $stmt->close();
+
+                                if(file_exists("../".$foto) and strpos($foto, "no-image.gif") === false)
+                                {
+                                    unlink("../".$foto);
+                                }
+                            }
                         }
-
-                        /* ligar variables de resultado */
-                        $stmt->bind_result($foto);
-                        
-                        /* obtener valor */
-                        $stmt->fetch();
-                        /* cerrar sentencia */
-                        $stmt->close();
-
-                        if(file_exists("../".$foto) and strpos($foto, "no-image.gif") === false)
+                        elseif (strpos($key, 'photoExtraNueva') !== false) 
                         {
-                            unlink("../".$foto);
+                            if ($stmt = $mysqli->prepare("INSERT INTO img_categorias (id_categoria, url, habilitada) VALUES (?, ?, ?)")) 
+                            {
+                                /* ligar parámetros para marcadores */
+                                $url = substr($rutaTmp, 3);
+                                $hab = 1;
+                                $stmt->bind_param("isi", $id, $url, $hab);
+
+                                /* ejecutar la consulta */
+                                if(!$stmt->execute())
+                                {
+                                    $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                                    $result  = "ko";
+                                }
+
+                                /* ligar variables de resultado */
+                                $stmt->bind_result($foto);
+
+                                /* obtener valor */
+                                $stmt->fetch();
+                                /* cerrar sentencia */
+                                $stmt->close();
+                            }    
                         }
+                        else
+                        {
+                            $id_img_cat = substr($key, 10);
+                            $rutasExtras[] = array("ruta"=>substr($rutaTmp, 3), "id"=>$id_img_cat);
+                            
+                            if ($stmt = $mysqli->prepare("SELECT url FROM img_categorias WHERE id=?")) 
+                            {
+                                /* ligar parámetros para marcadores */
+                                
+                                $stmt->bind_param("i", $id_img_cat);
+
+                                /* ejecutar la consulta */
+                                if(!$stmt->execute())
+                                {
+                                    $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                                    $result  = "ko";
+                                }
+
+                                /* ligar variables de resultado */
+                                $stmt->bind_result($foto);
+
+                                /* obtener valor */
+                                $stmt->fetch();
+                                /* cerrar sentencia */
+                                $stmt->close();
+
+                                if(file_exists("../".$foto))
+                                {
+                                    unlink("../".$foto);
+                                }
+                            }
+                        }
+                    }
+                    //if there is an error...
+                    else
+                    {
+                        //set that to be the returned message
+                        $message = 'Ooops!  Your upload triggered the following error:  invalid file';
+                        $result  = "ko";
+                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
                     }
                 }
                 //if there is an error...
                 else
                 {
                     //set that to be the returned message
-                    $message = 'Ooops!  Your upload triggered the following error:  invalid file';
+                    $message = 'Ooops!  Your upload triggered the following error:  '.$value['error'];
                     $result  = "ko";
                     header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
                 }
             }
-            //if there is an error...
-            else
-            {
-                //set that to be the returned message
-                $message = 'Ooops!  Your upload triggered the following error:  '.$_FILES['photo']['error'];
-                $result  = "ko";
-                header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
-            }
-        }
-        
+        }    
         // prepare and bind
         if ($stmt = $mysqli->prepare("UPDATE categorias SET `nombre` = ?, `foto` = ?, `descripcion_corta` = ?, `descripcion` = ?, `id_tour` = ?, `cat_superior` = ?, `lat` = ?, `long` = ? WHERE id = ?")) 
         {
@@ -396,16 +547,33 @@ switch ($action) {
             {
                 $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
                 $result = "ko";
-                header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
             }
 
             $stmt->close();
-        } 
+        }
         else
         {
             $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
             $result  = "ko";
-            header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+        }
+        
+        foreach ($rutasExtras as $rutaExtra)
+        {
+            if ($stmt = $mysqli->prepare("UPDATE img_categorias SET url = ? WHERE id = ?"))
+            {
+                $stmt->bind_param("si", $rutaExtra["ruta"],$rutaExtra["id"]);
+                if (!$stmt->execute()) 
+                {
+                    $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                    $result = "ko";
+                }
+                $stmt->close();
+            }
+            else
+            {
+                $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                $result  = "ko";
+            }
         }
         
         header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);

@@ -29,6 +29,7 @@ function getTours($mysqli) {
 function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
     $result = 'ok';
     $categorias = array();
+    $img_categorias = array();
     $error_msg = '';
     $types = array();
     $values = array();
@@ -79,8 +80,28 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
         {
             $categorias[] = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior, "lat"=>$lat, "long"=>$long);
         }
-        
         $stmt->close();
+        
+        for ($index = 0; $index < count($categorias); $index++)
+        {
+            if($stmt2 = $mysqli->prepare("SELECT id, url, habilitada FROM img_categorias WHERE id_categoria = ?"))
+            {
+                $stmt2->bind_param("i", $categorias[$index]['id']);
+                if(!$stmt2->execute())
+                {
+                    $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                    $result  = "ko";
+                }
+            }
+
+            $stmt2->bind_result($id_img_categoria, $url_img_categoria, $habilitada_img_categoria);
+
+            while ($stmt2->fetch()) 
+            {
+                $img_categorias[] = array("id"=>$id_img_categoria, "url"=>$url_img_categoria, "habilitada"=>$habilitada_img_categoria);
+            }
+            $categorias[$index]['fotos_extras'] = $img_categorias;
+        }
     }
     else 
     {

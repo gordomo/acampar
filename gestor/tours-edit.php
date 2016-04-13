@@ -59,37 +59,45 @@ $tours = getTours($mysqli);
                 <section class="wrapper">
                     <h3><i class="fa fa-angle-right"></i>TOURS</h3>
                     <div class="row mt">
-                        <div class="col-md-12">
-                            <div class="form-panel">
+                        <div class="col-md-12 formulario">
                                 <h4><i class="fa fa-angle-right"></i> Nueva Entrada</h4>
                                 <section id="editor_grilla_nueva">
                                     <form id='newEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php">
                                         <input type="hidden" value="newCategoria" name="action" id="action">
-                                        <div class="form-group">
-                                            <label class=" col-md-12 control-label">Nombre: </label>
+                                        <div class="col-md-12">
+                                            <label>Nombre: </label>
                                             <input type="text" id="nombre" name="nombre" class="form-control" required="true">
                                         </div>
-                                        <div class="form-group">
-                                            <label class=" col-md-12 control-label">Imagen: </label>
-                                            <input type="file" accept="file_extension|image"  id="photo" name="photo" autofocus>
+                                        <div class="col-md-12">
+                                            <label class="">Imagen Principal: </label>
                                         </div>
-                                        <div class="form-group">
-                                            <label class=" col-md-12 control-label">Descripción Corta: </label>
+                                        <div class="col-md-12">
+                                            <input type="file"  accept="file_extension|image"  id="photo" name="photo" autofocus>
+                                        </div>
+                                        <div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px">
+                                            <label class="">Agregar otra </label>
+                                            <button type="button" id="sumarImagen" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> + </button>
+                                            <button type="button" id="restarImagen" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> - </button>
+                                            <input name="cantidadImagenesExtras" id="cantidadImagenesExtras" value="0" type="hidden">
+                                            <div id="imagenes"></div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Descripción Corta: </label>
                                             <input type="text" id="descCorta" name="descCorta" class="form-control" >
                                         </div>
-                                        <div class="form-group">
-                                            <label class=" col-md-12 control-label">Descripción: </label>
+                                        <div class="col-md-12">
+                                            <label>Descripción: </label>
                                             <input type="text" id="desc" name="desc" class="form-control" >
                                         </div>
-                                        <div class="form-group">
-                                            <label class=" col-md-12 control-label" >Coordenadas: </label>
-                                            <label class=" col-md-12 control-label" style="width: 50%; float: left">Latitud: </label>
-                                            <label class=" col-md-12 control-label" style="width: 50%; float: left">Longitud: </label>
+                                        <div class="col-md-12">
+                                            <label class=" col-md-12 " >Coordenadas: </label>
+                                            <label class=" col-md-12 " style="width: 50%; float: left">Latitud: </label>
+                                            <label class=" col-md-12 " style="width: 50%; float: left">Longitud: </label>
                                             <input type="text" id="coordx" name="lat" class="form-control" style="width: 50%; float: left">
                                             <input type="text" id="coordy" name="long" class="form-control" style="width: 50%; float: left; margin-bottom: 10px">
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label">Categoria: </label>
+                                        <div class="col-md-12">
+                                            <label>Categoria: </label>
                                             <select id="categoria" name="categoria" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
                                                 <?php foreach ($tours['tours'] as $tour) { ?>
 
@@ -98,8 +106,8 @@ $tours = getTours($mysqli);
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12 control-label">Tour Padre: </label>
+                                        <div class="col-md-12">
+                                            <label>Tour Padre: </label>
                                             <select id="padre" name="padre" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
                                                 <option value="0">Tour Padre</option>
                                                 <?php foreach ($categorias['categorias'] as $categoria) { ?>
@@ -109,14 +117,13 @@ $tours = getTours($mysqli);
                                                 <?php } ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="col-md-12">
                                             <button type="submit" class="btn btn-success">Agregar Entrada</button>
                                             <img class="newImgCargando" src="assets/img/preloader.gif">
                                             <span class="newImgCargando">Cargando...</span>
                                         </div>
                                     </form>
                                 </section>
-                            </div><!-- /content-panel -->
                         </div>
                     </div>
 
@@ -131,7 +138,7 @@ $tours = getTours($mysqli);
                             <div class="col-md-10">
                                 <form action="tours-edit.php#editor_categorias" method="GET">
                                     <div class="col-md-4">
-                                        <label class="control-label">Tour padre: </label>
+                                        <label class="">Tour padre: </label>
                                         <select id="padre_buscar" name="padre_buscar">
                                             <option value="">seleccione una tour para filtrar</option>
                                                 <?php foreach ($categorias_busqueda['categorias'] as $categoria) { ?>
@@ -142,7 +149,7 @@ $tours = getTours($mysqli);
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="control-label">Categoría: </label>
+                                        <label class="">Categoría: </label>
                                         <select id="categoria_buscar" name="categoria_buscar">
                                             <option value="">seleccione una categoria para filtrar</option>
                                             <?php foreach ($tours['tours'] as $tour) { ?>
@@ -165,33 +172,51 @@ $tours = getTours($mysqli);
                             <?php foreach ($categorias['categorias'] as $categoria) { ?>
                                 <form id='newEntrada<?= $categoria['id'] ?>' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 32%;float:left;margin: 2px;border: 1px solid;padding: 2px;">
                                     <input type="hidden" value="editCategoria" name="action" id="action">
+                                    <input type="hidden" value="0" name="cantImagenesExtras" id="cantImagenesExtras<?= $categoria['id'] ?>">
                                     <input type="hidden" value="no" name="borrarFoto" id="borrarFoto<?= $categoria['id'] ?>">
                                     <input type="hidden" value="<?= $categoria['id'] ?>" name="id" id="id">
                                     <input type="hidden" value="<?= $categoria['foto'] ?>" name="foto" id="foto<?= $categoria['id'] ?>">
                                     <div class="form-group">
-                                        <label class=" col-md-12 control-label">Nombre: </label>
+                                        <label class=" col-md-12 ">Nombre: </label>
                                         <input type="text" value="<?= $categoria['nombre'] ?>" id="nombre" name="nombre" class="form-control" required="true">
                                     </div>
                                     <div class="form-group">
-                                        <label class=" col-md-12 control-label">Imagen: </label>
+                                        <label class=" col-md-12 ">Imagen Principal: </label>
                                         <input type="file" accept="file_extension|image"  id="photo<?= $categoria['id'] ?>" name="photo" autofocus>
-                                        <div class="col-md-12" style="padding: 10px; min-height: 400px; max-height: 450px;">
+                                        <div class="col-md-12" style="margin: 15px 0px;">
                                             <img id="imgCat<?= $categoria['id'] ?>" class="img-responsive" src="../<?= $categoria['foto'] ?>" >
                                         </div>
                                         <a class="btn btn-warning borrarImagen" id="<?= $categoria['id'] ?>">Borrar Imagen</a>
                                     </div>
                                     <div class="form-group">
-                                        <label class=" col-md-12 control-label">Descripción Corta: </label>
+                                        <label class=" col-md-12 ">Imagenes Extra: </label>
+                                        <?php foreach($categoria['fotos_extras'] as $fotoExtra){ ?>
+                                        <div class=" col-md-12 ">
+                                            <div class="col-md-12" style="margin: 15px 0px;">
+                                                <img id="imgCatExtra<?= $fotoExtra['id'] ?>" class="img-responsive" src="../<?= $fotoExtra['url'] ?>" >
+                                            </div>
+                                            <input class="col-md-12" type="file" accept="file_extension|image"  id="photoExtra<?= $fotoExtra['id'] ?>" name="photoExtra<?= $fotoExtra['id'] ?>" autofocus>
+                                            <a class="col-md-12 btn btn-warning borrarImagenExtra" data-id-form="<?=$categoria['id']?>" style="margin: 10px 0px;" id="<?= $fotoExtra['id'] ?>">Borrar</a>
+                                        </div>    
+                                        <?php } ?>
+                                        <div class=" col-md-12 ">
+                                            <a class="col-md-12 btn btn-default agregarImagenExtra" id="<?= $categoria['id'] ?>" style="margin: 10px 0px;" >Agregar otra imagen</a>
+                                            <div id="imagenesExtras<?= $categoria['id'] ?>"></div>
+                                        </div> 
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label class=" col-md-12 " style="margin-top: 15px">Descripción Corta: </label>
                                         <input type="text" value="<?=$categoria['descripcion_corta']?>" id="descCorta" name="descCorta" class="form-control" >
                                     </div>
                                     <div class="form-group">
-                                        <label class=" col-md-12 control-label">Descripción: </label>
+                                        <label class=" col-md-12 ">Descripción: </label>
                                         <input type="text" value="<?=$categoria['descripcion']?>" id="desc" name="desc" class="form-control" >
                                     </div>
                                     <div class="form-group">
-                                        <label class=" col-md-12 control-label">Coordenadas: </label>
-                                        <label class=" col-md-12 control-label" style="width: 50%; float: left">Latitud: </label>
-                                        <label class=" col-md-12 control-label" style="width: 50%; float: left">Longitud: </label>
+                                        <label class=" col-md-12 ">Coordenadas: </label>
+                                        <label class=" col-md-12 " style="width: 50%; float: left">Latitud: </label>
+                                        <label class=" col-md-12 " style="width: 50%; float: left">Longitud: </label>
                                         <input type="text" value="<?=$categoria['lat']?>" id="lat" name="lat" class="form-control" style="width: 50%; float: left">
                                         <input type="text" value="<?=$categoria['long']?>" id="long" name="long" class="form-control" style="width: 50%; float: left; margin-bottom: 10px">
                                     </div>
@@ -240,9 +265,50 @@ $tours = getTours($mysqli);
                 $("#borrarFoto"+id).val("true");
                 $("#newEntrada"+id).submit();
             });
-        
-                $(".eliminar").click(function ()
+            
+            $(".borrarImagenExtra").click(function()
+            {
+                var id = $(this).attr("id");
+                var id_form = $(this).attr("data-id-form");
+                
+                $("#newEntrada"+id_form+" input[name=action]" ).val("borrarFotoExtra");
+                $("#newEntrada"+id_form+" input[name=id]" ).val(id);
+                
+                $("#newEntrada"+id_form).submit();
+                
+            });
+            
+            $(".agregarImagenExtra").click(function()
+            {
+                var id = $(this).attr("id");
+                var cantImgExt = $('#cantImagenesExtras'+id).val();
+                cantImgExt ++;
+                $('#cantImagenesExtras'+id).val(cantImgExt);
+                $('#imagenesExtras'+id).append('<input type="file" accept="file_extension|image"  id="photoExtraNueva'+cantImgExt+'" name="photoExtraNueva'+cantImgExt+'" autofocus>');
+            });
+            
+            $("#sumarImagen").click(function()
+            {
+                var cantImagenesExtra = $("#cantidadImagenesExtras").val();
+                cantImagenesExtra ++;
+                $("#cantidadImagenesExtras").val(cantImagenesExtra);
+                $('#imagenes').append('<input type="file" accept="file_extension|image"  id="photo'+cantImagenesExtra+'" name="photo'+cantImagenesExtra+'" autofocus>');
+            });
+            
+            $("#restarImagen").click(function()
+            {
+                var cantImagenesExtra = $("#cantidadImagenesExtras").val();
+                
+                if(cantImagenesExtra != 0)
                 {
+                    $('#photo'+cantImagenesExtra).remove();
+                    cantImagenesExtra --;
+                    $("#cantidadImagenesExtras").val(cantImagenesExtra);
+                }    
+            });
+            
+            $(".eliminar").click(function ()
+            {
                     var answer = confirm("Deseas eliminar este registro?");
                     if (answer)
                     {

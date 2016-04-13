@@ -101,7 +101,7 @@ if ($logged == 'out') {
                         <div class="col-md-4 mb">
                             <div class="panel-5 pn">
                                 <div class="panel-5-header">
-                                    <h5>SLIDER SALIDAS</h5>
+                                    <h5>NOTICIAS</h5>
                                 </div>
                                 <div class="centered">
 
