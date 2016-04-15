@@ -66,7 +66,7 @@ $noticias = getNoticias($mysqli, false, true);
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">Texto: </label>
-                                            <input type="text" name="texto" id="texto" class="form-control" required="true">
+                                            <textarea rows="7" name="texto" id="texto" class="form-control" required="true"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class=" col-md-12 control-label">Imagen: </label>
@@ -106,7 +106,7 @@ $noticias = getNoticias($mysqli, false, true);
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Texto: </label>
-                                        <input type="text" name="texto" id="texto" class="form-control" required="true" value="<?=$slider['texto']?>">
+                                        <textarea name="texto" id="texto" rows="10" class="form-control" required="true"><?=$slider['texto']?>"</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Imagen: </label>

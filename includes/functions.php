@@ -256,7 +256,7 @@ function getSliderSalidas($mysqli, $id_slider = false, $todas = false)
     
 }
 
-function getNoticias($mysqli, $id = false, $todas = false)
+function getNoticias($mysqli, $id = false, $todas = false, $limit = false, $id_no = false)
 {
     
     $result = 'ok';
@@ -281,6 +281,16 @@ function getNoticias($mysqli, $id = false, $todas = false)
         $types[] = "i";
         $values[] = "1";
     }
+    
+    if($id_no){
+        $prep_stmt .= " AND id <> $id_no";
+    }
+    
+    if($limit){
+        $prep_stmt .= " limit ".$limit;
+    }
+    
+    
 
     if($stmt = $mysqli->prepare($prep_stmt))
     {

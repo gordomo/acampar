@@ -151,7 +151,7 @@ include_once 'includes/functions.php';
                     //CATEGORIAS DE CADA TOUR
                     foreach ($tours['tours'] as $id => $data) {
                         ?>
-                        <div class="row desplegable-<?=$data['id_css'] ?>">
+                        <div class="row desplegable-<?=$data['id_css']?>">
                             <hr/>
                             <?php
                             if($data['id'] == '2'){
@@ -243,61 +243,24 @@ include_once 'includes/functions.php';
                 <div class="row text-center">
                     <div class="flexslider">
                         <ul class="slides">
+                            <?php
+                            $noticias = getNoticias($mysqli, false, true);
+                            foreach ($noticias['noticias'] as $slider) {
+                            ?>
                             <li>
                                 <div style="min-height:100px">
-                                    <a href="#"><img class="img-responsive" src="img/icon2.jpg" alt="" style="margin: 0 auto;"></a>
+                                    <a href="#"><img class="img-responsive" src="<?=$slider['url']?>" alt="" style="margin: 0 auto;" width="350px" /></a>
                                 </div>
-                                <h3>Titulo de la noticia</h3>
+                                <h3><?=$slider['titulo']?></h3>
                                 <span>
-                                    <a href="#">
+                                    <a href="noticias/noticia.php?noticia=<?=$slider['id']?>">
                                         ver mas...
                                     </a>
                                 </span>
                             </li>
-                            <li>
-                                <div style="min-height:100px">
-                                    <a href="#"><img class="img-responsive" src="img/icon.jpg" alt="" style="margin: 0 auto;"></a>
-                                </div>
-                                <h3>Titulo de la noticia 2</h3>
-                                <span>
-                                    <a href="#">
-                                        ver mas...
-                                    </a>
-                                </span>
-                            </li>
-                            <li>
-                                <div style="min-height:100px">
-                                    <a href="#"><img class="img-responsive" src="img/icon1.jpg" alt="" style="margin: 0 auto;"></a>
-                                </div>
-                                <h3>Titulo de la noticia 3</h3>
-                                <span>
-                                    <a href="#">
-                                        ver mas...
-                                    </a>
-                                </span>
-                            </li>
-                            <li>
-                                <div style="min-height:100px">
-                                    <a href="#"><img class="img-responsive" src="img/icon.jpg" alt="" style="margin: 0 auto;"></a>
-                                </div>
-                                <h3>Titulo de la noticia 4</h3>
-                                <span>
-                                    <a href="#">
-                                        ver mas...
-                                    </a>
-                                </span>
-                            </li>
-                            <li>
-                                <div style="min-height:100px">
-                                    <a href="#"><img class="img-responsive" src="img/icon2.jpg" alt="" style="margin: 0 auto;"></a>
-                                </div>
-                                <h3>Titulo de la noticia 5</h3>
-                                <span>
-                                    <a href="#">
-                                        ver mas...
-                                    </a>
-                                </span>
-                            </li>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
