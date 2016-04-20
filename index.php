@@ -3,6 +3,7 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 
 $sliders_cabecera = getSliderCabecera($mysqli, false, true);
+$sliders_salidas = getSliderSalidas($mysqli,  false, true);
 ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -210,20 +211,20 @@ $sliders_cabecera = getSliderCabecera($mysqli, false, true);
             <div class="container">
                 <div id="cbp-fwslider" class="cbp-fwslider">
                     <ul>
+                        <?php 
+                        $i = 0;
+                        foreach ($sliders_salidas['sliders'] as $slider) {?>
                         <li>
-                            <img src="img/slider/slider1.jpg" alt="img01"/>
+                            <img src="<?=$slider['url']?>" class="img-responsive"/>
                             <div class="carousel-caption">
-                                <h3>Titulo</h3>
-                                <h4>Descripcion</h4>
+                                <h3><?=$slider['titulo']?></h3>
+                                <h4><?=$slider['descripcion']?></h4>
                             </div>
                         </li>
-                        <li>
-                            <img src="img/slider/slider2.jpg" alt="img02"/>
-                            <div class="carousel-caption">
-                                <h3>Titulo</h3>
-                                <h4>Descripcion</h4>
-                            </div>
-                        </li>
+                        <?php 
+                            $i++;
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
