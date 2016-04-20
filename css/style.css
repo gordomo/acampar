@@ -35,6 +35,7 @@ background-color: #F3F3F3;
 .navbar-nav>li>a:hover {
     color: #fe7800 !important;
     border-bottom: 2px solid #fe7800;
+    padding-bottom: 2px;
 
 }
 
