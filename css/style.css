@@ -25,13 +25,18 @@ background-color: #F3F3F3;
   padding: 50px;
 }
 
-/*.navbar-fixed-top{
-	-webkit-transition: padding .3s;
+.navbar-fixed-top{
+    -webkit-transition: padding .3s;
     -moz-transition: padding .3s;
     transition: padding .3s;
-    padding: 0px !important;
-}*/
-
+    padding: 25px !important;
+}
+.navbar-fixed-top img{
+    -webkit-transition: max-width .1s;
+    -moz-transition: max-width .1s;
+    transition: max-width .1s;
+    max-width: 50px;
+}
 .navbar-nav>li>a:hover {
     color: #fe7800 !important;
     border-bottom: 2px solid #fe7800;
