@@ -6,13 +6,13 @@ function getTours($mysqli) {
     $result = 'false';
     $tours = array();
     $error_msg = '';
-    $prep_stmt = "SELECT id, nombre, class_css, id_css FROM tours";
+    $prep_stmt = "SELECT id, nombre, class_css, id_css, descripcion FROM tours";
     $stmt = $mysqli->prepare($prep_stmt);
     if ($stmt) {
         $stmt->execute();
-        $stmt->bind_result($id_tour, $nombre, $class_css, $id_css);
+        $stmt->bind_result($id_tour, $nombre, $class_css, $id_css, $descripcion);
         while ($stmt->fetch()) {
-            $tours[] = array('id' => $id_tour, 'nombre' => $nombre, 'class_css' => $class_css, 'id_css' => $id_css);
+            $tours[] = array('id' => $id_tour, 'nombre' => $nombre, 'class_css' => $class_css, 'id_css' => $id_css, "descripcion"=>$descripcion);
         }
         $result = 'true';
     } else {

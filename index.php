@@ -181,7 +181,14 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                             }else{
                             ?>
                             <div class="row">
-                                <div class="col-md-6 col-xs-12 text-center" style="font: 40px 'trebuchet MS', 'lucida sans';padding: .4em; color:#FE7800"><b><?=ucfirst($data['nombre'])?></b></div>
+                                <div class="col-md-6 col-xs-12 text-center" style="font: 40px 'trebuchet MS', 'lucida sans';padding: .4em; color:#FE7800">
+                                    <div class="col-md-12">
+                                        <b><?=ucfirst($data['nombre'])?></b>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p class="tour-desc"><?=$data['descripcion']?></p>
+                                    </div>
+                                </div>
                                 <div class="col-md-6 col-xs-12 text-left" style="color:#FE7800">
                                     <ol class="circle-list">
                                 <?php

@@ -804,6 +804,9 @@ section#contacto .form-control:focus {
     transform: scale(1.5);
 }
 
-
-
-
+.tour-desc{
+    font-size: 0.4em;
+    margin: 20px 50px;
+    color: grey;
+    text-align: left;
+}
