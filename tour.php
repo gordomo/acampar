@@ -53,16 +53,16 @@ include_once 'includes/functions.php';
 
       <ul class="nav navbar-nav navbar-left">
         <li>
-            <a class="page-scroll" href="#tour">Nuestros Tours</a>
+            <a class="page-scroll" href="index.php#tour">Nuestros Tours</a>
         </li>
         <li>
-            <a class="page-scroll" href="#promociones">Próximas Salidas</a>
+            <a class="page-scroll" href="index.php#promociones">Próximas Salidas</a>
         </li>
         <li>
-            <a class="page-scroll" href="#noticias">Noticias</a>
+            <a class="page-scroll" href="index.php#noticias">Noticias</a>
         </li>
         <li>
-            <a class="page-scroll" href="#facebook">Facebook</a>
+            <a class="page-scroll" href="index.php#facebook">Facebook</a>
         </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -70,13 +70,13 @@ include_once 'includes/functions.php';
             <a href="yacanto/index.html" target="_blanck" >Posta Yacanto</a>
         </li>
         <li>
-            <a class="page-scroll" href="#calendario">Calendario</a>
+            <a class="page-scroll" href="index.php#calendario">Calendario</a>
         </li>
         <li>
-            <a class="page-scroll" href="#empresa">La Empresa</a>
+            <a class="page-scroll" href="index.php#empresa">La Empresa</a>
         </li>
         <li>
-            <a class="page-scroll" href="#contacto">Contacto</a>
+            <a class="page-scroll" href="index.php#contacto">Contacto</a>
         </li>
     </ul>
     </div><!-- /.navbar-collapse -->
