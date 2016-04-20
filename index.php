@@ -1,6 +1,8 @@
 <?php
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
+
+$sliders_cabecera = getSliderCabecera($mysqli, false, true);
 ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -93,31 +95,28 @@ include_once 'includes/functions.php';
 
         <section id="carousel">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="img/slider/slider1.jpg" alt="..." class="img-responsive">
+                    <?php 
+                    $i = 0;
+                    foreach ($sliders_cabecera['sliders'] as $slider) {?>
+                    <div class="item <?php if($i == 0) { echo 'active'; }?>">
+                        <img src="<?= $slider['url'] ?>" alt="..." class="img-responsive">
                         <div class="carousel-caption">
-                            <h3>Titulo</h3>
-                            <h4>Descripcion</h4>
+                            <h3><?= $slider['titulo'] ?></h3>
+                            <h4><?= $slider['descripcion'] ?></h4>
                         </div>
                     </div>
-                    <div class="item">
-                        <img src="img/slider/slider2.jpg" alt="..." class="img-responsive">
-                        <div class="carousel-caption">
-                            <h3>Titulo</h3>
-                            <h4>Descripcion</h4>
-                        </div>
-                    </div>
-
+                    <?php 
+                        $i ++;
+                    } ?>
                 </div>
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <?php for ($index = 0; $index < $i; $index++) { ?>
+                        <li data-target="#carousel-example-generic" data-slide-to="<?=$index?>" class="<?php if($index == 0) { echo 'active'; }?>"></li>
+                    <?php } ?>
+                </ol>
             </div> <!-- Carousel -->
         </section>
         <!-- tour Section -->
