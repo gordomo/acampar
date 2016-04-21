@@ -211,7 +211,7 @@ $tours = getTours($mysqli);
             });
             
             $(".eliminar").click(function ()
-            {
+            { 
                     var answer = confirm("Deseas eliminar este registro?");
                     if (answer)
                     {
