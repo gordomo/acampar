@@ -126,8 +126,9 @@ $tours = getTours($mysqli);
                                         <label class="col-md-12">Tour Padre: </label>
                                         <select id="padre" name="padre" style="width: 80%;float: left; margin-right: 10px;margin-bottom: 15px;border-radius: 5px;border-color: #CCCCCC;">
                                             <option value="0">Sin Padre - Tour final</option>
-                                            <?php 
-                                                foreach ($categorias['categorias'] as $categoriaCombo) {
+                                            <?php
+                                                $categorias_padre = getCategorias($mysqli, $categoria['id_tour']);
+                                                foreach ($categorias_padre['categorias'] as $categoriaCombo) {
                                                     if($categoria['id'] != $categoriaCombo['id']){?>
                                                         <option <?php if($categoriaCombo['id'] == $categoria['cat_superior']){echo "selected";} ?> value="<?= $categoriaCombo['id'] ?>"><?= $categoriaCombo['nombre'] ?></option>
                                             <?php }

@@ -161,7 +161,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                                 <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 40px">
                                     <div class="col-md-4 col-xs-12 desplegadas" id="9"><img src="img/iconos/aconcagua.png" class="img-responsive" /> Aconcagua</div>
                                     <div class="col-md-4 col-xs-12 desplegadas" id="11"><img src="img/iconos/champaqui.png" class="img-responsive" /> Champaquí</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="13"><img src="img/iconos/cumbres_argentinas.png" class="img-responsive" /> Cumbres Argentinas</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="13"><img src="img/iconos/cumbres_argentinas.png" class="img-responsive" /> Montañas Argentinas</div>
                                 </div>
                                 <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 30px">
                                     <div class="col-md-4 col-xs-12 desplegadas" id="14"><img src="img/iconos/patagonia.png" class="img-responsive" /> Patagonia</div>

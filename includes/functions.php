@@ -56,6 +56,8 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
         $types[] = "i";
         $values[] = $id;
     }
+    
+    $prep_stmt .= " ORDER BY nombre";
 
     if($stmt = $mysqli->prepare($prep_stmt))
     {
