@@ -26,7 +26,7 @@ function getTours($mysqli) {
     return $retorno;
 }
 
-function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
+function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
     $result = 'ok';
     $categorias = array();
     $img_categorias = array();
@@ -48,6 +48,13 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '') {
         $prep_stmt .= " AND cat_superior = ?";
         $types[] = "i";
         $values[] = $cat_superior;
+    }
+    
+    if ($id != '') 
+    {
+        $prep_stmt .= " AND id = ?";
+        $types[] = "i";
+        $values[] = $id;
     }
 
     if($stmt = $mysqli->prepare($prep_stmt))

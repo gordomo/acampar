@@ -158,7 +158,7 @@ switch ($action) {
 
                         move_uploaded_file($value['tmp_name'], $rutaTmp);
 
-                        if($value['name'] == "photo")
+                        if($key == "photo")
                         {
                             $ruta = substr($rutaTmp, 3);
                         }
@@ -294,10 +294,9 @@ switch ($action) {
         $result = "ok";
         $message = "Categoria eliminada correctamente";
         $id = $_POST['id'];
-        
+        //chequeo si tiene hijos
         if ($stmt1 = $mysqli->prepare("SELECT * FROM categorias WHERE cat_superior = ?")) 
         {
-            
             $stmt1->bind_param("s", $id);
 
             if (!$stmt1->execute())
@@ -308,9 +307,11 @@ switch ($action) {
             
             $stmt1->store_result();
             
+            //si no tiene hijos prosigo
             if(!$stmt1->num_rows)
             {
-                if ($stmt2 = $mysqli->prepare("DELETE FROM categorias WHERE id = ?")) 
+                //recupero url de la foto principal
+                if ($stmt2 = $mysqli->prepare("SELECT foto FROM categorias WHERE id = ?")) 
                 {
                     $stmt2->bind_param("s", $id);
 
@@ -320,11 +321,85 @@ switch ($action) {
                         $result = "ko";
                     }
 
+                    $stmt2->bind_result($foto);
+                    $stmt2->fetch();
+                    //la elimino siempre y cuando sea distinta de no-image.gif
+                    if($foto != null && file_exists("../".$foto) && strpos($foto, "no-image.gif") === false)
+                    {
+                        unlink("../".$foto);
+                    }
+                    //tengo que hacer lo mismo con las fotos extras
+                    $stmt2->store_result();
                     $stmt2->close();
+                    if ($stmt3 = $mysqli->prepare("SELECT url FROM img_categorias WHERE id_categoria = ?")) 
+                    {
+                        $stmt3->bind_param("s", $id);
+
+                        if (!$stmt3->execute())
+                        {
+                            $message = "Falló la ejecución: (" . $stmt3->errno . ") " . $stmt3->error;
+                            $result = "ko";
+                        }
+
+                        $stmt3->bind_result($url);
+                        while ($stmt3->fetch()) 
+                        {
+                            //la elimino siempre y cuando sea distinta de no-image.gif
+                            if(file_exists("../".$url) and strpos($url, "no-image.gif") === false)
+                            {
+                                unlink("../".$url);
+                            }
+                        }
+                    }    
+                    else
+                    {
+                        $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                        $result = "ko";
+                        echo json_encode(array("result"=>$result, "mensaje"=>$message, "asd"=>"venimo4"));
+                        exit();
+                    }
+                    //ahora borro el registro de la tabla categorias
+                    $stmt3->close();
+                    if ($stmt4 = $mysqli->prepare("DELETE FROM categorias WHERE id = ?")) 
+                    {
+                        $stmt4->bind_param("s", $id);
+
+                        if (!$stmt4->execute())
+                        {
+                            $message = "Falló la ejecución: (" . $stmt4->errno . ") " . $stmt4->error;
+                            $result = "ko";
+                        }
+
+                        $stmt4->close();
+                    }
+                    else
+                    {
+                        $message = "Falló la preparación 1: (" . $mysqli->errno . ") " . $mysqli->error;
+                        $result = "ko";
+                    }
+                    
+                    // y los registros de la tabla img_categorias, donde están las imagenes extras
+                    if ($stmt5 = $mysqli->prepare("DELETE FROM img_categorias WHERE id_categoria = ?")) 
+                    {
+                        $stmt5->bind_param("s", $id);
+
+                        if (!$stmt5->execute())
+                        {
+                            $message = "Falló la ejecución: (" . $stmt5->errno . ") " . $stmt5->error;
+                            $result = "ko";
+                        }
+
+                        $stmt5->close();
+                    }
+                    else
+                    {
+                        $message = "Falló la preparación 2: (" . $mysqli->errno . ") " . $mysqli->error;
+                        $result = "ko";
+                    }
                 }
                 else
                 {
-                    $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+                    $message = "Falló la preparación 3: (" . $mysqli->errno . ") " . $mysqli->error;
                     $result = "ko";
                 }
             }
@@ -338,7 +413,7 @@ switch ($action) {
         }
         else
         {
-            $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+            $message = "Falló la preparación 4: (" . $mysqli->errno . ") " . $mysqli->error;
             $result = "ko";
         }
         
@@ -364,7 +439,7 @@ switch ($action) {
         $rutasExtras = array();
         $rutasExtrasNuevas = array();
         $borrarFoto = (isset($_POST['borrarFoto']) && $_POST['borrarFoto'] !== '') ? $_POST['borrarFoto'] : false;
-        
+
         if($borrarFoto)
         {
             if ($stmt = $mysqli->prepare("SELECT foto FROM categorias WHERE id=?"))
@@ -412,7 +487,7 @@ switch ($action) {
                         $valid_file = false;
                         $message = 'Oops!  Your file\'s size is to large.';
                         $result  = "ko";
-                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                        header("Location: tour-edit.php?result=" . $result . "&mensaje=" . $message . "&id=".$id);
                     }
 
                     $pos = strpos($value['type'], "image");
@@ -421,7 +496,7 @@ switch ($action) {
                         $valid_file = false;
                         $message = 'Oops!  El archivo no es una imagen.';
                         $result  = "ko";
-                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                        header("Location: tour-edit.php?result=" . $result . "&mensaje=" . $message . "&id=".$id);
                     }
                     //if the file has passed the test
                     if($valid_file)
@@ -525,7 +600,7 @@ switch ($action) {
                         //set that to be the returned message
                         $message = 'Ooops!  Your upload triggered the following error:  invalid file';
                         $result  = "ko";
-                        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                        header("Location: tour-edit.php?result=" . $result . "&mensaje=" . $message . "&id=".$id);
                     }
                 }
                 //if there is an error...
@@ -534,7 +609,7 @@ switch ($action) {
                     //set that to be the returned message
                     $message = 'Ooops!  Your upload triggered the following error:  '.$value['error'];
                     $result  = "ko";
-                    header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+                    header("Location: tour-edit.php?result=" . $result . "&mensaje=" . $message . "&id=".$id);
                 }
             }
         }    
@@ -576,7 +651,7 @@ switch ($action) {
             }
         }
         
-        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
+        header("Location: tour-edit.php?result=" . $result . "&mensaje=" . $message . "&id=".$id);
         break;    
         
 //################################## CATEGORIAS FIN #########################################
