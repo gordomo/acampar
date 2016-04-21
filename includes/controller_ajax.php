@@ -82,12 +82,14 @@ switch ($_POST['option']){
 				$to = 'consultas@acampartrek.com';
 				$email_subject = "Nueva consulta desde el formulario de contacto";
                                 
+                                $email_body = "";
+                                
                                 if($_POST['id_cat']){
                                     $categoria = getInfoCategoria($mysqli, $_POST['id_cat']);
                                     $email_subject = "Nueva consulta sobre un tour";
+                                    $email_body = "Consulta sobre el tour: ".$categoria['categoria']['nombre']."\n\n";
                                 }
                                 
-                                $email_body = "Consulta sobre el tour: ".$categoria['categoria']['nombre']."\n\n";
 				$email_body .= "Datos del contacto:\n\n"."Nombre: {$nombre}\nEmail: {$email}\nTelefono: {$phone}\nConsulta:\n{$consulta}";
 				$headers = "From: {$email}";
 				
