@@ -147,6 +147,7 @@ if($resultado['result'] == 'true'){
             <div class="row">
                 <div class="col-lg-12">
                     <form name="sentMessage" id="contactForm" novalidate>
+                        <input type="hidden" name="id_cat" id="id_cat" value="<?=$_GET['id']?>" />
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

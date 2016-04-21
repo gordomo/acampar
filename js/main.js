@@ -185,7 +185,8 @@ $('.btn-submit-consulta').click(function () {
             "nombre": $('#name').val(),
             "email": $('#email_cons').val(),
             "phone": $('#phone_cons').val(),
-            "consulta": $('#message').val()
+            "consulta": $('#message').val(),
+            "id_cat": $('#id_cat').val()
         },
         dataType: 'json',
         success: function (data)
