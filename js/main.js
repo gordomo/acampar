@@ -176,7 +176,7 @@ $('.btn-submit').click(function () {
 });
 
 $('.btn-submit-consulta').click(function () {
-    $(this).button('Enviando..');
+    $(this).button('loading');
     $.ajax({
         type: "POST",
         url: "includes/controller_ajax.php",
