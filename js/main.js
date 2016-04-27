@@ -33,10 +33,20 @@ $(function () {
     $('a[href*="#"]:not([href="#"])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             var target = $(this.hash);
+            var desfasaje = 0;
+            if($('#nav-header').height() == 0)
+            {
+                desfasaje = 50;
+            }
+            else
+            {
+                desfasaje = 200;
+            }
+            
             target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
             if (target.length) {
                 $('html, body').animate({
-                    scrollTop: target.offset().top
+                    scrollTop: target.offset().top - desfasaje
                 }, 1000);
                 return false;
             }
@@ -84,7 +94,7 @@ $('.desplegadas').click(function ()
 {
     $(".desplegable-individual ol").html("");
     var titulo = $(this).text();
-    var id_categoria = this.id;
+    var id_categoria = $(this).attr("id");
     
     $.ajax({
         url: "includes/controller_ajax.php",
@@ -94,7 +104,9 @@ $('.desplegadas').click(function ()
         success: function (data) {
             if (data.result === 'ok') 
             {
+                console.log(data);
                 $(".desplegable-individual b").html(titulo);
+//                $(".tour-desc").html(descripcion);
                 $('.desplegable-individual').show('fast');
                 $('html, body').animate({
                     scrollTop: $('.desplegable-individual').offset().top - 200
@@ -254,6 +266,7 @@ $(document).ready(function () {
     {
         $(".no-event").show();
     }
+    $("#carousel-example-generic").carousel({interval: 2000});
 });
 
 

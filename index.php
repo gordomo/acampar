@@ -45,7 +45,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
     <body>
         <div id="fb-root"></div>
         <!-- Header -->
-        <header>
+        <header id="nav-header">
             <nav class="navbar navbar-default" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -103,11 +103,13 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     $i = 0;
                     foreach ($sliders_cabecera['sliders'] as $slider) {?>
                     <div class="item <?php if($i == 0) { echo 'active'; }?>">
-                        <img src="<?= $slider['url'] ?>" alt="..." class="img-responsive">
-                        <div class="carousel-caption">
-                            <h3><?= $slider['titulo'] ?></h3>
-                            <h4><?= $slider['descripcion'] ?></h4>
-                        </div>
+                        <a href="tour.php?id=<?= $slider['categoria_id'] ?>">
+                            <img src="<?= $slider['url'] ?>" alt="..." class="img-responsive">
+                            <div class="carousel-caption">
+                                <h3><?= $slider['titulo'] ?></h3>
+                                <h4><?= $slider['descripcion'] ?></h4>
+                            </div>
+                        </a>    
                     </div>
                     <?php 
                         $i ++;
@@ -119,6 +121,8 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                         <li data-target="#carousel-example-generic" data-slide-to="<?=$index?>" class="<?php if($index == 0) { echo 'active'; }?>"></li>
                     <?php } ?>
                 </ol>
+                <a class="carousel-control left" data-target="#carousel-example-generic" data-slide="prev"></a>
+		<a class="carousel-control right" data-target="#carousel-example-generic" data-slide="next"></a>
             </div> <!-- Carousel -->
         </section>
         <!-- tour Section -->
@@ -159,20 +163,23 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                             ?>
                             <div class="row">
                                 <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 40px">
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="9"><img src="img/iconos/aconcagua.png" class="img-responsive" /> Aconcagua</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="11"><img src="img/iconos/champaqui.png" class="img-responsive" /> Champaquí</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="13"><img src="img/iconos/cumbres_argentinas.png" class="img-responsive" /> Montañas Argentinas</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="1"><img src="img/iconos/aconcagua.png" class="img-responsive" /> Aconcagua</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="2"><img src="img/iconos/champaqui.png" class="img-responsive" /> Champaquí</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="3"><img src="img/iconos/cumbres_argentinas.png" class="img-responsive" /> Cumbres Argentinas</div>
                                 </div>
                                 <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 30px">
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="14"><img src="img/iconos/patagonia.png" class="img-responsive" /> Patagonia</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="12"><img src="img/iconos/quebrada_del_condorito.png" class="img-responsive" /> Quebrada del Condorito</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="10"><img src="img/iconos/sendas_incas.png" class="img-responsive" /> Sendas Incas</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="4"><img src="img/iconos/patagonia.png" class="img-responsive" /> Patagonia</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="5"><img src="img/iconos/quebrada_del_condorito.png" class="img-responsive" /> Quebrada del Condorito</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="6"><img src="img/iconos/sendas_incas.png" class="img-responsive" /> Sendas Incas</div>
                                 </div>
                             </div>
                             <hr/>
                             <div class="row desplegable-individual">
-                                <div class="col-md-6 col-xs-12 text-center">
-                                    <b></b>
+                                <div class="col-md-6 col-xs-12 text-center" style="font: 40px 'trebuchet MS', 'lucida sans';padding: .4em; color:#FE7800">
+                                    <div class="col-md-12"><b></b></div>
+                                    <div class="col-md-12">
+                                        <p class="tour-desc"></p>
+                                    </div>
                                 </div>
                                 <div class="col-md-6 col-xs-12 text-left">
                                     <ol class="circle-list"></ol>

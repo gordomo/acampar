@@ -126,13 +126,23 @@ $tours = getTours($mysqli);
                                         <label class="col-md-12">Tour Padre: </label>
                                         <select id="padre" name="padre" style="width: 80%;float: left; margin-right: 10px;margin-bottom: 15px;border-radius: 5px;border-color: #CCCCCC;">
                                             <option value="0">Sin Padre - Tour final</option>
+                                            <optgroup label="Principales" id="principales" <?php if($categoria['id_tour'] != 2){echo "style='display: none'";}?> >
+                                                <option value="1" <?php if(1 == $categoria['cat_superior']){echo "selected";} ?>>Aconcagua</option>
+                                                <option value="2" <?php if(2 == $categoria['cat_superior']){echo "selected";} ?>>Champaquí</option>
+                                                <option value="3" <?php if(3 == $categoria['cat_superior']){echo "selected";} ?>>Cumbres Argentinas</option>
+                                                <option value="4" <?php if(4 == $categoria['cat_superior']){echo "selected";} ?>>Patagonia</option>
+                                                <option value="5" <?php if(5 == $categoria['cat_superior']){echo "selected";} ?>>Quebrada del Condorito</option>
+                                                <option value="6" <?php if(6 == $categoria['cat_superior']){echo "selected";} ?>>Sendas Incas</option>
+                                            </optgroup>
+                                            <optgroup label="Secundarias">
                                             <?php
-                                                $categorias_padre = getCategorias($mysqli, $categoria['id_tour']);
+                                                $categorias_padre = getCategorias($mysqli);
                                                 foreach ($categorias_padre['categorias'] as $categoriaCombo) {
                                                     if($categoria['id'] != $categoriaCombo['id']){?>
                                                         <option <?php if($categoriaCombo['id'] == $categoria['cat_superior']){echo "selected";} ?> value="<?= $categoriaCombo['id'] ?>"><?= $categoriaCombo['nombre'] ?></option>
                                             <?php }
                                                 } ?>
+                                           </optgroup>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -221,6 +231,18 @@ $tours = getTours($mysqli);
                             },
                             dataType: "json"
                         });
+                    }
+                });
+                
+                $("#categoria").change(function() 
+                {
+                    if($(this).val() == 2)
+                    {
+                        $("#principales").show();
+                    }
+                    else
+                    {
+                        $("#principales").hide();
                     }
                 });
         </script>

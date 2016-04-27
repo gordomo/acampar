@@ -99,6 +99,7 @@ $tours = getTours($mysqli);
                                         <div class="col-md-12">
                                             <label>Categoria: </label>
                                             <select id="categoria" name="categoria" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
+                                                <option value="0">Seleccione una Categoria</option>
                                                 <?php foreach ($tours['tours'] as $tour) { ?>
 
                                                     <option value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
@@ -108,13 +109,23 @@ $tours = getTours($mysqli);
                                         </div>
                                         <div class="col-md-12">
                                             <label>Tour Padre: </label>
-                                            <select id="padre" name="padre" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
+                                            <select id="padre" name="padre" disabled="true" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
                                                 <option value="0">Tour Padre</option>
-                                                <?php foreach ($categorias['categorias'] as $categoria) { ?>
+                                                <optgroup label="Principales" id="principales" style="display: none">
+                                                    <option value="1">Aconcagua</option>
+                                                    <option value="2">Champaquí</option>
+                                                    <option value="3">Cumbres Argentinas</option>
+                                                    <option value="4">Patagonia</option>
+                                                    <option value="5">Quebrada del Condorito</option>
+                                                    <option value="6">Sendas Incas</option>
+                                                </optgroup>
+                                                <optgroup label="Secundarias">
+                                                    <?php foreach ($categorias['categorias'] as $categoria) { ?>
 
-                                                    <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
+                                                        <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
 
-                                                <?php } ?>
+                                                    <?php } ?>
+                                                </optgroup>
                                             </select>
                                         </div>
                                         <div class="col-md-12">
@@ -139,7 +150,7 @@ $tours = getTours($mysqli);
                                 <form action="tours-edit.php#editor_categorias" method="GET">
                                     <div class="col-md-4">
                                         <label class="">Tour padre: </label>
-                                        <select id="padre_buscar" name="padre_buscar">
+                                        <select id="padre_buscar" name="padre_buscar" >
                                             <option value="">seleccione una tour para filtrar</option>
                                                 <?php foreach ($categorias_busqueda['categorias'] as $categoria) { ?>
 
@@ -253,5 +264,17 @@ $tours = getTours($mysqli);
                     cantImagenesExtra --;
                     $("#cantidadImagenesExtras").val(cantImagenesExtra);
                 }    
-            });    
+            });
+            
+            $("#categoria").change(function(){
+                $("#padre").attr("disabled", false);
+                if($(this).val() == 2)
+                {
+                    $("#principales").show();
+                }
+                else
+                {
+                    $("#principales").hide();
+                }
+            });
         </script>
