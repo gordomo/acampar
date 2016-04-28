@@ -220,10 +220,9 @@ section h3.section-subheading {
 /******** fwslider *************/
 
 .cbp-fwslider {
-  position: relative;
-  margin: 0 0 10px;
-  overflow: hidden;
-  padding: 40px 0 0;
+    position: relative;
+    margin: 10px 0px;
+    overflow: hidden;
 }
 
 .cbp-fwslider ul {
