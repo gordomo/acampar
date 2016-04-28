@@ -612,7 +612,7 @@ switch ($action) {
                     header("Location: tour-edit.php?result=" . $result . "&mensaje=" . $message . "&id=".$id);
                 }
             }
-        }    
+        }
         // prepare and bind
         if ($stmt = $mysqli->prepare("UPDATE categorias SET `nombre` = ?, `foto` = ?, `descripcion_corta` = ?, `descripcion` = ?, `id_tour` = ?, `cat_superior` = ?, `lat` = ?, `long` = ? WHERE id = ?")) 
         {

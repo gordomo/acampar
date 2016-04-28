@@ -152,11 +152,21 @@ $tours = getTours($mysqli);
                                         <label class="">Tour padre: </label>
                                         <select id="padre_buscar" name="padre_buscar" >
                                             <option value="">seleccione una tour para filtrar</option>
+                                            <optgroup label="Principales">
+                                                    <option value="1">Aconcagua</option>
+                                                    <option value="2">Champaquí</option>
+                                                    <option value="3">Cumbres Argentinas</option>
+                                                    <option value="4">Patagonia</option>
+                                                    <option value="5">Quebrada del Condorito</option>
+                                                    <option value="6">Sendas Incas</option>
+                                            </optgroup>
+                                            <optgroup label="Secundarias">
                                                 <?php foreach ($categorias_busqueda['categorias'] as $categoria) { ?>
 
                                                     <option <?php if($categoria['id'] == $padre_buscar){echo "selected";} ?> value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
 
                                                 <?php } ?>
+                                            </optgroup>        
                                         </select>
                                     </div>
                                     <div class="col-md-4">

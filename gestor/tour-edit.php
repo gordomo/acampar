@@ -65,7 +65,7 @@ $tours = getTours($mysqli);
                                 <form id='newEntrada<?= $categoria['id'] ?>' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 32%;float:left;margin: 2px;border: 1px solid;padding: 2px;">
                                     <input type="hidden" value="editCategoria" name="action" id="action">
                                     <input type="hidden" value="0" name="cantImagenesExtras" id="cantImagenesExtras<?= $categoria['id'] ?>">
-                                    <input type="hidden" value="false" name="borrarFoto" id="borrarFoto<?= $categoria['id'] ?>">
+                                    <input type="hidden" value="0" name="borrarFoto" id="borrarFoto<?= $categoria['id'] ?>">
                                     <input type="hidden" value="<?= $categoria['id'] ?>" name="id" id="id">
                                     <input type="hidden" value="<?= $categoria['foto'] ?>" name="foto" id="foto<?= $categoria['id'] ?>">
                                     <div class="form-group">
@@ -164,7 +164,7 @@ $tours = getTours($mysqli);
                 var id = $(this).attr("id");
                 $("#foto"+id).val("");
                 $("#photo"+id).val("");
-                $("#borrarFoto"+id).val("true");
+                $("#borrarFoto"+id).val("1");
                 $("#newEntrada"+id).submit();
             });
             
