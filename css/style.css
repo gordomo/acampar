@@ -810,3 +810,6 @@ section#contacto .form-control:focus {
     color: grey;
     text-align: left;
 }
+.map{
+    background-image: url(../img/map-image.png);
+}

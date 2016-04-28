@@ -1,6 +1,12 @@
 <?php
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
+
+$resultado = getCategorias($mysqli, '', '', $_GET['id']);
+
+if($resultado['result'] == 'ok'){
+    $datos = $resultado['categorias'][0];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -30,93 +36,73 @@ include_once 'includes/functions.php';
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    
+  <style>
+      #map {
+        width: 100%;
+        height: 400px;
+      }
+    </style>
 </head>
 
 <body>
       <!-- Header -->
-    <header>
-<nav class="navbar navbar-default" role="navigation">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+<header>
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
 
-    </div>
-    <a class="navbar-brand" href="index.php"><img src="img/logos/logo.png" class="img-responsive center-block" alt=""></a>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+        </div>
+        <a class="navbar-brand" href="index.php"><img src="img/logos/logo.png" class="img-responsive center-block" alt=""></a>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
 
-      <ul class="nav navbar-nav navbar-left">
-        <li>
-            <a class="page-scroll" href="index.php#tour">Nuestros Tours</a>
-        </li>
-        <li>
-            <a class="page-scroll" href="index.php#promociones">Próximas Salidas</a>
-        </li>
-        <li>
-            <a class="page-scroll" href="index.php#noticias">Noticias</a>
-        </li>
-        <li>
-            <a class="page-scroll" href="index.php#facebook">Facebook</a>
-        </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="yacanto/index.html" target="_blanck" >Posta Yacanto</a>
-        </li>
-        <li>
-            <a class="page-scroll" href="index.php#calendario">Calendario</a>
-        </li>
-        <li>
-            <a class="page-scroll" href="index.php#empresa">La Empresa</a>
-        </li>
-        <li>
-            <a class="page-scroll" href="index.php#contacto">Contacto</a>
-        </li>
-    </ul>
-    </div><!-- /.navbar-collapse -->
-</nav>
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+                <a class="page-scroll" href="index.php#tour">Nuestros Tours</a>
+            </li>
+            <li>
+                <a class="page-scroll" href="index.php#promociones">Próximas Salidas</a>
+            </li>
+            <li>
+                <a class="page-scroll" href="index.php#noticias">Noticias</a>
+            </li>
+            <li>
+                <a class="page-scroll" href="index.php#facebook">Facebook</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="yacanto/index.html" target="_blanck" >Posta Yacanto</a>
+            </li>
+            <li>
+                <a class="page-scroll" href="index.php#calendario">Calendario</a>
+            </li>
+            <li>
+                <a class="page-scroll" href="index.php#empresa">La Empresa</a>
+            </li>
+            <li>
+                <a class="page-scroll" href="index.php#contacto">Contacto</a>
+            </li>
+        </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
 </header>
-
-<?php
-$resultado = getInfoCategoria($mysqli, $_GET['id']);
-if($resultado['result'] == 'true'){
-    $datos = $resultado['categoria'];
-}
-?>
- <section id="carousel">
-    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="img/slider/slider1.jpg" alt="..." class="img-responsive">
-      <div class="carousel-caption">
-          <h3>Titulo</h3>
-          <h4>Descripcion</h4>
-      </div>
-    </div>
-    <div class="item">
-        <img src="img/slider/slider2.jpg" alt="..." class="img-responsive">
+<section>
+    <div>
+        <img src="<?=$datos['foto']?>">
         <div class="carousel-caption">
             <h3><?=$datos['nombre']?></h3>
-            <h4>Descripcion</h4>
+            <h4><?=$datos['descripcion_corta']?></h4>
         </div>
     </div>
-  </div>
-  </div> <!-- Carousel -->
-</section>
+</section>      
    
 <section id="empresa">
     <div class="container ">
@@ -128,11 +114,28 @@ if($resultado['result'] == 'true'){
         </div>
     </div>
 </section>
-
-
+<?php if($datos['fotos_extras']){ ?>
+<section id="fotosExtras">
+    <div class="container">
+        <div id="cbp-fwslider" class="cbp-fwslider">
+            <ul>
+            <?php 
+                $i = 0;
+                foreach ($datos['fotos_extras'] as $slider) {?>
+                    <li>
+                        <img src="<?=$slider['url']?>" class="img-responsive"/>
+                    </li>
+            <?php 
+                    $i++;
+                }
+            ?>
+            </ul>
+        </div>
+   </div>
+</section>
+<?php } ?>  
 <figure class="map">
-    <div style='overflow:hidden;height:400px;width:100%;'><div id='gmap_canvas' style='height:400px;width:100%;'></div>
-    <style>#gmap_canvas img{max-width:none!important;background:none!important}</style></div> 
+    <div id="map"></div>
 </figure>
 
 
@@ -188,9 +191,7 @@ if($resultado['result'] == 'true'){
     <footer>
         <div class="container">
             <div class="row">
-          
                 <div class="col-md-12">
-
                     <ul class="list-inline social-buttons">
                         <li><a href="#"><i class="fa fa-twitter"></i></a>
                         </li>
@@ -201,39 +202,36 @@ if($resultado['result'] == 'true'){
                     </ul>
                     <span class="copyright">Copyright &copy; Acampartrek 2016</span>
                 </div>
-             
             </div>
         </div>
     </footer>
 
-
-
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
- <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;amp;sensor=false"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
    
     <!-- Custom Theme JavaScript -->
     <script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
     <script src="js/main.js"></script>
-
-    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
-    <a href='http://mapswebsite.net/es'>http://mapswebsite.net/es</a>
-    <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=ecbfea3dff5104b3614ca3fd2456ff39559a417c'></script>
-    <script type='text/javascript'>
-        function init_map(){
-                var myOptions = {zoom:11,center:new google.maps.LatLng(-34,-64),mapTypeId: google.maps.MapTypeId.TERRAIN};
-                map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
-                marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(-34,-64)});
-                infowindow = new google.maps.InfoWindow({content:'<strong><?=$datos['nombre']?></strong><br>-32.108617,-64.760455<br><br>'});
-                google.maps.event.addListener(marker, 'click', function(){
-                    infowindow.open(map,marker);
-                });
-                infowindow.open(map,marker);
-            }
-            google.maps.event.addDomListener(window, 'load', init_map);
+    <script src="js/jquery.cbpFWSlider.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+        $(document).ready(function () {
+          var mapDiv = document.getElementById('map');
+          var map = new google.maps.Map(mapDiv, {
+            center: {lat: <?=$datos['lat']?>, lng: <?=$datos['long']?>},
+            zoom: 15,
+            disableDefaultUI: true,
+            disableDoubleClickZoom: true,
+            draggable: false,
+            fullscreenControl: false,
+            keyboardShortcuts: false,
+            scrollwheel: false
+          });
+        });
     </script>
+
 </body>
 
 </html>
