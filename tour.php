@@ -222,12 +222,13 @@ if($resultado['result'] == 'ok'){
           var map = new google.maps.Map(mapDiv, {
             center: {lat: <?=$datos['lat']?>, lng: <?=$datos['long']?>},
             zoom: 15,
-            disableDefaultUI: true,
+//            disableDefaultUI: true,
             disableDoubleClickZoom: true,
-            draggable: false,
+//            draggable: false,
             fullscreenControl: false,
             keyboardShortcuts: false,
-            scrollwheel: false
+            scrollwheel: false,
+            mapTypeId: google.maps.MapTypeId.HYBRID 
           });
         });
     </script>
