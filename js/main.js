@@ -267,24 +267,44 @@ $(document).ready(function () {
         $(".no-event").show();
     }
     $("#carousel-example-generic").carousel({interval: 2000});
+    
+    
+    var isMobile = {
+        Windows: function() {
+            return /IEMobile/i.test(navigator.userAgent);
+        },
+        Android: function() {
+            return /Android/i.test(navigator.userAgent);
+        },
+        BlackBerry: function() {
+            return /BlackBerry/i.test(navigator.userAgent);
+        },
+        iOS: function() {
+            return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        },
+        any: function() {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+        }
+    };
+        
+    if(isMobile.any())
+    {
+        $("#whatsapp").show();
+
+        if(isMobile.Android())
+        {
+            $("#whatsapp").attr("href", "intent://send/543415427965#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end");
+        }
+        else
+        {
+            $("#whatsapp").attr("href", "tel:+543415427965");
+        }
+    }
 });
 
 
 
 $(function () {
-    /*
-     - how to call the plugin:
-     $( selector ).cbpFWSlider( [options] );
-     - options:
-     {
-     // default transition speed (ms)
-     speed : 500,
-     // default transition easing
-     easing : 'ease'
-     }
-     - destroy:
-     $( selector ).cbpFWSlider( 'destroy' );
-     */
 
     $('#cbp-fwslider').cbpFWSlider();
 
@@ -303,48 +323,3 @@ $(window).load(function () {
         }
     });
 });
-
-/*
- * REMEMBER TO CHANGE TO YOUR APP ID AND CHANGE data-href TO SUIT YOU
- */
-//(function(d, s, id) {
-//  var js, fjs = d.getElementsByTagName(s)[0];
-//  if (d.getElementById(id)) return;
-//  js = d.createElement(s); js.id = id;
-//  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=ADD YOUR APP ID HERE";
-//  fjs.parentNode.insertBefore(js, fjs);
-//}(document, 'script', 'facebook-jssdk'));
-//$(window).bind("load resize", function(){
-//  var container_width = $('#container').width();
-//    $('#container').html('<div class="fb-like-box" ' +
-//    'data-href="https://web.facebook.com/acampartrek/?fref=ts"' +
-//    ' data-width="' + container_width + '" data-height="480" data-show-faces="true" ' +
-//    'data-stream="true" data-header="true"></div>');
-//    FB.XFBML.parse( );
-//});
-
-/*$('.desplegable-ciclo').click(function()
- {
- $('.desplegable-ciclo-individual').show('fast');
- $('html, body').animate({
- scrollTop: $('.desplegable-ciclo-individual').offset().top - 100
- }, 1000);
- });*/
-
-/*$('.desplegable-trekking').click(function()
- {
- $("#append-li").html("");
- $.getJSON( "json/"+this.id+".json", function( data ){
- $.each( data, function( i, val ) {
- if(i == 'nombre'){
- $("#apend-h3").html(val);
- }else{
- $("#append-li").append( "<li class='alert alert-success'><a href='#'>" + val + "</li>" );
- }
- });
- });
- $('.desplegable-trekking-individual').show('fast');
- $('html, body').animate({
- scrollTop: $('.desplegable-trekking-individual').offset().top - 100
- }, 1000);
- });*/

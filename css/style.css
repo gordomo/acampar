@@ -812,3 +812,6 @@ section#contacto .form-control:focus {
 .map{
     background-image: url(../img/map-image.png);
 }
+#whatsapp{
+    display: none;
+}

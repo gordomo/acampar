@@ -442,6 +442,9 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                                         <textarea class="form-control" placeholder="Tu mensaje | Your Message *" id="message" required data-validation-required-message="Please enter a message." rows="10"></textarea>
                                         <p class="help-block text-danger"></p>
                                     </div>
+                                    <div class="form-group">
+                                        <p style="color: white;">Nuestros teléfonos son (0341) 4351750 y (0341) 155427965 . Si llama fuera de Argentina deberá agregar +54</p>
+                                    </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-lg-12 text-center">
@@ -462,7 +465,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     <div class="col-md-12">
 
                         <ul class="list-inline social-buttons">
-                            <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
+                            <li><a href="#" id="whatsapp"><i class="fa fa-whatsapp"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
