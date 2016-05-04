@@ -1541,4 +1541,29 @@ switch ($action) {
         
         header("Location: noticias-edit.php?result=" . $result . "&mensaje=" . $message);
         break;
+        
+    case "editSeguimientoSatalital":
+        
+        $texto = $_POST['texto'];
+        
+        if ($stmt = $mysqli->prepare("UPDATE seguimiento SET texto = ?")) 
+        {
+            $stmt->bind_param("s", $texto);
+
+            if (!$stmt->execute()) 
+            {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+            }
+
+            $stmt->close();
+        } 
+        else
+        {
+            $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+            $result  = "ko";
+        }
+        
+        header("Location: seguimiento-satelital-edit.php?result=" . $result . "&mensaje=" . $message);
+        break;
 }

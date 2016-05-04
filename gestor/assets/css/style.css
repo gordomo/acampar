@@ -1179,30 +1179,31 @@ PANELS CONFIGURATIONS
 }
 
 .panel-6 {
-    background: url(../img/panel_6.jpg) no-repeat center top;
+    background: url(../../../img/spot1.jpg);
     text-align: center;
-    background-position: center center;
+    background-size: cover;
+    cursor: pointer;
 }
 .panel-6 .panel-6-header {
-    background: rgba(0, 47, 134, 0.6);
-    padding: 3px;
-    margin-bottom: 15px;
+	background: rgba(120, 121, 123, 0.6);
+	padding: 3px;
+	margin-bottom: 15px;
 }
 .panel-6 h1 {
-    color: #f2f2f2;
+	color: #f2f2f2;
 }
 .panel-6 h5 {
-    font-weight: 200;
-    margin-top: 10px;
-    color: white;
+	font-weight: 200;
+	margin-top: 10px;
+	color: white;
 }
 .panel-6 footer {
-    color: white;
+	color: white;
 }
 .panel-6 footer h5 {
-    margin-left:10px; 
-    margin-right: 10px;
-    font-weight: 700;
+	margin-left:10px; 
+	margin-right: 10px;
+	font-weight: 700;
 }
 
 /*Green Panel*/

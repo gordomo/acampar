@@ -36,6 +36,12 @@ MAIN SIDEBAR MENU
                     <span>Noticias</span>
                 </a>
             </li>
+            <li class="sub-menu">
+                <a href="seguimiento-satelital-edit.php">
+                    <i class="fa fa-compass"></i>
+                    <span>Seguimiento Satelital</span>
+                </a>
+            </li>
         </ul>
         <!-- sidebar menu end-->
     </div>

@@ -396,7 +396,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                         <img class="img-responsive center-block" src="img/spot1.jpg" height="250" width="250">
                     </div>
                     <div class="col-md-4 text-center">
-                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='seguimiento/index.html'">Seguí el viaje</button>
+                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='seguimiento/index.php'">Seguí el viaje</button>
                     </div>
                     <div class="col-md-4">
                         <img class="img-responsive center-block" src="img/spot2.jpg" height="250" width="250">

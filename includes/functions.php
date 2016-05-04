@@ -1229,3 +1229,24 @@ function getToursFromCategorias($mysqli, $id = false)
         }
     }
 }    
+
+    function getSeguimientoSatelital($mysqli)
+    {
+        $result = "ok";
+        $message = 'ok';
+        if ($stmt = $mysqli->prepare("SELECT texto FROM seguimiento")) 
+        {
+            if (!$stmt->execute())
+            {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+
+                return array("result" => $result, "mensaje" => $message, "respuesta" => "");
+            }
+            
+            $stmt->execute();
+            $stmt->bind_result($texto);
+            $stmt->fetch();
+            return array("result" => $result, "mensaje" => $message, "texto" => $texto);
+        }
+    }

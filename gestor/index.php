@@ -97,11 +97,22 @@ if ($logged == 'out') {
                                 </div>
                             </div>
                         </div>
-                        <!-- PANEL 4 -->
+                        <!-- PANEL 5 -->
                         <div class="col-md-4 mb">
                             <div class="panel-5 pn">
                                 <div class="panel-5-header">
                                     <h5>NOTICIAS</h5>
+                                </div>
+                                <div class="centered">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- PANEL 6 -->
+                        <div class="col-md-4 mb">
+                            <div class="panel-6 pn">
+                                <div class="panel-6-header">
+                                    <h5>SEGUIMIENTO SATELITAL</h5>
                                 </div>
                                 <div class="centered">
 
@@ -129,6 +140,9 @@ if ($logged == 'out') {
             });
             $('.panel-5').click(function () {
                 location.href = 'noticias-edit.php';
+            });
+            $('.panel-6').click(function () {
+                location.href = 'seguimiento-satelital-edit.php';
             });
         </script>
 
