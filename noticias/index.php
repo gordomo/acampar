@@ -104,7 +104,11 @@ include_once '../includes/functions.php';
             ?>
                     <div class="boxed sticky push-down-45">
                         <div class="meta">
-                            <img class="wp-post-image" src="../<?=$slider['url']?>" alt="<?=$slider['titulo']?>" width="500" height="324" />
+                            <div class="wp-post-image">
+                                <?php if($slider['url'] != '' ) { ?>
+                                    <img class="wp-post-image" src="../<?=$slider['url']?>" alt="<?=$slider['titulo']?>" width="500" height="324" />
+                                <?php } else if($slider['video'] != '' ) { echo $slider['video']; }?>
+                            </div>
                             <div class="meta__container">
                                 <div class="row">
                                     <div class="col-xs-12  col-sm-8">
