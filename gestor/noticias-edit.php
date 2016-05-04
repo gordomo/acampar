@@ -73,6 +73,10 @@ $noticias = getNoticias($mysqli, false, true);
                                             <input type="file" accept="file_extension|image"  id="photo" name="photo" autofocus>
                                         </div>
                                         <div class="form-group">
+                                            <label class=" col-md-12 control-label">Video: </label>
+                                            <input type="text" id="video" name="video" autofocus>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-md-12">Habilitado: </label>
                                             <select id="habilitado" name="habilitado" style="width: 80%; margin-right: 10px;margin-bottom: 15px;border-radius: 5px;border-color: #CCCCCC;">
                                                 <option value="1">Si</option>
@@ -112,6 +116,10 @@ $noticias = getNoticias($mysqli, false, true);
                                         <label class=" col-md-12 control-label">Imagen: </label>
                                         <input type="file" accept="file_extension|image"  id="photo" name="photo" autofocus>
                                         <img class="img-responsive" src="../<?=$slider['url']?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-2 control-label">Video: </label>
+                                        <input type="text" id="video" name="video" class="form-control" value="<?=$slider['video']?>">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-12">Habilitado: </label>

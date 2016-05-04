@@ -275,7 +275,7 @@ function getNoticias($mysqli, $id = false, $todas = false, $limit = false, $id_n
     $types = array();
     $values = array();
 
-    $prep_stmt = "SELECT id, titulo, texto, fecha, url, habilitado FROM `noticias` WHERE 1 = 1";
+    $prep_stmt = "SELECT id, titulo, texto, fecha, url, habilitado, video FROM `noticias` WHERE 1 = 1";
     
     if ($id) 
     {
@@ -325,11 +325,11 @@ function getNoticias($mysqli, $id = false, $todas = false, $limit = false, $id_n
             $result  = "ko";
         }
         
-        $stmt->bind_result($id, $titulo, $texto, $fecha, $url, $habilitado);
+        $stmt->bind_result($id, $titulo, $texto, $fecha, $url, $habilitado, $video);
         
         while ($stmt->fetch()) 
         {
-            $noticias[] = array("id"=>$id, "titulo"=>$titulo, "texto"=>$texto, "fecha"=>$fecha, "url"=>$url, "habilitado"=>$habilitado);
+            $noticias[] = array("id"=>$id, "titulo"=>$titulo, "texto"=>$texto, "fecha"=>$fecha, "url"=>$url, "habilitado"=>$habilitado, "video"=>$video);
         }
         
         $stmt->close();

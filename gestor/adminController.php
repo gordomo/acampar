@@ -1255,6 +1255,7 @@ switch ($action) {
         
         $titulo = $_POST['titulo'];
         $texto = $_POST['texto'];
+        $video = $_POST['video'];
         $habilitado = $_POST['habilitado'];
         $fecha = date("Y-m-d");
         
@@ -1300,9 +1301,9 @@ switch ($action) {
                     $ruta = substr($ruta, 3);
                     
                     // prepare and bind
-                    if ($stmt = $mysqli->prepare("INSERT INTO noticias (titulo, texto, fecha, url, habilitado) values (?, ?, ?, ?, ?)")) 
+                    if ($stmt = $mysqli->prepare("INSERT INTO noticias (titulo, texto, fecha, url, habilitado, video) values (?, ?, ?, ?, ?, ?)")) 
                     {
-                        $stmt->bind_param("ssssi", $titulo, $texto, $fecha, $ruta, $habilitado);
+                        $stmt->bind_param("ssssis", $titulo, $texto, $fecha, $ruta, $habilitado, htmlentities($video));
 
                         if (!$stmt->execute()) 
                         {
@@ -1424,6 +1425,7 @@ switch ($action) {
         $id = $_POST['id'];
         $titulo = $_POST['titulo'];
         $texto = $_POST['texto'];
+        $video = $_POST['video'];
         $habilitado = $_POST['habilitado'];
         $fecha = date("Y-m-d");
         $ruta = (isset($_POST['foto']) && $_POST['foto'] !== '') ? $_POST['foto'] : "img/categorias/no-image.gif";
@@ -1521,9 +1523,9 @@ switch ($action) {
         }
         
         // prepare and bind
-        if ($stmt = $mysqli->prepare("UPDATE noticias SET titulo = ?, texto = ?, fecha = ?, url = ?, habilitado = ? WHERE id = ?")) 
+        if ($stmt = $mysqli->prepare("UPDATE noticias SET titulo = ?, texto = ?, fecha = ?, url = ?, habilitado = ?, video = ? WHERE id = ?")) 
         {
-            $stmt->bind_param("ssssii", $titulo, $texto, $fecha, $ruta, $habilitado, $id);
+            $stmt->bind_param("ssssisi", $titulo, $texto, $fecha, $ruta, $habilitado, htmlentities($video) ,$id);
 
             if (!$stmt->execute()) 
             {
