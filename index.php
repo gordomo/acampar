@@ -163,14 +163,56 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                             ?>
                             <div class="row">
                                 <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 40px">
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="1"><img src="img/iconos/aconcagua.png" class="img-responsive" /> Aconcagua</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="2"><img src="img/iconos/champaqui.png" class="img-responsive" /> Champaquí</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="3"><img src="img/iconos/cumbres_argentinas.png" class="img-responsive" /> Cumbres Argentinas</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="1">
+                                        <div class="col-md-12">
+                                            <img id="icono1" src="img/iconos/aconcagua.png" class="img-responsive" style="display:none"/> 
+                                        </div>    
+                                        <div class="col-md-12">
+                                            Aconcagua
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="2">
+                                        <div class="col-md-12">
+                                            <img id="icono2" src="img/iconos/champaqui.png" class="img-responsive" style="display:none"/> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            Champaquí
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="3">
+                                        <div class="col-md-12">
+                                            <img id="icono3" src="img/iconos/cumbres_argentinas.png" class="img-responsive" style="display:none"/> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            Cumbres Argentinas
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 col-xs-12 text-center" style="padding-bottom: 30px">
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="4"><img src="img/iconos/patagonia.png" class="img-responsive" /> Patagonia</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="5"><img src="img/iconos/quebrada_del_condorito.png" class="img-responsive" /> Quebrada del Condorito</div>
-                                    <div class="col-md-4 col-xs-12 desplegadas" id="6"><img src="img/iconos/sendas_incas.png" class="img-responsive" /> Sendas Incas</div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="4">
+                                        <div class="col-md-12">
+                                            <img id="icono4" src="img/iconos/patagonia.png" class="img-responsive" style="display:none"/> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            Patagonia
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="5">
+                                        <div class="col-md-12">
+                                            <img id="icono5" src="img/iconos/quebrada_del_condorito.png" class="img-responsive" style="display:none"/> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            Quebrada del Condorito
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-4 col-xs-12 desplegadas" id="6">
+                                        <div class="col-md-12">
+                                            <img id="icono6" src="img/iconos/sendas_incas.png" class="img-responsive" style="display:none"/> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            Sendas Incas
+                                        </div>    
+                                    </div>
                                 </div>
                             </div>
                             <hr/>
@@ -489,7 +531,15 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
         <script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
 
         <script src="js/main.js"></script>
-
+        <script>
+            $(".desplegadas").hover(function(){
+                var id = $(this).attr("id");
+                $("#icono"+id).show('fast');
+            },function(){
+                var id = $(this).attr("id");
+                $("#icono"+id).hide('fast');
+            });
+        </script>
     </body>
 
 </html>

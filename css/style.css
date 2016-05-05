@@ -615,26 +615,11 @@ section#contacto .form-control:focus {
 
 .desplegadas{
     cursor: pointer;
+    font-size: 20px;
 }
 
 .desplegadas img{
     margin:auto;
-}
-
-.desplegadas h3{
-    top: 45%;
-    margin: 0;
-    padding-top: 100px;
-    text-transform: uppercase;
-    color: white;
-    cursor: pointer;
-    -webkit-transition: font-size 1s; /* Safari */
-    transition: font-size 1s;
-}
-
-.desplegadas:hover h3{
-    font-size: 28px;
-
 }
 
 .desplegable-trekking-individual .desplegadas-individual {
