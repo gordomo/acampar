@@ -616,6 +616,11 @@ section#contacto .form-control:focus {
 .desplegadas{
     cursor: pointer;
     font-size: 20px;
+    min-height: 150px;
+}
+.desplegadas:hover{
+    border: 1px solid #ccc;
+    border-radius: 90px;
 }
 
 .desplegadas img{
