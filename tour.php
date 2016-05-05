@@ -219,18 +219,34 @@ if($resultado['result'] == 'ok'){
     <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script>
         $(document).ready(function () {
-          var mapDiv = document.getElementById('map');
-          var map = new google.maps.Map(mapDiv, {
-            center: {lat: <?=$datos['lat']?>, lng: <?=$datos['long']?>},
-            zoom: 15,
-//            disableDefaultUI: true,
-            disableDoubleClickZoom: true,
-//            draggable: false,
-            fullscreenControl: false,
-            keyboardShortcuts: false,
-            scrollwheel: false,
-            mapTypeId: google.maps.MapTypeId.HYBRID 
-          });
+            var mapDiv = document.getElementById('map');
+            var map = new google.maps.Map(mapDiv, {
+                center: {lat: <?=$datos['lat']?>, lng: <?=$datos['long']?>},
+                zoom: 15,
+  //            disableDefaultUI: true,
+                disableDoubleClickZoom: true,
+  //            draggable: false,
+                fullscreenControl: false,
+                keyboardShortcuts: false,
+                scrollwheel: false,
+                mapTypeId: google.maps.MapTypeId.HYBRID 
+            });
+          
+            var flightPlanCoordinates = [
+                {lat: 37.772, lng: -122.214},
+                {lat: 21.291, lng: -157.821},
+                {lat: -18.142, lng: 178.431},
+                {lat: -27.467, lng: 153.027}
+              ];
+            var flightPath = new google.maps.Polyline({
+                path: flightPlanCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+              });
+
+            flightPath.setMap(map);
         });
     </script>
 

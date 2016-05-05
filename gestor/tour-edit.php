@@ -113,6 +113,42 @@ $tours = getTours($mysqli);
                                         <input type="text" value="<?=$categoria['long']?>" id="long" name="long" class="form-control" style="width: 50%; float: left; margin-bottom: 10px">
                                     </div>
                                     <div class="form-group">
+                                        <label class=" col-md-12 ">Puntos del recorrido: </label>
+                                        <label class=" col-md-12 " style="width: 50%; float: left">Latitud: </label>
+                                        <label class=" col-md-12 " style="width: 50%; float: left">Longitud: </label>
+                                        <div class="col-md-12" id="puntosRecorridos" style="margin-top: 10px;">
+                                            <?php 
+                                                $i = 1;
+                                                if($categoria['polynes'] != null){
+                                                foreach ($categoria['polynes'] as $punto){
+                                            ?>
+                                                <div class="col-md-12 puntosRecorrido<?=$i?>" style="margin-bottom: 2px">
+                                                    <div class="col-md-5">
+                                                        <input type="text" value="<?=$punto['lat']?>" name="lat<?=$i?>" class="form-control lat">
+                                                    </div>    
+                                                    <div class="col-md-5">
+                                                        <input type="text" value="<?=$punto['long']?>" id="long<?=$i?>" name="long<?=$i?>" class="form-control long">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <a href='javascript:eliminarPuntoRecorrido(<?=$i?>);' id="<?=$i?>" class="btn btn-default eliminarPuntoRecorrido"> - </a>
+                                                    </div>    
+                                                </div>    
+                                            <?php 
+                                                $i++;
+                                                } }
+                                            ?>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                <div class="col-md-10">
+                                                    <a class="btn btn-default agregarPunto" style="width: 100%"> + </a>
+                                                </div>    
+                                            </div>    
+                                        </div>
+                                        <input name="idPuntosRecorridos" id="idPuntosRecorridos" type="hidden">
+                                        <input name="cantPuntosRecorridos" id="cantPuntosRecorridos" value="<?=$i?>" type="hidden">
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-md-12">Categoria: </label>
                                         <select id="categoria" name="categoria" style="width: 80%;float: left; margin-right: 10px;margin-bottom: 15px;border-radius: 5px;border-color: #CCCCCC;">
                                             <?php foreach ($tours['tours'] as $tour) { ?>
@@ -207,6 +243,47 @@ $tours = getTours($mysqli);
                     cantImagenesExtra --;
                     $("#cantidadImagenesExtras").val(cantImagenesExtra);
                 }    
+            });
+            
+            function eliminarPuntoRecorrido(id)
+            {
+                $('.puntosRecorrido'+id).remove();
+            };
+            
+            $(".agregarPunto").click(function(){
+                
+                var cantPuntos = $("#cantPuntosRecorridos").val();
+                cantPuntos ++;
+                $("#cantPuntosRecorridos").val(cantPuntos);
+                
+                $("#puntosRecorridos").append(  "<div class='col-md-12 puntosRecorrido" + cantPuntos + "' style='margin-bottom: 2px'>" + 
+                                                    "<div class='col-md-5'>" +
+                                                        "<input type='text' name='lat"+ cantPuntos + "' class='form-control lat'> "+
+                                                    "</div>" +
+                                                    "<div class='col-md-5'>"+
+                                                        "<input type='text' id='long"+ cantPuntos + "' name='long"+ cantPuntos + "' class='form-control long '>" +
+                                                    "</div>" +
+                                                    "<div class='col-md-2'>"+
+                                                        "<a href='javascript:eliminarPuntoRecorrido("+cantPuntos+");' id="+ cantPuntos + " class='btn btn-default eliminarPuntoRecorrido'> - </a>" +
+                                                    "</div>    "+
+                                                "</div>");
+                                                
+                
+            });
+            
+            $(".form").submit(function(){
+                
+                var puntos = [];
+                
+                $.each( $(".lat"), function() {
+                        
+                        puntos.push({lat:$(this).val(),long:$('#long'+$(this).attr('id')).val()});
+                        
+                });
+                $("#idPuntosRecorridos").val(JSON.stringify(puntos));
+                
+                $(".form").submit();
+                
             });
             
             $(".eliminar").click(function ()

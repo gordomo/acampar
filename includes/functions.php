@@ -34,7 +34,7 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
     $types = array();
     $values = array();
 
-    $prep_stmt = "SELECT id, nombre, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long` FROM categorias WHERE 1 = 1";
+    $prep_stmt = "SELECT id, nombre, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long`, `polylines` FROM categorias WHERE 1 = 1";
     
     if ($id_tour != '') 
     {
@@ -83,11 +83,11 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
             $result  = "ko";
         }
         
-        $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long);
+        $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long, $polynes);
         
         while ($stmt->fetch()) 
         {
-            $categorias[] = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior, "lat"=>$lat, "long"=>$long);
+            $categorias[] = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior, "lat"=>$lat, "long"=>$long, "polynes"=>  json_decode($polynes, true));
         }
         $stmt->close();
         

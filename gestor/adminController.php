@@ -107,8 +107,8 @@ switch ($action) {
         
         $result  = "ok";
         $message = "Categoria agregada correctamente";
-        
         $nombre = $_POST['nombre'];
+        $cantidadPuntosRecorridos = $_POST['cantidadPuntosRecorridos'];
         $descCorta = $_POST['descCorta'];
         $desc = $_POST['desc'];
         $lat = $_POST['lat'];
@@ -118,6 +118,12 @@ switch ($action) {
         $ruta = (isset($_POST['foto']) && $_POST['foto'] !== '') ? $_POST['foto'] : "img/categorias/no-image.gif";
         $rutasExtras = array();
         $insertedID = 0;
+        $puntosDelRecorrido = array();
+        
+        for ($i = 1; $i < $cantidadPuntosRecorridos; $i++) {
+            $puntosDelRecorrido[] = array("lat"=>$_POST['lat'.$i], "long"=>$_POST['long'.$i]);
+        }
+        $puntosDelRecorridoJson = json_encode($puntosDelRecorrido, true);
         
         foreach ($_FILES as $key => $value) 
         {
@@ -188,9 +194,9 @@ switch ($action) {
         }
         
         // prepare and bind
-        if ($stmt = $mysqli->prepare("INSERT INTO categorias (`nombre`, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long`) values (?, ?, ?, ?, ?, ?, ?, ?)")) 
+        if ($stmt = $mysqli->prepare("INSERT INTO categorias (`nombre`, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long`, `polylines`) values (?, ?, ?, ?, ?, ?, ?, ?, ?)")) 
         {
-            $stmt->bind_param("ssssiiss", $nombre, $ruta, $descCorta, $desc, $categoria, $padre, $lat, $long);
+            $stmt->bind_param("ssssiisss", $nombre, $ruta, $descCorta, $desc, $categoria, $padre, $lat, $long, $puntosDelRecorridoJson);
 
             if (!$stmt->execute()) 
             {
@@ -424,7 +430,6 @@ switch ($action) {
         break;    
         
     case "editCategoria":
-        
         $result  = "ok";
         $message = "Categoria editada correctamente";
         $id = $_POST['id'];
@@ -439,6 +444,7 @@ switch ($action) {
         $rutasExtras = array();
         $rutasExtrasNuevas = array();
         $borrarFoto = (isset($_POST['borrarFoto']) && $_POST['borrarFoto'] !== '') ? $_POST['borrarFoto'] : false;
+        $idPuntosRecorridos = $_POST['idPuntosRecorridos'];
 
         if($borrarFoto)
         {
@@ -614,9 +620,9 @@ switch ($action) {
             }
         }
         // prepare and bind
-        if ($stmt = $mysqli->prepare("UPDATE categorias SET `nombre` = ?, `foto` = ?, `descripcion_corta` = ?, `descripcion` = ?, `id_tour` = ?, `cat_superior` = ?, `lat` = ?, `long` = ? WHERE id = ?")) 
+        if ($stmt = $mysqli->prepare("UPDATE categorias SET `nombre` = ?, `foto` = ?, `descripcion_corta` = ?, `descripcion` = ?, `id_tour` = ?, `cat_superior` = ?, `lat` = ?, `long` = ?, polylines = ? WHERE id = ?")) 
         {
-            $stmt->bind_param("ssssiissi", $nombre, $ruta, $descCorta, $desc, $categoria, $padre, $lat, $long, $id);
+            $stmt->bind_param("ssssiisssi", $nombre, $ruta, $descCorta, $desc, $categoria, $padre, $lat, $long, $idPuntosRecorridos, $id);
 
             if (!$stmt->execute()) 
             {

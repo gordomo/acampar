@@ -97,6 +97,19 @@ $tours = getTours($mysqli);
                                             <input type="text" id="coordy" name="long" class="form-control" style="width: 50%; float: left; margin-bottom: 10px">
                                         </div>
                                         <div class="col-md-12">
+                                            <label class=" col-md-12 " >Puntos del recorrido: </label>
+                                            <div class="col-md-12">
+                                                <button type="button" id="sumarPunto" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> + </button>
+                                                <button type="button" id="restarPunto" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> - </button>
+                                                <input name="cantidadPuntosRecorridos" id="cantidadPuntosRecorridos" value="0" type="hidden">
+                                                <div class="col-md-12" id="puntosRecorridos" style="margin-top: 10px; display: none">
+                                                    <label class=" col-md-6">Latitud: </label>
+                                                    <label class=" col-md-6">Longitud: </label>
+                                                </div>
+                                            </div>
+                                                
+                                        </div>
+                                        <div class="col-md-12">
                                             <label>Categoria: </label>
                                             <select id="categoria" name="categoria" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
                                                 <option value="0">Seleccione una Categoria</option>
@@ -274,6 +287,33 @@ $tours = getTours($mysqli);
                     cantImagenesExtra --;
                     $("#cantidadImagenesExtras").val(cantImagenesExtra);
                 }    
+            });
+            
+            $("#sumarPunto").click(function()
+            {
+                $("#puntosRecorridos").show();
+                var cantidadPuntosRecorridos = $("#cantidadPuntosRecorridos").val();
+                cantidadPuntosRecorridos ++;
+                $("#cantidadPuntosRecorridos").val(cantidadPuntosRecorridos);
+                $('#puntosRecorridos').append('<input class="form-control" style="width:50%; float: left;" type="text" id="lat'+cantidadPuntosRecorridos+'" name="lat'+cantidadPuntosRecorridos+'"><input style="width:50%;float: left;" class="form-control" type="text" id="long'+cantidadPuntosRecorridos+'" name="long'+cantidadPuntosRecorridos+'">');
+            });
+            
+            $("#restarPunto").click(function()
+            {
+                var cantidadPuntosRecorridos = $("#cantidadPuntosRecorridos").val();
+                
+                if(cantidadPuntosRecorridos != 0)
+                {
+                    $('#lat'+cantidadPuntosRecorridos).remove();
+                    $('#long'+cantidadPuntosRecorridos).remove();
+                    cantidadPuntosRecorridos --;
+                    $("#cantidadPuntosRecorridos").val(cantidadPuntosRecorridos);
+                    if(!cantidadPuntosRecorridos)
+                    {
+                        $("#puntosRecorridos").hide();
+                    }
+                }
+                
             });
             
             $("#categoria").change(function(){
