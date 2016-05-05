@@ -3,7 +3,6 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 
 $resultado = getCategorias($mysqli, '', '', $_GET['id']);
-
 if($resultado['result'] == 'ok'){
     $datos = $resultado['categorias'][0];
 }
@@ -222,7 +221,7 @@ if($resultado['result'] == 'ok'){
             var mapDiv = document.getElementById('map');
             var map = new google.maps.Map(mapDiv, {
                 center: {lat: <?=$datos['lat']?>, lng: <?=$datos['long']?>},
-                zoom: 15,
+                zoom: 13,
   //            disableDefaultUI: true,
                 disableDoubleClickZoom: true,
   //            draggable: false,
@@ -233,10 +232,10 @@ if($resultado['result'] == 'ok'){
             });
           
             var flightPlanCoordinates = [
-                {lat: 37.772, lng: -122.214},
-                {lat: 21.291, lng: -157.821},
-                {lat: -18.142, lng: 178.431},
-                {lat: -27.467, lng: 153.027}
+                <?php foreach ($datos['polynes'] as $polynes){?>
+                        {lat: <?=$polynes['lat']?>, lng: <?=$polynes['long']?>},
+                <?php }?>
+                    
               ];
             var flightPath = new google.maps.Polyline({
                 path: flightPlanCoordinates,

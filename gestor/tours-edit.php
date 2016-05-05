@@ -124,21 +124,12 @@ $tours = getTours($mysqli);
                                             <label>Tour Padre: </label>
                                             <select id="padre" name="padre" disabled="true" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
                                                 <option value="0">Tour Padre</option>
-                                                <optgroup label="Principales" id="principales" style="display: none">
-                                                    <option value="1">Aconcagua</option>
-                                                    <option value="2">Champaquí</option>
-                                                    <option value="3">Cumbres Argentinas</option>
-                                                    <option value="4">Patagonia</option>
-                                                    <option value="5">Quebrada del Condorito</option>
-                                                    <option value="6">Sendas Incas</option>
-                                                </optgroup>
-                                                <optgroup label="Secundarias">
-                                                    <?php foreach ($categorias['categorias'] as $categoria) { ?>
-
-                                                        <option value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
-
-                                                    <?php } ?>
-                                                </optgroup>
+                                                <option value="1">Aconcagua</option>
+                                                <option value="2">Champaquí</option>
+                                                <option value="3">Cumbres Argentinas</option>
+                                                <option value="4">Patagonia</option>
+                                                <option value="5">Quebrada del Condorito</option>
+                                                <option value="6">Sendas Incas</option>
                                             </select>
                                         </div>
                                         <div class="col-md-12">
@@ -316,15 +307,16 @@ $tours = getTours($mysqli);
                 
             });
             
-            $("#categoria").change(function(){
-                $("#padre").attr("disabled", false);
-                if($(this).val() == 2)
+            $("#categoria").change(function() 
                 {
-                    $("#principales").show();
-                }
-                else
-                {
-                    $("#principales").hide();
-                }
-            });
+                    if($(this).val() == 2)
+                    {
+                        $("#padre").attr("disabled", false);
+                    }
+                    else
+                    {
+                        $("#padre").val(0);
+                        $("#padre").attr("disabled", true);
+                    }
+                });
         </script>
