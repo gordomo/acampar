@@ -122,6 +122,10 @@ section#satelital {
        position: relative;
     padding-top: 80px;
     padding-bottom: 80px;
+    background-color: #222;
+    background-image: url(../img/map-image.png);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 /********Carousel*************/
 
@@ -312,10 +316,6 @@ section h3.section-subheading {
 /******** Contacto *************/
 
 section#contacto {
-    background-color: #222;
-    background-image: url(../img/map-image.png);
-    background-position: center;
-    background-repeat: no-repeat;
     padding-bottom: 30px;
 
 }

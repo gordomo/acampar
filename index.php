@@ -434,14 +434,11 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     </div>
                 </div>
                 <div class="row ">
-                    <div class="col-md-4">
-                        <img class="img-responsive center-block" src="img/spot1.jpg" height="250" width="250">
+                    <div class="col-md-12 text-center">
+                        <img class="img-responsive center-block" src="img/unnamed.png" height="250" width="250">
                     </div>
-                    <div class="col-md-4 text-center">
-                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='seguimiento/index.php'">Seguí el viaje</button>
-                    </div>
-                    <div class="col-md-4">
-                        <img class="img-responsive center-block" src="img/spot2.jpg" height="250" width="250">
+                    <div class="col-md-12 text-center">
+                        <button style="margin-top: 45px" type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='seguimiento/index.php'">Seguí el viaje</button>
                     </div>
                 </div>
 
@@ -485,7 +482,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">
-                                        <p style="color: white;">Nuestros teléfonos son (0341) 4351750 y (0341) 155427965 . Si llama fuera de Argentina deberá agregar +54</p>
+                                        <p style="color: black;">Nuestros teléfonos son (0341) 4351750 y (0341) 155427965 . Si llama fuera de Argentina deberá agregar +54</p>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
