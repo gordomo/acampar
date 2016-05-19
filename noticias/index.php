@@ -44,7 +44,7 @@ include_once '../includes/functions.php';
 <header class="header push-down-45">
 	<div class="container">
             <div class="logo pull-left">
-                <a href="index.php"><img src="../img/logos/LogoHorizontal.png" alt="Logo" width="352" height="140" /></a>
+                <a href="../index.php"><img src="../img/logos/LogoHorizontal.png" alt="Logo" width="352" height="140" /></a>
             </div>
 		
             <div class="navbar-header">

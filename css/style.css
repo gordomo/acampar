@@ -103,8 +103,8 @@ section#empresa {
     position: relative;
     padding-top: 80px;
     padding-bottom: 80px;
-
- background-color: #F3F3F3;
+    background-image: url('../img/Fondo quienes somos.jpg');
+    background-color: #F3F3F3;
 }
 
 section#facebook {
@@ -317,7 +317,8 @@ section h3.section-subheading {
 
 section#contacto {
     padding-bottom: 30px;
-
+    background-image: url('../img/Fondo contacto A.jpg');
+    background-size: cover;
 }
 
 section#contacto .form-group {
@@ -533,14 +534,17 @@ section#contacto .form-control:focus {
 .fondoVioleta:hover{
     background-image: url('../img/icon1.jpg');
     background-size: cover;
+    background-position: -50px;
 }
 .fondoNaranja:hover{
     background-image: url('../img/icon.jpg');
     background-size: cover;
+    background-position: -30px;
 }
 .fondoVerde:hover{
     background-image: url('../img/icon2.jpg');
     background-size: cover;
+    background-position: -25px;
 }
 
 .desplegable-trekking{
@@ -804,4 +808,16 @@ section#contacto .form-control:focus {
 }
 #whatsapp{
     display: none;
+}
+#promociones{
+    padding-top: 90px;
+    background-image: url('../img/Fondo Proximas Salidas.png');
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.cuerpo section{
+    min-height: 92vh;
 }

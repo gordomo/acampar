@@ -94,7 +94,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
 
 
         </header>
-
+    <div class="cuerpo">
         <section id="carousel">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
@@ -181,7 +181,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                                     </div>
                                     <div class="col-md-4 col-xs-12 desplegadas" id="3">
                                         <div class="col-md-12">
-                                            Cumbres Argentinas
+                                            Montañas Argentinas
                                         </div>
                                         <div class="col-md-12">
                                             <img id="icono3" src="img/iconos/cumbres_argentinas.png" class="img-responsive" style="display:none"/> 
@@ -272,11 +272,13 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                         $i = 0;
                         foreach ($sliders_salidas['sliders'] as $slider) {?>
                         <li>
-                            <img src="<?=$slider['url']?>" class="img-responsive"/>
-                            <div class="carousel-caption">
-                                <h3><?=$slider['titulo']?></h3>
-                                <h4><?=$slider['descripcion']?></h4>
-                            </div>
+                            <a href="tour.php?id=<?= $slider['categoria_id'] ?>">
+                                <img src="<?=$slider['url']?>" class="img-responsive"/>
+                                <div class="carousel-caption">
+                                    <h3><?=$slider['titulo']?></h3>
+                                    <h4><?=$slider['descripcion']?></h4>
+                                </div>
+                            </a>    
                         </li>
                         <?php 
                             $i++;
@@ -431,11 +433,12 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 <div class="row ">
                     <div class="col-lg-12 text-center">
                         <h2 class="section-heading">Seguimiento Satelital</h2>
+                        <h3 style="color: #FAF8F8;">Nuestro sistema conecta con una red global vía satélite que te permite enviar mensajes y coordenadas GPS desde cualquier lugar, sin necesidad de contar con señal celular. Desde nuestra página podrá seguir todas las expediciones online en tiempo real usando Google Maps.</h3>
                     </div>
                 </div>
                 <div class="row ">
                     <div class="col-md-12 text-center">
-                        <img class="img-responsive center-block" src="img/unnamed.png" height="250" width="250">
+                        <img class="img-responsive center-block" src="img/unnamed.png">
                     </div>
                     <div class="col-md-12 text-center">
                         <button style="margin-top: 45px" type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='seguimiento/index.php'">Seguí el viaje</button>
@@ -496,7 +499,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 </div>
             </div>
         </section>
-
+    </div>    
         <footer>
             <div class="container">
                 <div class="row">
