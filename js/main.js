@@ -289,8 +289,6 @@ $(document).ready(function () {
         
     if(isMobile.any())
     {
-        $("#whatsapp").show();
-
         if(isMobile.Android())
         {
             $("#whatsapp").attr("href", "intent://send/543415427965#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end");
@@ -299,6 +297,11 @@ $(document).ready(function () {
         {
             $("#whatsapp").attr("href", "tel:+543415427965");
         }
+    }
+    else
+    {
+        $("#whatsapp").attr("target", "blank");
+        $("#whatsapp").attr("href", "http://web.whatsapp.com");
     }
 });
 
@@ -322,4 +325,8 @@ $(window).load(function () {
             $('body').removeClass('loading');
         }
     });
+});
+
+$('.page-scroll').click(function(){
+    $('#navbar-collapse-1').removeClass('in');
 });

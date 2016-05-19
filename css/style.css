@@ -65,6 +65,7 @@ background-color: #F3F3F3;
     .navbar-collapse {
         border-top: 1px solid transparent;
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        padding-top: 25px;
     }
     .navbar-collapse.collapse {
         display: none!important;
@@ -806,9 +807,7 @@ section#contacto .form-control:focus {
 .map{
     background-image: url(../img/map-image.png);
 }
-#whatsapp{
-    display: none;
-}
+
 #promociones{
     padding-top: 90px;
     background-image: url('../img/Fondo Proximas Salidas.png');

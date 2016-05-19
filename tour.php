@@ -94,13 +94,18 @@ if($resultado['result'] == 'ok'){
     </nav>
 </header>
 <section>
-    <div>
-        <img src="<?=$datos['foto']?>">
-        <div class="carousel-caption">
-            <h3><?=$datos['nombre']?></h3>
-            <h4><?=$datos['descripcion_corta']?></h4>
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="<?=$datos['foto']?>">
+                <div class="carousel-caption">
+                    <h3><?=$datos['nombre']?></h3>
+                    <h4><?=$datos['descripcion_corta']?></h4>
+                </div>   
+            </div>
         </div>
-    </div>
+    </div> <!-- Carousel -->
 </section>      
    
 <section id="empresa">
@@ -192,13 +197,10 @@ if($resultado['result'] == 'ok'){
             <div class="row">
                 <div class="col-md-12">
                     <ul class="list-inline social-buttons">
-                        <li><a href="#" id="whatsapp"><i class="fa fa-whatsapp"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
+                        <li><a href="#" id="whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                     </ul>
                     <span class="copyright">Copyright &copy; Acampartrek 2016</span>
                 </div>

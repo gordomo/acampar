@@ -130,7 +130,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h2 class="section-heading">Nuestros Tour</h2>
+                        <h2 class="section-heading">Nuestros Tours</h2>
                         <h3 class="section-subheading text-muted">Texto descriptivo, general del tipo de actividad, servicio que ofrece, intengibles que voy a experimentar </h3>
                     </div>
                 </div>
@@ -265,7 +265,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
         </section>
 
         <section id="promociones">
-            <div class="container">
+            <div class="container" style="margin-top: 15vh;">
                 <div id="cbp-fwslider" class="cbp-fwslider">
                     <ul>
                         <?php 
@@ -505,9 +505,8 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 <div class="row">
 
                     <div class="col-md-12">
-
                         <ul class="list-inline social-buttons">
-                            <li><a href="#" id="whatsapp"><i class="fa fa-whatsapp"></i></a></li>
+                            <li><a href="#" id="whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
