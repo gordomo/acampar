@@ -217,7 +217,7 @@ include_once '../includes/functions.php';
                             <li><a href="../index.php">Inicio</a></li>
                             <li><a href="../index.php#tour">Nuestros Tours</a></li>
                             <li><a href="../index.php#promociones">Próximas Salidas</a></li>
-                            <li><a href="../yacanto/index.html">Posta Yacanto</a></li>
+                            <li><a href="../yacanto/">Posta Yacanto</a></li>
                             <li><a href="../index.php#calendario">Calendario</a> </li>
                             <li><a href="../index.php#empresa">La Empresa</a> </li>
                         </ul>

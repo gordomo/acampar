@@ -286,23 +286,6 @@ $(document).ready(function () {
             return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
         }
     };
-        
-    if(isMobile.any())
-    {
-        if(isMobile.Android())
-        {
-            $("#whatsapp").attr("href", "intent://send/543415427965#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end");
-        }
-        else
-        {
-            $("#whatsapp").attr("href", "tel:+543415427965");
-        }
-    }
-    else
-    {
-        $("#whatsapp").attr("target", "blank");
-        $("#whatsapp").attr("href", "http://web.whatsapp.com");
-    }
 });
 
 

@@ -1,16 +1,21 @@
-<!DOCTYPE html>
+<?php
+include_once '../includes/db_connect.php';
+include_once '../includes/functions.php';
+
+$resultado = getYacanto($mysqli);
+if ($resultado['result'] == 'ok') {
+    $datos = $resultado['categoria'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-
-        <title>Acampar Trek - Quienes somos?</title>
+        <title>Acampar Trek</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +24,7 @@
         <link href="../css/style.css" rel="stylesheet">
         <link href="../css/flexslider.css" rel="stylesheet" />
         <!-- Custom Fonts -->
-        <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
         <link href='https://fonts.googleapis.com/css?family=Product+Sans' rel='stylesheet' type='text/css'>
 
         <script src="../js/modernizr.custom.js"></script>
@@ -31,6 +36,12 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+        <style>
+            #map {
+                width: 100%;
+                height: 400px;
+            }
+        </style>
     </head>
 
     <body>
@@ -47,7 +58,7 @@
                     </button>
 
                 </div>
-                <a class="navbar-brand" href="../index.php"><img src="../img/logos/logo.png" class="img-responsive center-block logo" alt=""></a>
+                <a class="navbar-brand" href="index.php"><img src="../img/logos/logo.png" class="img-responsive center-block logo" alt=""></a>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
 
@@ -67,7 +78,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="../yacanto/" target="_blank" >Posta Yacanto</a>
+                            <a href="#" target="_blanck" >Posta Yacanto</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="../index.php#calendario">Calendario</a>
@@ -81,103 +92,56 @@
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>
-
-
         </header>
-
-        <section id="carousel">
+        <section>
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="../img/qsomos/QS1.jpg" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item">
-                        <img src="../img/qsomos/QS2.jpg" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item">
-                        <img src="../img/qsomos/QS3.jpg" alt="..." class="img-responsive">
+                        <img src="../<?= $datos['foto'] ?>">
+                        <div class="carousel-caption">
+                            <h3><?= $datos['nombre'] ?></h3>
+                            <h4><?= $datos['descripcion_corta'] ?></h4>
+                        </div>   
                     </div>
                 </div>
             </div> <!-- Carousel -->
-        </section>
+        </section>      
 
         <section id="empresa">
             <div class="container ">
                 <div class="row ">
                     <div class="article col-sm-8 col-sm-offset-2">
-                        <h2>Acampar Trek</h2>
-
-                        <p>Tratamos de acercar a nuestros clientes a sus metas, a la vivencia de experiencias únicas,irrepetibles e inolvidables en pleno contacto con la naturaleza y la comunidad local en cada 
-                            destino elegido.<br>
-                            Trabajamos para el continuo desarrollo, innovando y creando propuestas con un alto valor
-                            agregado social, histórico y geográfico.
-                        </p>
-
-                        <h2>Porque elegirnos</h2>
-
-                        <ul>
-                            <li>
-                                La profesionalidad de nuestros guías.
-                            </li>
-                            <li>
-                                Nos avalan más de 20 años de experiencia.
-                            </li>
-                            <li>
-                                Brindamos la mayor seguridad.
-                            </li>
-                            <li>
-                                La atención personalizada.
-                            </li>
-                            <li>
-                                Nuestro compromiso con el medio ambiente.
-                            </li>
-                            <li>
-                                Nuestro objetivo es superar las expectativas de cada participante.
-                            </li>
-                            <li>
-                                Nos adaptamos a tus necesidades e intereses.
-                            </li>
-                        </ul>
-                        <p></p>
-                        <h2>Habilitaciones y credenciales</h2>
-
-                        <p>Los guías, se encuentran capacitados por la Asociación Argentina de Guías de Montaña (AAGM), 
-                            Escuela Mendocina de Guías de Alta Montaña y Trekking (EPGAMT) y Socorristas para 
-                            Excursionistas en Zonas Agrestes (SE)
-                            Los mismos están inscriptos en el Registro Provincial de Prestadores de Servicios de Turismo 
-                            Alternativo – de la AGENCIA CÓRDOBA D.A.C. y T. – GOBIERNO DE CÓRDOBA.
-                            Estamos habilitados como Prestador de Servicios Turísticos del Parque Nacional Qª del Condorito 
-                            (según lo previsto por la Resolución H.D. Nº 68/2002).
-                            Además, contamos con las respectivas habilitaciones del Parque Provinciales y Parque Nacionales 
-                            donde operamos.</p>
-
-                        <h2>Seguros</h2>
-                        <p>
-                            En función a lo dispuesto por la Administración de Parques Nacionales y el Gobierno de Córdoba
-                            (Ley Provincial Nº 8801), se cuenta con los respectivos seguros de Responsabilidad Civil (RC) y 
-                            Accidentes Personales (AP) para el Turismo de Aventura.
-                            Algunas de las propuestas no incluyen seguros AP, en este caso es responsabilidad del pasajero 
-                            contratar una póliza de seguro.
-                            Los guías cuentan con botiquín de primeros auxilios, equipos de VHF y teléfonos celulares para 
-                            responder ante cualquier emergencia.
-                            Acampartrek®, incorporo un moderno dispositivo satelital de seguimiento en tiempo real. Más 
-                            información
-                        </p>
-
+                        <p><?= $datos['descripcion'] ?></p>
                     </div>
-
                 </div>
-
             </div>
         </section>
+        <?php if ($datos['fotos_extras']) { ?>
+            <section id="fotosExtras">
+                <div class="container">
+                    <div id="cbp-fwslider" class="cbp-fwslider">
+                        <ul>
+                            <?php
+                            $i = 0;
+                            foreach ($datos['fotos_extras'] as $slider) {
+                                ?>
+                                <li>
+                                    <img src="../<?= $slider['url'] ?>" class="img-responsive"/>
+                                </li>
+                                <?php
+                                $i++;
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+<?php } ?>  
+        <figure class="map">
+            <div id="map"></div>
+        </figure>
+
 
         <!-- Section Contacto  -->
         <section id="contacto">
@@ -190,6 +154,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <form name="sentMessage" id="contactForm" novalidate>
+                            <input type="hidden" name="id_cat" id="id_cat" value="<?= $datos['id'] ?>" />
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -230,7 +195,6 @@
         <footer>
             <div class="container">
                 <div class="row">
-
                     <div class="col-md-12">
                         <ul class="list-inline social-buttons">
                             <li class="hidden-lg hidden-md"><a href="tel:+543415427965"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
@@ -240,23 +204,52 @@
                         </ul>
                         <span class="copyright">Copyright &copy; Acampartrek 2016</span>
                     </div>
-
                 </div>
             </div>
         </footer>
 
-
-
         <!-- jQuery -->
         <script src="../js/jquery.js"></script>
-
         <!-- Bootstrap Core JavaScript -->
         <script src="../js/bootstrap.min.js"></script>
 
         <!-- Custom Theme JavaScript -->
         <script type="text/javascript" src="../js/jquery.flexslider-min.js"></script>
         <script src="../js/main.js"></script>
+        <script src="../js/jquery.cbpFWSlider.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script>
+            $(document).ready(function () {
+                var mapDiv = document.getElementById('map');
+                var map = new google.maps.Map(mapDiv, {
+                    center: {lat: <?= $datos['lat'] ?>, lng: <?= $datos['long'] ?>},
+                    zoom: 13,
+                    //            disableDefaultUI: true,
+                    disableDoubleClickZoom: true,
+                    //            draggable: false,
+                    fullscreenControl: false,
+                    keyboardShortcuts: false,
+                    scrollwheel: false,
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                });
 
+                var flightPlanCoordinates = [
+<?php foreach ($datos['polynes'] as $polynes) { ?>
+                        {lat: <?= $polynes['lat'] ?>, lng: <?= $polynes['long'] ?>},
+<?php } ?>
+
+                ];
+                var flightPath = new google.maps.Polyline({
+                    path: flightPlanCoordinates,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+
+                flightPath.setMap(map);
+            });
+        </script>
 
     </body>
 

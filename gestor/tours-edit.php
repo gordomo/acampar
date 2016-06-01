@@ -87,7 +87,7 @@ $tours = getTours($mysqli);
                                         </div>
                                         <div class="col-md-12">
                                             <label>Descripción: </label>
-                                            <input type="text" id="desc" name="desc" class="form-control" >
+                                            <textarea id="desc" name="desc" class="form-control" ></textarea>
                                         </div>
                                         <div class="col-md-12">
                                             <label class=" col-md-12 " >Coordenadas: </label>

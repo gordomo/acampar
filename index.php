@@ -57,7 +57,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     </button>
 
                 </div>
-                <a class="navbar-brand" href="#"><img src="img/logos/logo.png" class="img-responsive center-block" alt=""></a>
+                <a class="navbar-brand" href="#"><img src="img/logos/logo.png" class="img-responsive center-block logo" alt=""></a>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
 
@@ -77,7 +77,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="yacanto/index.html" target="_self" >Posta Yacanto</a>
+                            <a href="yacanto" target="_self" >Posta Yacanto</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="#calendario">Calendario</a>
@@ -265,7 +265,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
         </section>
 
         <section id="promociones">
-            <div class="container" style="margin-top: 15vh;">
+            <div class="container proximas-salidas">
                 <div id="cbp-fwslider" class="cbp-fwslider">
                     <ul>
                         <?php 
@@ -308,7 +308,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                             ?>
                             <li>
                                 <div style="min-height:100px">
-                                    <a href="#"><img class="img-responsive" src="<?=$slider['url']?>" alt="" style="margin: 0 auto;" width="350px" /></a>
+                                    <a href="noticias/noticia.php?noticia=<?=$slider['id']?>"><img class="img-responsive" src="<?=$slider['url']?>" alt="" style="margin: 0 auto;" width="350px" /></a>
                                 </div>
                                 <h3><?=$slider['titulo']?></h3>
                                 <span>
@@ -321,6 +321,11 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                             }
                             ?>
                         </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="noticias/index.php" class="btn btn-info col-md-12">Ver Todas Las Noticias</a>
                     </div>
                 </div>
             </div>
@@ -410,7 +415,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 </div>
             </div>
         </section>
-        <section id="empresa">
+        <section id="empresa" class="quienes_somos">
             <div class="container ">
                 <div class="row ">
                     <div class="col-lg-12 text-center">
@@ -506,10 +511,10 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
 
                     <div class="col-md-12">
                         <ul class="list-inline social-buttons">
-                            <li><a href="#" id="whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li class="hidden-lg hidden-md"><a href="tel:+543415427965"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
+                            <li><a href="https://twitter.com/Acampartrek"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="https://www.facebook.com/acampartrek"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.youtube.com/user/acampartrek"><i class="fa fa-youtube-play"></i></a></li>
                         </ul>
                         <span class="copyright">Copyright &copy; Acampartrek 2016</span>
                     </div>

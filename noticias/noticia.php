@@ -52,7 +52,7 @@ include_once '../includes/functions.php';
         <header class="header push-down-45">
             <div class="container">
                 <div class="logo pull-left">
-                    <a href="index.php"><img src="../img/logos/LogoHorizontal.png" alt="Logo" width="352" height="140" /></a>
+                    <a href="../index.php"><img src="../img/logos/LogoHorizontal.png" alt="Logo" width="352" height="140" /></a>
                 </div>
 
                 <div class="navbar-header">
@@ -225,7 +225,7 @@ include_once '../includes/functions.php';
                             <li><a href="../index.php">Inicio</a></li>
                             <li><a href="../index.php#tour">Nuestros Tours</a></li>
                             <li><a href="../index.php#promociones">Próximas Salidas</a></li>
-                            <li><a href="../yacanto/index.html">Posta Yacanto</a></li>
+                            <li><a href="../yacanto/">Posta Yacanto</a></li>
                             <li><a href="../index.php#calendario">Calendario</a> </li>
                             <li><a href="../index.php#empresa">La Empresa</a> </li>
                         </ul>

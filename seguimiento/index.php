@@ -51,7 +51,7 @@
                     </button>
 
                 </div>
-                <a class="navbar-brand" href="../index.php"><img src="../img/logos/logo.png" class="img-responsive center-block" alt=""></a>
+                <a class="navbar-brand" href="../index.php"><img src="../img/logos/logo.png" class="img-responsive center-block logo" alt=""></a>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
 
@@ -71,7 +71,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="../yacanto/index.html" target="_blank" >Posta Yacanto</a>
+                            <a href="../yacanto/" target="_blank" >Posta Yacanto</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="../index.php#calendario">Calendario</a>
@@ -116,10 +116,10 @@
 
                     <div class="col-md-12">
                         <ul class="list-inline social-buttons">
-                            <li><a href="#" id="whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li class="hidden-lg hidden-md"><a href="tel:+543415427965"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
+                            <li><a href="https://twitter.com/Acampartrek"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="https://www.facebook.com/acampartrek"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.youtube.com/user/acampartrek"><i class="fa fa-youtube-play"></i></a></li>
                         </ul>
                         <span class="copyright">Copyright &copy; Acampartrek 2016</span>
                     </div>

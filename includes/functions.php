@@ -12,7 +12,7 @@ function getTours($mysqli) {
         $stmt->execute();
         $stmt->bind_result($id_tour, $nombre, $class_css, $id_css, $descripcion);
         while ($stmt->fetch()) {
-            $tours[] = array('id' => $id_tour, 'nombre' => $nombre, 'class_css' => $class_css, 'id_css' => $id_css, "descripcion"=>$descripcion);
+            $tours[] = array('id' => $id_tour, 'nombre' => $nombre, 'class_css' => $class_css, 'id_css' => $id_css, "descripcion" => $descripcion);
         }
         $result = 'true';
     } else {
@@ -26,6 +26,51 @@ function getTours($mysqli) {
     return $retorno;
 }
 
+function getYacanto($mysqli) {
+
+    $result = "ko";
+    $prep_stmt = "SELECT id, nombre, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long`, `polylines` FROM categorias WHERE nombre = ?";
+    $error_msg = "";
+    $categoria = array();
+
+    $stmt = $mysqli->prepare($prep_stmt);
+    if ($stmt) {
+        $name = "Yacanto";
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long, $polylines);
+        $stmt->fetch();
+        $categoria = array("id" => $id, "nombre" => $nombre, "foto" => $foto, "descripcion_corta" => $descripcion_corta, "descripcion" => $descripcion, "id_tour" => $id_tour, "cat_superior" => $cat_superior, "lat" => $lat, "long" => $long, "polynes" => json_decode($polylines, true));
+
+        $result = 'ok';
+    } else {
+        $error_msg .= '* Error de base de datos.';
+    }
+
+    $stmt->close();
+
+    if ($stmt2 = $mysqli->prepare("SELECT id, url FROM img_categorias WHERE id_categoria = ? and habilitada = 1")) {
+        
+        $stmt2->bind_param("i", $categoria['id']);
+        if (!$stmt2->execute()) {
+            $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+            $result = "ko";
+        }
+    }
+
+    $stmt2->bind_result($id_img_categoria, $url_img_categoria);
+
+    while ($stmt2->fetch()) {
+        $img_categorias[] = array("id" => $id_img_categoria, "url" => $url_img_categoria);
+    }
+    $categoria['fotos_extras'] = $img_categorias;
+
+    $retorno = array('result' => $result, 'categoria' => $categoria, 'mensaje' => $error_msg);
+
+    return $retorno;
+}
+
 function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
     $result = 'ok';
     $categorias = array();
@@ -35,39 +80,33 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
     $values = array();
 
     $prep_stmt = "SELECT id, nombre, `foto`, `descripcion_corta`, `descripcion`, `id_tour`, `cat_superior`, `lat`, `long`, `polylines` FROM categorias WHERE 1 = 1";
-    
-    if ($id_tour != '') 
-    {
+
+    if ($id_tour != '') {
         $prep_stmt .= " AND id_tour = ?";
         $types[] = "i";
         $values[] = $id_tour;
     }
-    
-    if ($cat_superior != '') 
-    {
+
+    if ($cat_superior != '') {
         $prep_stmt .= " AND cat_superior = ?";
         $types[] = "i";
         $values[] = $cat_superior;
     }
-    
-    if ($id != '') 
-    {
+
+    if ($id != '') {
         $prep_stmt .= " AND id = ?";
         $types[] = "i";
         $values[] = $id;
     }
-    
+
     $prep_stmt .= " ORDER BY nombre";
 
-    if($stmt = $mysqli->prepare($prep_stmt))
-    {
+    if ($stmt = $mysqli->prepare($prep_stmt)) {
         $bind[] = implode("", $types);
-        foreach ($values as $value)
-        {
+        foreach ($values as $value) {
             $bind[] = $value;
         }
-        switch (count($bind))
-        {
+        switch (count($bind)) {
             case 1:
                 break;
             case 2:
@@ -77,45 +116,37 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
                 $stmt->bind_param($bind[0], $bind[1], $bind[2]);
                 break;
         }
-        if(!$stmt->execute())
-        {
+        if (!$stmt->execute()) {
             $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
-            $result  = "ko";
+            $result = "ko";
         }
-        
+
         $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long, $polynes);
-        
-        while ($stmt->fetch()) 
-        {
-            $categorias[] = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior, "lat"=>$lat, "long"=>$long, "polynes"=>  json_decode($polynes, true));
+
+        while ($stmt->fetch()) {
+            $categorias[] = array("id" => $id, "nombre" => $nombre, "foto" => $foto, "descripcion_corta" => $descripcion_corta, "descripcion" => $descripcion, "id_tour" => $id_tour, "cat_superior" => $cat_superior, "lat" => $lat, "long" => $long, "polynes" => json_decode($polynes, true));
         }
         $stmt->close();
-        
-        for ($index = 0; $index < count($categorias); $index++)
-        {
-            if($stmt2 = $mysqli->prepare("SELECT id, url, habilitada FROM img_categorias WHERE id_categoria = ?"))
-            {
+
+        for ($index = 0; $index < count($categorias); $index++) {
+            if ($stmt2 = $mysqli->prepare("SELECT id, url, habilitada FROM img_categorias WHERE id_categoria = ?")) {
                 $stmt2->bind_param("i", $categorias[$index]['id']);
-                if(!$stmt2->execute())
-                {
+                if (!$stmt2->execute()) {
                     $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
-                    $result  = "ko";
+                    $result = "ko";
                 }
             }
 
             $stmt2->bind_result($id_img_categoria, $url_img_categoria, $habilitada_img_categoria);
 
-            while ($stmt2->fetch()) 
-            {
-                $img_categorias[] = array("id"=>$id_img_categoria, "url"=>$url_img_categoria, "habilitada"=>$habilitada_img_categoria);
+            while ($stmt2->fetch()) {
+                $img_categorias[] = array("id" => $id_img_categoria, "url" => $url_img_categoria, "habilitada" => $habilitada_img_categoria);
             }
             $categorias[$index]['fotos_extras'] = $img_categorias;
         }
-    }
-    else 
-    {
+    } else {
         $message = "Falló la preparacion: (" . $mysqli->errno . ") " . $mysqli->error;
-        $result  = "ko";
+        $result = "ko";
     }
 
     $retorno = array('result' => $result, 'categorias' => $categorias, 'mensaje' => $error_msg);
@@ -123,41 +154,35 @@ function getCategorias($mysqli, $id_tour = '', $cat_superior = '', $id = '') {
     return $retorno;
 }
 
-function getSliderCabecera($mysqli, $id_slider = false, $todas = false)
-{
-    
+function getSliderCabecera($mysqli, $id_slider = false, $todas = false) {
+
     $result = 'ok';
     $sliders = array();
     $error_msg = '';
-    
+
     $types = array();
     $values = array();
 
     $prep_stmt = "SELECT id, url, habilitado, titulo, descripcion, categoria_id FROM `slider_cabecera` WHERE 1 = 1";
-    
-    if ($id_slider) 
-    {
+
+    if ($id_slider) {
         $prep_stmt .= " AND id = ?";
         $types[] = "i";
         $values[] = $id_slider;
     }
-    
-    if (!$todas)
-    {
+
+    if (!$todas) {
         $prep_stmt .= " AND habilitado = ?";
         $types[] = "i";
         $values[] = "1";
     }
 
-    if($stmt = $mysqli->prepare($prep_stmt))
-    {
+    if ($stmt = $mysqli->prepare($prep_stmt)) {
         $bind[] = implode("", $types);
-        foreach ($values as $value)
-        {
+        foreach ($values as $value) {
             $bind[] = $value;
         }
-        switch (count($bind))
-        {
+        switch (count($bind)) {
             case 1:
                 break;
             case 2:
@@ -167,68 +192,57 @@ function getSliderCabecera($mysqli, $id_slider = false, $todas = false)
                 $stmt->bind_param($bind[0], $bind[1], $bind[2]);
                 break;
         }
-        if(!$stmt->execute())
-        {
+        if (!$stmt->execute()) {
             $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
-            $result  = "ko";
+            $result = "ko";
         }
-        
+
         $stmt->bind_result($id, $url, $habilitado, $titulo, $descripcion, $categoria_id);
-        
-        while ($stmt->fetch()) 
-        {
-            $sliders[] = array("id"=>$id, "url"=>$url, "habilitado"=>$habilitado, "titulo"=>$titulo, "descripcion"=>$descripcion, "categoria_id"=>$categoria_id);
+
+        while ($stmt->fetch()) {
+            $sliders[] = array("id" => $id, "url" => $url, "habilitado" => $habilitado, "titulo" => $titulo, "descripcion" => $descripcion, "categoria_id" => $categoria_id);
         }
-        
+
         $stmt->close();
-    }
-    else 
-    {
+    } else {
         $message = "Falló la preparacion: (" . $mysqli->errno . ") " . $mysqli->error;
-        $result  = "ko";
+        $result = "ko";
     }
 
     $retorno = array('result' => $result, 'sliders' => $sliders, 'mensaje' => $error_msg);
 
     return $retorno;
-    
 }
 
-function getSliderSalidas($mysqli, $id_slider = false, $todas = false)
-{
-    
+function getSliderSalidas($mysqli, $id_slider = false, $todas = false) {
+
     $result = 'ok';
     $sliders = array();
     $error_msg = '';
-    
+
     $types = array();
     $values = array();
 
     $prep_stmt = "SELECT id, url, habilitado, titulo, descripcion, categoria_id FROM `slider_salidas` WHERE 1 = 1";
-    
-    if ($id_slider) 
-    {
+
+    if ($id_slider) {
         $prep_stmt .= " AND id = ?";
         $types[] = "i";
         $values[] = $id_slider;
     }
-    
-    if (!$todas)
-    {
+
+    if (!$todas) {
         $prep_stmt .= " AND habilitado = ?";
         $types[] = "i";
         $values[] = "1";
     }
 
-    if($stmt = $mysqli->prepare($prep_stmt))
-    {
+    if ($stmt = $mysqli->prepare($prep_stmt)) {
         $bind[] = implode("", $types);
-        foreach ($values as $value)
-        {
+        foreach ($values as $value) {
             $bind[] = $value;
         }
-        switch (count($bind))
-        {
+        switch (count($bind)) {
             case 1:
                 break;
             case 2:
@@ -238,78 +252,67 @@ function getSliderSalidas($mysqli, $id_slider = false, $todas = false)
                 $stmt->bind_param($bind[0], $bind[1], $bind[2]);
                 break;
         }
-        if(!$stmt->execute())
-        {
+        if (!$stmt->execute()) {
             $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
-            $result  = "ko";
+            $result = "ko";
         }
-        
+
         $stmt->bind_result($id, $url, $habilitado, $titulo, $descripcion, $categoria_id);
-        
-        while ($stmt->fetch()) 
-        {
-            $sliders[] = array("id"=>$id, "url"=>$url, "habilitado"=>$habilitado, "titulo"=>$titulo, "descripcion"=>$descripcion, "categoria_id"=>$categoria_id);
+
+        while ($stmt->fetch()) {
+            $sliders[] = array("id" => $id, "url" => $url, "habilitado" => $habilitado, "titulo" => $titulo, "descripcion" => $descripcion, "categoria_id" => $categoria_id);
         }
-        
+
         $stmt->close();
-    }
-    else 
-    {
+    } else {
         $message = "Falló la preparacion: (" . $mysqli->errno . ") " . $mysqli->error;
-        $result  = "ko";
+        $result = "ko";
     }
 
     $retorno = array('result' => $result, 'sliders' => $sliders, 'mensaje' => $error_msg);
 
     return $retorno;
-    
 }
 
-function getNoticias($mysqli, $id = false, $todas = false, $limit = false, $id_no = false)
-{
-    
+function getNoticias($mysqli, $id = false, $todas = false, $limit = false, $id_no = false) {
+
     $result = 'ok';
     $noticias = array();
     $error_msg = '';
-    
+
     $types = array();
     $values = array();
 
     $prep_stmt = "SELECT id, titulo, texto, fecha, url, habilitado, video FROM `noticias` WHERE 1 = 1";
-    
-    if ($id) 
-    {
+
+    if ($id) {
         $prep_stmt .= " AND id = ?";
         $types[] = "i";
         $values[] = $id;
     }
-    
-    if (!$todas)
-    {
+
+    if (!$todas) {
         $prep_stmt .= " AND habilitado = ?";
         $types[] = "i";
         $values[] = "1";
     }
-    
-    if($id_no){
+
+    if ($id_no) {
         $prep_stmt .= " AND id <> $id_no";
     }
-    
-    if($limit){
-        $prep_stmt .= " limit ".$limit;
-    }
-    
-    
 
-    if($stmt = $mysqli->prepare($prep_stmt))
-    {
+    if ($limit) {
+        $prep_stmt .= " limit " . $limit;
+    }
+
+
+
+    if ($stmt = $mysqli->prepare($prep_stmt)) {
         $bind[] = implode("", $types);
-        foreach ($values as $value)
-        {
+        foreach ($values as $value) {
             $bind[] = $value;
         }
-        switch (count($bind))
-        {
+        switch (count($bind)) {
             case 1:
                 break;
             case 2:
@@ -319,31 +322,26 @@ function getNoticias($mysqli, $id = false, $todas = false, $limit = false, $id_n
                 $stmt->bind_param($bind[0], $bind[1], $bind[2]);
                 break;
         }
-        if(!$stmt->execute())
-        {
+        if (!$stmt->execute()) {
             $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
-            $result  = "ko";
+            $result = "ko";
         }
-        
+
         $stmt->bind_result($id, $titulo, $texto, $fecha, $url, $habilitado, $video);
-        
-        while ($stmt->fetch()) 
-        {
-            $noticias[] = array("id"=>$id, "titulo"=>$titulo, "texto"=>$texto, "fecha"=>$fecha, "url"=>$url, "habilitado"=>$habilitado, "video"=>$video);
+
+        while ($stmt->fetch()) {
+            $noticias[] = array("id" => $id, "titulo" => $titulo, "texto" => $texto, "fecha" => $fecha, "url" => $url, "habilitado" => $habilitado, "video" => $video);
         }
-        
+
         $stmt->close();
-    }
-    else 
-    {
+    } else {
         $message = "Falló la preparacion: (" . $mysqli->errno . ") " . $mysqli->error;
-        $result  = "ko";
+        $result = "ko";
     }
 
     $retorno = array('result' => $result, 'noticias' => $noticias, 'mensaje' => $error_msg);
 
     return $retorno;
-    
 }
 
 function getInfoCategoria($mysqli, $id_categoria) {
@@ -359,7 +357,7 @@ function getInfoCategoria($mysqli, $id_categoria) {
         $stmt->store_result();
         $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $id_tour, $cat_superior, $lat, $long);
         $stmt->fetch();
-        $categoria = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior, "lat"=>$lat, "long"=>$long);
+        $categoria = array("id" => $id, "nombre" => $nombre, "foto" => $foto, "descripcion_corta" => $descripcion_corta, "descripcion" => $descripcion, "id_tour" => $id_tour, "cat_superior" => $cat_superior, "lat" => $lat, "long" => $long);
 
         $result = 'true';
     } else {
@@ -1112,12 +1110,9 @@ function esc_url($url) {
     }
 }
 
-function getCalendario($mysqli, $mes = false) 
-{
-    if($mes)
-    {
-        if ($stmt = $mysqli->prepare("SELECT * FROM calendario WHERE mes=?")) 
-        {
+function getCalendario($mysqli, $mes = false) {
+    if ($mes) {
+        if ($stmt = $mysqli->prepare("SELECT * FROM calendario WHERE mes=?")) {
             /* ligar parámetros para marcadores */
             $stmt->bind_param("i", $mes);
 
@@ -1139,15 +1134,11 @@ function getCalendario($mysqli, $mes = false)
 
             return $calendario;
         }
-    }
-    else
-    {
-        if ($stmt = $mysqli->prepare("SELECT * FROM calendario")) 
-        {
+    } else {
+        if ($stmt = $mysqli->prepare("SELECT * FROM calendario")) {
             $calendarios = array();
             /* ejecutar la consulta */
-            if (!$stmt->execute()) 
-            {
+            if (!$stmt->execute()) {
                 $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
                 $result = "ko";
 
@@ -1157,9 +1148,8 @@ function getCalendario($mysqli, $mes = false)
             /* ligar variables de resultado */
             $stmt->execute();
             $stmt->bind_result($id, $mes, $ano, $id_excursiones, $dias);
-            while ($stmt->fetch()) 
-            {
-                $calendarios[] = array("id"=>$id, "mes"=>$mes, "ano"=>$ano, "id_excursiones"=> json_decode($id_excursiones), "dias"=>$dias);
+            while ($stmt->fetch()) {
+                $calendarios[] = array("id" => $id, "mes" => $mes, "ano" => $ano, "id_excursiones" => json_decode($id_excursiones), "dias" => $dias);
             }
             /* obtener valor */
             $stmt->fetch();
@@ -1171,12 +1161,9 @@ function getCalendario($mysqli, $mes = false)
     }
 }
 
-function getToursFromCategorias($mysqli, $id = false) 
-{
-    if($id)
-    {
-        if ($stmt = $mysqli->prepare("SELECT * FROM categorias WHERE id=?")) 
-        {
+function getToursFromCategorias($mysqli, $id = false) {
+    if ($id) {
+        if ($stmt = $mysqli->prepare("SELECT * FROM categorias WHERE id=?")) {
             /* ligar parámetros para marcadores */
             $stmt->bind_param("i", $id);
 
@@ -1198,15 +1185,11 @@ function getToursFromCategorias($mysqli, $id = false)
 
             return $categorias;
         }
-    }
-    else
-    {
-        if ($stmt = $mysqli->prepare("SELECT * FROM categorias")) 
-        {
+    } else {
+        if ($stmt = $mysqli->prepare("SELECT * FROM categorias")) {
             $categorias = array();
             /* ejecutar la consulta */
-            if (!$stmt->execute()) 
-            {
+            if (!$stmt->execute()) {
                 $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
                 $result = "ko";
 
@@ -1216,9 +1199,8 @@ function getToursFromCategorias($mysqli, $id = false)
             /* ligar variables de resultado */
             $stmt->execute();
             $stmt->bind_result($id, $nombre, $foto, $descripcion_corta, $descripcion, $coordenadas, $id_tour, $cat_superior);
-            while ($stmt->fetch()) 
-            {
-                $categorias[] = array("id"=>$id, "nombre"=>$nombre, "foto"=>$foto, "descripcion_corta"=>$descripcion_corta, "descripcion"=>$descripcion, "coordenadas"=>$coordenadas, "id_tour"=>$id_tour, "cat_superior"=>$cat_superior);
+            while ($stmt->fetch()) {
+                $categorias[] = array("id" => $id, "nombre" => $nombre, "foto" => $foto, "descripcion_corta" => $descripcion_corta, "descripcion" => $descripcion, "coordenadas" => $coordenadas, "id_tour" => $id_tour, "cat_superior" => $cat_superior);
             }
             /* obtener valor */
             $stmt->fetch();
@@ -1228,25 +1210,22 @@ function getToursFromCategorias($mysqli, $id = false)
             return $categorias;
         }
     }
-}    
+}
 
-    function getSeguimientoSatelital($mysqli)
-    {
-        $result = "ok";
-        $message = 'ok';
-        if ($stmt = $mysqli->prepare("SELECT texto FROM seguimiento")) 
-        {
-            if (!$stmt->execute())
-            {
-                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
-                $result = "ko";
+function getSeguimientoSatelital($mysqli) {
+    $result = "ok";
+    $message = 'ok';
+    if ($stmt = $mysqli->prepare("SELECT texto FROM seguimiento")) {
+        if (!$stmt->execute()) {
+            $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+            $result = "ko";
 
-                return array("result" => $result, "mensaje" => $message, "respuesta" => "");
-            }
-            
-            $stmt->execute();
-            $stmt->bind_result($texto);
-            $stmt->fetch();
-            return array("result" => $result, "mensaje" => $message, "texto" => $texto);
+            return array("result" => $result, "mensaje" => $message, "respuesta" => "");
         }
+
+        $stmt->execute();
+        $stmt->bind_result($texto);
+        $stmt->fetch();
+        return array("result" => $result, "mensaje" => $message, "texto" => $texto);
     }
+}

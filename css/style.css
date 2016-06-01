@@ -104,9 +104,11 @@ section#empresa {
     position: relative;
     padding-top: 80px;
     padding-bottom: 80px;
-    background-image: url('../img/Fondo quienes somos.jpg');
     background-color: #F3F3F3;
 }
+.quienes_somos{
+        background-image: url('../img/Fondo quienes somos.jpg');
+    }
 
 section#facebook {
     width: 100%;
@@ -695,13 +697,19 @@ section#contacto .form-control:focus {
     align-items: center;
 }
 
-@media screen and (max-width:400px)
+@media screen and (max-width:510px)
 {
     .carousel-caption h3 {
         font-size: 30px;
     }
     .carousel-caption h4 {
         font-weight: 700;
+    }
+    .navbar-default{
+        max-height: 30px !important;
+    }
+    .logo{
+        max-width: 50px;
     }
 }
 
@@ -808,15 +816,20 @@ section#contacto .form-control:focus {
     background-image: url(../img/map-image.png);
 }
 
-#promociones{
-    padding-top: 90px;
+.proximas-salidas{
+    padding: 0;
     background-image: url('../img/Fondo Proximas Salidas.png');
+    background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh;
+    width: 100% !important;
 }
-
+/*@media screen and (max-width:760px)
+{
+    .proximas-salidas{
+        background-size: 100%;
+    }
+}*/
 .cuerpo section{
     min-height: 92vh;
 }
