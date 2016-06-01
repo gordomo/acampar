@@ -490,7 +490,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">
-                                        <p style="color: black;">Nuestros teléfonos son (0341) 4351750 y (0341) 155427965 . Si llama fuera de Argentina deberá agregar +54</p>
+                                        <p style="color: black;">Nuestros teléfonos son (0341) 4351750 y (0341) 155427965 <i class="fa fa-whatsapp"></i>. Si llama fuera de Argentina deberá agregar +54</p>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
