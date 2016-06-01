@@ -20,7 +20,6 @@ $categoria_buscar = isset($_GET['categoria_buscar']) ? $_GET['categoria_buscar']
 $categorias = getCategorias($mysqli, $categoria_buscar, $padre_buscar);
 $categorias_busqueda = getCategorias($mysqli);
 $tours = getTours($mysqli);
-
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +42,7 @@ $tours = getTours($mysqli);
         <link href="assets/css/table-responsive.css" rel="stylesheet">
         <script src="../js/jquery.js"></script>
         <script src="assets/js/main.js"></script>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -60,85 +60,84 @@ $tours = getTours($mysqli);
                     <h3><i class="fa fa-angle-right"></i>TOURS</h3>
                     <div class="row mt">
                         <div class="col-md-12 formulario">
-                                <h4><i class="fa fa-angle-right"></i> Nueva Entrada</h4>
-                                <section id="editor_grilla_nueva">
-                                    <form id='newEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php">
-                                        <input type="hidden" value="newCategoria" name="action" id="action">
+                            <h4><i class="fa fa-angle-right"></i> Nueva Entrada</h4>
+                            <section id="editor_grilla_nueva">
+                                <form id='newEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php">
+                                    <input type="hidden" value="newCategoria" name="action" id="action">
+                                    <div class="col-md-12">
+                                        <label>Nombre: </label>
+                                        <input type="text" id="nombre" name="nombre" class="form-control" required="true">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="">Imagen Principal: </label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="file"  accept="file_extension|image"  id="photo" name="photo" autofocus>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px">
+                                        <label class="">Agregar otra </label>
+                                        <button type="button" id="sumarImagen" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> + </button>
+                                        <button type="button" id="restarImagen" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> - </button>
+                                        <input name="cantidadImagenesExtras" id="cantidadImagenesExtras" value="0" type="hidden">
+                                        <div id="imagenes"></div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Descripción Corta: </label>
+                                        <input type="text" id="descCorta" name="descCorta" class="form-control" >
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Descripción: </label>
+                                        <textarea id="desc" name="desc" class="form-control" ></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class=" col-md-12 " >Coordenadas: </label>
+                                        <label class=" col-md-12 " style="width: 50%; float: left">Latitud: </label>
+                                        <label class=" col-md-12 " style="width: 50%; float: left">Longitud: </label>
+                                        <input type="text" id="coordx" name="lat" class="form-control" style="width: 50%; float: left">
+                                        <input type="text" id="coordy" name="long" class="form-control" style="width: 50%; float: left; margin-bottom: 10px">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class=" col-md-12 " >Puntos del recorrido: </label>
                                         <div class="col-md-12">
-                                            <label>Nombre: </label>
-                                            <input type="text" id="nombre" name="nombre" class="form-control" required="true">
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="">Imagen Principal: </label>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <input type="file"  accept="file_extension|image"  id="photo" name="photo" autofocus>
-                                        </div>
-                                        <div class="col-md-12" style="margin-top: 10px; margin-bottom: 10px">
-                                            <label class="">Agregar otra </label>
-                                            <button type="button" id="sumarImagen" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> + </button>
-                                            <button type="button" id="restarImagen" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> - </button>
-                                            <input name="cantidadImagenesExtras" id="cantidadImagenesExtras" value="0" type="hidden">
-                                            <div id="imagenes"></div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label>Descripción Corta: </label>
-                                            <input type="text" id="descCorta" name="descCorta" class="form-control" >
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label>Descripción: </label>
-                                            <textarea id="desc" name="desc" class="form-control" ></textarea>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class=" col-md-12 " >Coordenadas: </label>
-                                            <label class=" col-md-12 " style="width: 50%; float: left">Latitud: </label>
-                                            <label class=" col-md-12 " style="width: 50%; float: left">Longitud: </label>
-                                            <input type="text" id="coordx" name="lat" class="form-control" style="width: 50%; float: left">
-                                            <input type="text" id="coordy" name="long" class="form-control" style="width: 50%; float: left; margin-bottom: 10px">
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class=" col-md-12 " >Puntos del recorrido: </label>
-                                            <div class="col-md-12">
-                                                <button type="button" id="sumarPunto" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> + </button>
-                                                <button type="button" id="restarPunto" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> - </button>
-                                                <input name="cantidadPuntosRecorridos" id="cantidadPuntosRecorridos" value="0" type="hidden">
-                                                <div class="col-md-12" id="puntosRecorridos" style="margin-top: 10px; display: none">
-                                                    <label class=" col-md-6">Latitud: </label>
-                                                    <label class=" col-md-6">Longitud: </label>
-                                                </div>
+                                            <button type="button" id="sumarPunto" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> + </button>
+                                            <button type="button" id="restarPunto" class="btn btn-default" style="padding: 0px 12px;margin-left: 10px;"> - </button>
+                                            <input name="cantidadPuntosRecorridos" id="cantidadPuntosRecorridos" value="0" type="hidden">
+                                            <div class="col-md-12" id="puntosRecorridos" style="margin-top: 10px; display: none">
+                                                <label class=" col-md-6">Latitud: </label>
+                                                <label class=" col-md-6">Longitud: </label>
                                             </div>
-                                                
                                         </div>
-                                        <div class="col-md-12">
-                                            <label>Categoria: </label>
-                                            <select id="categoria" name="categoria" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
-                                                <option value="0">Seleccione una Categoria</option>
-                                                <?php foreach ($tours['tours'] as $tour) { ?>
 
-                                                    <option value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Categoria: </label>
+                                        <select id="categoria" name="categoria" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
+                                            <?php foreach ($tours['tours'] as $tour) { ?>
 
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label>Tour Padre: </label>
-                                            <select id="padre" name="padre" disabled="true" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
-                                                <option value="0">Tour Padre</option>
-                                                <option value="1">Aconcagua</option>
-                                                <option value="2">Champaquí</option>
-                                                <option value="3">Cumbres Argentinas</option>
-                                                <option value="4">Patagonia</option>
-                                                <option value="5">Quebrada del Condorito</option>
-                                                <option value="6">Sendas Incas</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-success">Agregar Entrada</button>
-                                            <img class="newImgCargando" src="assets/img/preloader.gif">
-                                            <span class="newImgCargando">Cargando...</span>
-                                        </div>
-                                    </form>
-                                </section>
+                                                <option value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
+
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Tour Padre: </label>
+                                        <select id="padre" name="padre" disabled="true" style="width: 100%;margin-right: 10px;margin-bottom: 15px;border-radius: 3px;border-color: #CCCCCC;">
+                                            <option value="0">Tour Padre</option>
+                                            <option value="1">Aconcagua</option>
+                                            <option value="2">Champaquí</option>
+                                            <option value="3">Cumbres Argentinas</option>
+                                            <option value="4">Patagonia</option>
+                                            <option value="5">Quebrada del Condorito</option>
+                                            <option value="6">Sendas Incas</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-success">Agregar Entrada</button>
+                                        <img class="newImgCargando" src="assets/img/preloader.gif">
+                                        <span class="newImgCargando">Cargando...</span>
+                                    </div>
+                                </form>
+                            </section>
                         </div>
                     </div>
 
@@ -157,19 +156,21 @@ $tours = getTours($mysqli);
                                         <select id="padre_buscar" name="padre_buscar" >
                                             <option value="">seleccione una tour para filtrar</option>
                                             <optgroup label="Principales">
-                                                    <option value="1">Aconcagua</option>
-                                                    <option value="2">Champaquí</option>
-                                                    <option value="3">Cumbres Argentinas</option>
-                                                    <option value="4">Patagonia</option>
-                                                    <option value="5">Quebrada del Condorito</option>
-                                                    <option value="6">Sendas Incas</option>
+                                                <option value="1">Aconcagua</option>
+                                                <option value="2">Champaquí</option>
+                                                <option value="3">Cumbres Argentinas</option>
+                                                <option value="4">Patagonia</option>
+                                                <option value="5">Quebrada del Condorito</option>
+                                                <option value="6">Sendas Incas</option>
                                             </optgroup>
                                             <optgroup label="Secundarias">
                                                 <?php foreach ($categorias_busqueda['categorias'] as $categoria) { ?>
 
-                                                    <option <?php if($categoria['id'] == $padre_buscar){echo "selected";} ?> value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
+                                                    <option <?php if ($categoria['id'] == $padre_buscar) {
+                                                        echo "selected";
+                                                    } ?> value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?></option>
 
-                                                <?php } ?>
+<?php } ?>
                                             </optgroup>        
                                         </select>
                                     </div>
@@ -177,11 +178,13 @@ $tours = getTours($mysqli);
                                         <label class="">Categoría: </label>
                                         <select id="categoria_buscar" name="categoria_buscar">
                                             <option value="">seleccione una categoria para filtrar</option>
-                                            <?php foreach ($tours['tours'] as $tour) { ?>
+<?php foreach ($tours['tours'] as $tour) { ?>
 
-                                                <option <?php if($tour['id'] == $categoria_buscar){echo "selected";} ?> value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
+                                                <option <?php if ($tour['id'] == $categoria_buscar) {
+        echo "selected";
+    } ?> value="<?= $tour['id'] ?>"><?= $tour['nombre'] ?></option>
 
-                                            <?php } ?>
+<?php } ?>
                                         </select>
                                     </div>
                                     <div class="col-md-2">
@@ -209,19 +212,19 @@ $tours = getTours($mysqli);
                                             </th>
                                         </tr>
                                     </thead>
-                                    <?php foreach ($categorias['categorias'] as $categoria) { ?>
-                                    <tr>
-                                        <td>
-                                            <?= $categoria['nombre'] ?>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary editar" id="<?= $categoria['id'] ?>"><i class="fa fa-edit"></i></button>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger eliminar" id="<?= $categoria['id'] ?>"><i class="fa fa-trash-o"></i></button>
-                                        </td>
-                                    </tr>
-                                    <?php } ?>
+                                            <?php foreach ($categorias['categorias'] as $categoria) { ?>
+                                        <tr>
+                                            <td>
+    <?= $categoria['nombre'] ?>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary editar" id="<?= $categoria['id'] ?>"><i class="fa fa-edit"></i></button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger eliminar" id="<?= $categoria['id'] ?>"><i class="fa fa-trash-o"></i></button>
+                                            </td>
+                                        </tr>
+<?php } ?>
                                 </table>
                             </div>
                         </section>
@@ -230,93 +233,110 @@ $tours = getTours($mysqli);
             </section>
         </section>
         <script>
+            tinymce.init({
+                selector: 'textarea',
+                height: 500,
+                plugins: [
+                    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+                ],
+                toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+                toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+                toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+            });
+            
             $(".editar").click(function ()
             {
-                window.location.href = "tour-edit.php?id="+$(this).attr('id');
+                window.location.href = "tour-edit.php?id=" + $(this).attr('id');
             });
-            
+
             $(".eliminar").click(function ()
-            { 
-                    var answer = confirm("Deseas eliminar este registro?");
-                    if (answer)
-                    {
-                        $.ajax({
-                            type: "POST",
-                            url: "adminController.php",
-                            data: {id: $(this).attr('id'), action: 'eliminarEntradaCategorias'},
-                            success: function (data)
-                            {
-                                if (data.result == 'ok')
-                                {
-                                    location.reload();
-                                } 
-                                else
-                                {
-                                    alert('error al procesar el requerimiento: ' + data.mensaje);
-                                }
-                            },
-                            dataType: "json"
-                        });
-                    }
-                });
-                
-            $("#sumarImagen").click(function()
             {
-                var cantImagenesExtra = $("#cantidadImagenesExtras").val();
-                cantImagenesExtra ++;
-                $("#cantidadImagenesExtras").val(cantImagenesExtra);
-                $('#imagenes').append('<input type="file" accept="file_extension|image"  id="photo'+cantImagenesExtra+'" name="photo'+cantImagenesExtra+'" autofocus>');
-            });
-            
-            $("#restarImagen").click(function()
-            {
-                var cantImagenesExtra = $("#cantidadImagenesExtras").val();
-                
-                if(cantImagenesExtra != 0)
+                var answer = confirm("Deseas eliminar este registro?");
+                if (answer)
                 {
-                    $('#photo'+cantImagenesExtra).remove();
-                    cantImagenesExtra --;
-                    $("#cantidadImagenesExtras").val(cantImagenesExtra);
-                }    
+                    $.ajax({
+                        type: "POST",
+                        url: "adminController.php",
+                        data: {id: $(this).attr('id'), action: 'eliminarEntradaCategorias'},
+                        success: function (data)
+                        {
+                            if (data.result == 'ok')
+                            {
+                                location.reload();
+                            } else
+                            {
+                                alert('error al procesar el requerimiento: ' + data.mensaje);
+                            }
+                        },
+                        dataType: "json"
+                    });
+                }
             });
-            
-            $("#sumarPunto").click(function()
+
+            $("#sumarImagen").click(function ()
+            {
+                var cantImagenesExtra = $("#cantidadImagenesExtras").val();
+                cantImagenesExtra++;
+                $("#cantidadImagenesExtras").val(cantImagenesExtra);
+                $('#imagenes').append('<input type="file" accept="file_extension|image"  id="photo' + cantImagenesExtra + '" name="photo' + cantImagenesExtra + '" autofocus>');
+            });
+
+            $("#restarImagen").click(function ()
+            {
+                var cantImagenesExtra = $("#cantidadImagenesExtras").val();
+
+                if (cantImagenesExtra != 0)
+                {
+                    $('#photo' + cantImagenesExtra).remove();
+                    cantImagenesExtra--;
+                    $("#cantidadImagenesExtras").val(cantImagenesExtra);
+                }
+            });
+
+            $("#sumarPunto").click(function ()
             {
                 $("#puntosRecorridos").show();
                 var cantidadPuntosRecorridos = $("#cantidadPuntosRecorridos").val();
-                cantidadPuntosRecorridos ++;
+                cantidadPuntosRecorridos++;
                 $("#cantidadPuntosRecorridos").val(cantidadPuntosRecorridos);
-                $('#puntosRecorridos').append('<input class="form-control" style="width:50%; float: left;" type="text" id="lat'+cantidadPuntosRecorridos+'" name="lat'+cantidadPuntosRecorridos+'"><input style="width:50%;float: left;" class="form-control" type="text" id="long'+cantidadPuntosRecorridos+'" name="long'+cantidadPuntosRecorridos+'">');
+                $('#puntosRecorridos').append('<input class="form-control" style="width:50%; float: left;" type="text" id="lat' + cantidadPuntosRecorridos + '" name="lat' + cantidadPuntosRecorridos + '"><input style="width:50%;float: left;" class="form-control" type="text" id="long' + cantidadPuntosRecorridos + '" name="long' + cantidadPuntosRecorridos + '">');
             });
-            
-            $("#restarPunto").click(function()
+
+            $("#restarPunto").click(function ()
             {
                 var cantidadPuntosRecorridos = $("#cantidadPuntosRecorridos").val();
-                
-                if(cantidadPuntosRecorridos != 0)
+
+                if (cantidadPuntosRecorridos != 0)
                 {
-                    $('#lat'+cantidadPuntosRecorridos).remove();
-                    $('#long'+cantidadPuntosRecorridos).remove();
-                    cantidadPuntosRecorridos --;
+                    $('#lat' + cantidadPuntosRecorridos).remove();
+                    $('#long' + cantidadPuntosRecorridos).remove();
+                    cantidadPuntosRecorridos--;
                     $("#cantidadPuntosRecorridos").val(cantidadPuntosRecorridos);
-                    if(!cantidadPuntosRecorridos)
+                    if (!cantidadPuntosRecorridos)
                     {
                         $("#puntosRecorridos").hide();
                     }
                 }
-                
+
+            });
+
+            $("#categoria").change(function ()
+            {
+                if ($(this).val() == 2)
+                {
+                    $("#padre").attr("disabled", false);
+                } else
+                {
+                    $("#padre").val(0);
+                    $("#padre").attr("disabled", true);
+                }
             });
             
-            $("#categoria").change(function() 
-                {
-                    if($(this).val() == 2)
-                    {
-                        $("#padre").attr("disabled", false);
-                    }
-                    else
-                    {
-                        $("#padre").val(0);
-                        $("#padre").attr("disabled", true);
-                    }
-                });
+            $('.mce-container .mce-menubar').load(function(){
+                $('.mce-container .mce-menubar').hide();
+            });
+
+            
         </script>

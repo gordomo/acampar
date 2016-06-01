@@ -41,6 +41,7 @@ $tours = getTours($mysqli);
         <link href="assets/css/table-responsive.css" rel="stylesheet">
         <script src="../js/jquery.js"></script>
         <script src="assets/js/main.js"></script>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -62,7 +63,7 @@ $tours = getTours($mysqli);
                         </div>
                         <section>
                             <?php foreach ($categorias['categorias'] as $categoria) { ?>
-                                <form id='newEntrada<?= $categoria['id'] ?>' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 32%;float:left;margin: 2px;border: 1px solid;padding: 2px;">
+                                <form id='newEntrada<?= $categoria['id'] ?>' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 100%;float:left;margin: 2px;border: 1px solid;padding: 2px;">
                                     <input type="hidden" value="editCategoria" name="action" id="action">
                                     <input type="hidden" value="0" name="cantImagenesExtras" id="cantImagenesExtras<?= $categoria['id'] ?>">
                                     <input type="hidden" value="0" name="borrarFoto" id="borrarFoto<?= $categoria['id'] ?>">
@@ -103,7 +104,7 @@ $tours = getTours($mysqli);
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 ">Descripción: </label>
-                                        <input type="text" value="<?=$categoria['descripcion']?>" id="desc" name="desc" class="form-control" >
+                                        <textarea id="desc" name="desc" class="form-control" ><?=$categoria['descripcion']?></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 ">Coordenadas: </label>
@@ -312,4 +313,17 @@ $tours = getTours($mysqli);
                         $("#padre").attr("disabled", true);
                     }
                 });
+                
+                tinymce.init({
+                selector: 'textarea',
+                height: 500,
+                plugins: [
+                    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+                ],
+                toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+                toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+                toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+            });
         </script>
