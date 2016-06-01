@@ -35,7 +35,7 @@ function getYacanto($mysqli) {
 
     $stmt = $mysqli->prepare($prep_stmt);
     if ($stmt) {
-        $name = "Yacanto";
+        $name = "Posta Yacanto";
         $stmt->bind_param("s", $name);
         $stmt->execute();
         $stmt->store_result();
