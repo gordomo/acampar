@@ -58,7 +58,7 @@ if ($resultado['result'] == 'ok') {
                     </button>
 
                 </div>
-                <a class="navbar-brand" href="index.php"><img src="../img/logos/logo.png" class="img-responsive center-block logo" alt=""></a>
+                <a class="navbar-brand" href="../index.php"><img src="../img/logos/logo.png" class="img-responsive center-block logo" alt=""></a>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
 

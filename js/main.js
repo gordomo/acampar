@@ -13,6 +13,21 @@ $(window).on("scroll", function () {
     }
 });
 
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
 $('.navbar-toggle').click(function () {
 
     $('.collapse').toggle('fast');
@@ -104,9 +119,7 @@ $('.desplegadas').click(function ()
         success: function (data) {
             if (data.result === 'ok') 
             {
-                console.log(data);
                 $(".desplegable-individual b").html(titulo);
-//                $(".tour-desc").html(descripcion);
                 $('.desplegable-individual').show('fast');
                 $('html, body').animate({
                     scrollTop: $('.desplegable-individual').offset().top - 200

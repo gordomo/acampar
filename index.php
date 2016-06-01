@@ -543,6 +543,30 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 var id = $(this).attr("id");
                 $("#icono"+id).stop(true).hide('fast');
             });
+            
+            $(document).ready(function(){
+                var id_padre = getUrlParameter("cat_padre");
+                var id_tour = getUrlParameter("tour");
+                var triggerTour = '';
+                switch(id_tour) {
+                    case '2':
+                        triggerTour = 'trekking';
+                        break;
+                    case '3':
+                        triggerTour = 'cabalgatas';
+                        break;
+                    case '1':
+                        triggerTour = 'ciclo';
+                }
+                console.log(triggerTour + " - " + id_padre);
+                $('#'+id_padre).click();
+                setTimeout(
+                function() 
+                {
+                    $('#'+triggerTour).click();
+                }, 500);
+                
+            });
         </script>
     </body>
 
