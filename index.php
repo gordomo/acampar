@@ -105,11 +105,15 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     <div class="item <?php if($i == 0) { echo 'active'; }?>">
                         <a href="tour.php?id=<?= $slider['categoria_id'] ?>">
                             <img src="<?= $slider['url'] ?>" alt="..." class="img-responsive">
-                            <div class="carousel-caption">
+                            <div class="carousel-caption hidden-xs">
                                 <h3><?= $slider['titulo'] ?></h3>
                                 <h4><?= $slider['descripcion'] ?></h4>
                             </div>
-                        </a>    
+                        </a>
+                        <div class="hidden-lg hidden-md hidden-sm text-center">
+                                <h3><?= $slider['titulo'] ?></h3>
+                                <h4><?= $slider['descripcion'] ?></h4>
+                        </div>
                     </div>
                     <?php 
                         $i ++;

@@ -29,7 +29,6 @@ background-color: #F3F3F3;
     -webkit-transition: padding .3s;
     -moz-transition: padding .3s;
     transition: padding .3s;
-    padding: 25px !important;
 }
 .navbar-fixed-top img{
     -webkit-transition: max-width .1s;
