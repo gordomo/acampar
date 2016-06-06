@@ -29,6 +29,7 @@ background-color: #F3F3F3;
     -webkit-transition: padding .3s;
     -moz-transition: padding .3s;
     transition: padding .3s;
+    padding: 25px !important;
 }
 .navbar-fixed-top img{
     -webkit-transition: max-width .1s;
@@ -704,12 +705,6 @@ section#contacto .form-control:focus {
     .carousel-caption h4 {
         font-weight: 700;
     }
-    .navbar-default{
-        max-height: 30px !important;
-    }
-    .logo{
-        max-width: 50px;
-    }
 }
 
 /* SUB SITIOS ESTILOS */
@@ -831,4 +826,7 @@ section#contacto .form-control:focus {
 }*/
 .cuerpo section{
     min-height: 92vh;
+}
+#promociones{
+    padding-top: 60px;
 }
