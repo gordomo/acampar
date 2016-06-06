@@ -815,7 +815,7 @@ section#contacto .form-control:focus {
     background-image: url('../img/Fondo Proximas Salidas.png');
     background-repeat: no-repeat;
     background-size: 100%;
-    background-position: center;
+    /*background-position: center;*/
     width: 100% !important;
 }
 /*@media screen and (max-width:760px)
