@@ -333,7 +333,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="noticias/index.php" class="btn btn-info col-md-12">Ver Todas Las Noticias</a>
+                        <a href="noticias/index.php" class="btn btn-info" style="width: 100%;">Ver Todas Las Noticias</a>
                     </div>
                 </div>
             </div>

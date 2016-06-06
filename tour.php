@@ -116,7 +116,7 @@ if ($resultado['result'] == 'ok') {
                         <p><?= $datos['descripcion'] ?></p>
                     </div>
                     <div class="article col-sm-8 col-sm-offset-2">
-                        <a class="btn btn-info col-md-12" href="index.php?cat_padre=<?= $datos['cat_superior'] ?>&tour=<?= $datos['id_tour'] ?>">Volver</a>
+                        <a class="btn btn-info" style="width: 100%;" href="index.php?cat_padre=<?= $datos['cat_superior'] ?>&tour=<?= $datos['id_tour'] ?>">Volver</a>
                     </div>
                 </div>
             </div>
