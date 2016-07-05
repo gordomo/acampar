@@ -830,3 +830,7 @@ section#contacto .form-control:focus {
 #promociones{
     padding-top: 60px;
 }
+
+.navbar-fixed-top .navbar-collapse {
+    max-height: 1340px;
+}

@@ -120,11 +120,6 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     } ?>
                 </div>
                 <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <?php for ($index = 0; $index < $i; $index++) { ?>
-                        <li data-target="#carousel-example-generic" data-slide-to="<?=$index?>" class="<?php if($index == 0) { echo 'active'; }?>"></li>
-                    <?php } ?>
-                </ol>
                 <a class="carousel-control left" data-target="#carousel-example-generic" data-slide="prev"></a>
 		<a class="carousel-control right" data-target="#carousel-example-generic" data-slide="next"></a>
             </div> <!-- Carousel -->
@@ -276,17 +271,23 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                         $i = 0;
                         foreach ($sliders_salidas['sliders'] as $slider) {?>
                         <li>
-                            <a href="tour.php?id=<?= $slider['categoria_id'] ?>">
-                                <img src="<?=$slider['url']?>" class="img-responsive"/>
-                                <div class="carousel-caption hidden-xs">
-                                    <h3><?=$slider['titulo']?></h3>
-                                    <h4><?=$slider['descripcion']?></h4>
-                                </div>
-                            </a>  
-                            <div class="hidden-lg hidden-md hidden-sm text-center">
-                                    <h3><?=$slider['titulo']?></h3>
-                                    <h4><?=$slider['descripcion']?></h4>
-                            </div>
+                            <ul>
+                                <li>
+                                    <a href="tour.php?id=<?= $slider['categoria_id'] ?>">
+                                        <img src="<?=$slider['url']?>" class="img-responsive"/>
+                                        <div class="carousel-caption hidden-xs">
+                                            <h3><?=$slider['titulo']?></h3>
+                                            <h4><?=$slider['descripcion']?></h4>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li style="width: 100%; text-align: center">
+                                    <div class="hidden-lg hidden-md hidden-sm text-center">
+                                            <h3><?=$slider['titulo']?></h3>
+                                            <h4><?=$slider['descripcion']?></h4>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
                         <?php 
                             $i++;
@@ -433,7 +434,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                             que ha logrado reunir, durante más de 20 años de trayectoria, un notable Staff de guías, asistentes y colaboradores que logran transmitir el amor y la
                             pasión por su profesión en cada actividad propuesta, con un trato personal y afectivo.
                         </h3>
-                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='qsomos/index.html'">Logísticas y Condiciones</button>
+                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='qsomos/index.html'">Logística y Condiciones</button>
                     </div>
 
                 </div>

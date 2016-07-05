@@ -99,10 +99,14 @@ if ($resultado['result'] == 'ok') {
                 <div class="carousel-inner">
                     <div class="item active">
                         <img src="<?= $datos['foto'] ?>">
-                        <div class="carousel-caption">
+                        <div class="carousel-caption hidden-xs">
                             <h3><?= $datos['nombre'] ?></h3>
                             <h4><?= $datos['descripcion_corta'] ?></h4>
-                        </div>   
+                        </div>
+                        <div class="hidden-lg hidden-md hidden-sm text-center">
+                            <h3 style="text-transform: uppercase;"><?= $datos['nombre'] ?></h3>
+                            <h4><?= $datos['descripcion_corta'] ?></h4>
+                        </div>
                     </div>
                 </div>
             </div> <!-- Carousel -->
