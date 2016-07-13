@@ -125,7 +125,7 @@ include_once '../includes/functions.php';
                                             <span class="meta__date"><span class="glyphicon glyphicon-calendar"></span> &nbsp; <?= $noticia['fecha'] ?></span>
                                         </div>
                                     </div>
-                                    <?php if($noticia['url'] != '') { ?>
+                                    <?php if($noticia['video'] != '') { ?>
                                     <div class="col-xs-6 col-sm-2 text-center">
                                         <div class="meta__info">
                                             <span id="vid" class="meta__date" style="cursor: pointer">
@@ -133,7 +133,7 @@ include_once '../includes/functions.php';
                                             </span>
                                         </div>
                                     </div>
-                                    <?php } if($noticia['video'] != '') { ?>
+                                    <?php } if($noticia['url'] != '') { ?>
                                     <div class="col-xs-6 col-sm-2 text-center">
                                         <div class="meta__info">
                                             <span id="fot" class="meta__date" style="cursor: pointer">

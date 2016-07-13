@@ -278,7 +278,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, false);
                                                             margin-top: 55px;
                                                             font-weight: 700;
                                                             color: #fe7800;">
-                            Próximas salidas
+                            Próximas Salidas
                         </h2>
                     </div>
                 </div>
