@@ -38,6 +38,7 @@ $noticias = getNoticias($mysqli, false, true);
         <link href="assets/css/table-responsive.css" rel="stylesheet">
         <script src="../js/jquery.js"></script>
         <script src="assets/js/main.js"></script>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -65,7 +66,7 @@ $noticias = getNoticias($mysqli, false, true);
                                             <input type="text" id="titulo" name="titulo" class="form-control" required="true">
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 col-sm-2 control-label">Texto: </label>
+                                            <label style="padding-right: 15px;padding-left: 15px;">Texto: </label>
                                             <textarea rows="7" name="texto" id="texto" class="form-control" required="true"></textarea>
                                         </div>
                                         <div class="form-group">
@@ -141,6 +142,18 @@ $noticias = getNoticias($mysqli, false, true);
             </section>
         </section>
         <script>
+            tinymce.init({
+                selector: 'textarea',
+                height: 500,
+                plugins: [
+                    "advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                    "table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+                ],
+                toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+                toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | insertdatetime preview | forecolor backcolor",
+                toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+            });
 
             $(document).ready(function ()
             {

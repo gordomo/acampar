@@ -230,6 +230,7 @@ section h3.section-subheading {
     position: relative;
     margin: 10px 0px;
     overflow: hidden;
+    padding-top: 8em;
 }
 
 .cbp-fwslider ul {
@@ -811,19 +812,17 @@ section#contacto .form-control:focus {
 }
 
 .proximas-salidas{
-    padding: 0;
-    background-image: url('../img/Fondo Proximas Salidas.png');
+    background-size: contain;
     background-repeat: no-repeat;
-    background-size: 100%;
-    /*background-position: center;*/
-    width: 100% !important;
+    min-height: 500px;
+    background-position: center;
 }
-/*@media screen and (max-width:760px)
+@media screen and (min-width:760px)
 {
     .proximas-salidas{
-        background-size: 100%;
+        background-image: url('../img/Fondo Proximas Salidas.png');
     }
-}*/
+}
 .cuerpo section{
     min-height: 92vh;
 }

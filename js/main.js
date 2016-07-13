@@ -202,34 +202,45 @@ $('.btn-submit').click(function () {
 
 $('.btn-submit-consulta').click(function () {
     $(this).button('loading');
-    $.ajax({
-        type: "POST",
-        url: "includes/controller_ajax.php",
-        data: {
-            "option": "enviar_consulta_index",
-            "nombre": $('#name').val(),
-            "email": $('#email_cons').val(),
-            "phone": $('#phone_cons').val(),
-            "consulta": $('#message').val(),
-            "id_cat": $('#id_cat').val()
-        },
-        dataType: 'json',
-        success: function (data)
-        {
-            $('.btn-submit-consulta').button('reset');
-            if (data.result) {
-                $('#success').html("<div class='mail-success'>" + data.mensaje + "</div>");
-                $('#contactForm')[0].reset();
-            } else {
+
+    if($('#email_cons').val() !== $('#email_cons_conf').val())
+    {
+        $('.btn-submit-consulta').button('reset');
+        $('#success').html("<div class='mail-error'>los correos no coinciden | Emails do not match</div>");
+    }
+    else
+    {
+        $.ajax({
+            type: "POST",
+            url: $('#url').val(),
+            data: {
+                "option": "enviar_consulta_index",
+                "nombre": $('#name').val(),
+                "email": $('#email_cons').val(),
+                "phone": $('#phone_cons').val(),
+                "consulta": $('#message').val(),
+                "id_cat": $('#id_cat').val()
+            },
+            dataType: 'json',
+            success: function (data)
+            {
+                console.log("success "+data.result);
+                $('.btn-submit-consulta').button('reset');
+                if (data.result) {
+                    $('#success').html("<div class='mail-success'>" + data.mensaje + "</div>");
+                    $('#contactForm')[0].reset();
+                } else {
+                    $('#success').html("<div class='mail-error'>" + data.mensaje + "</div>");
+                }
+            },
+            error: function (data)
+            {
+                console.log("error "+data.mensaje);
+                $('.btn-submit-consulta').button('reset');
                 $('#success').html("<div class='mail-error'>" + data.mensaje + "</div>");
             }
-        },
-        error: function (data)
-        {
-            $('.btn-submit-consulta').button('reset');
-            $('#success').html("<div class='mail-error'>" + data.mensaje + "</div>");
-        }
-    });
+        });
+    }
 });
 
 //calendario

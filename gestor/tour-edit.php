@@ -84,7 +84,7 @@ $tours = getTours($mysqli);
                                     <div class="form-group">
                                         <label class=" col-md-12 ">Imagenes Extra: </label>
                                         <?php foreach($categoria['fotos_extras'] as $fotoExtra){ ?>
-                                        <div class=" col-md-12 ">
+                                        <div class="col-md-12 foto-<?= $fotoExtra['id'] ?>">
                                             <div class="col-md-12" style="margin: 15px 0px;">
                                                 <img id="imgCatExtra<?= $fotoExtra['id'] ?>" class="img-responsive" src="../<?= $fotoExtra['url'] ?>" >
                                             </div>
@@ -194,16 +194,30 @@ $tours = getTours($mysqli);
                 $("#newEntrada"+id).submit();
             });
             
+            
+            
             $(".borrarImagenExtra").click(function()
             {
                 var id = $(this).attr("id");
-                var id_form = $(this).attr("data-id-form");
-                
-                $("#newEntrada"+id_form+" input[name=action]" ).val("borrarFotoExtra");
-                $("#newEntrada"+id_form+" input[name=id]" ).val(id);
-                
-                $("#newEntrada"+id_form).submit();
-                
+                $.ajax({
+                    type: "POST",
+                    url: 'adminController.php',
+                    data: {
+                        "action": "borrarFotoExtra",
+                        "id": id,
+                    },
+                    dataType: 'json',
+                    success: function (data)
+                    {
+                        if(data.result === 'ok'){
+                            $('.foto-'+id).remove()
+                        }
+                    },
+                    error: function (data)
+                    {
+                        console.log("error "+data.mensaje);
+                    }
+                });
             });
             
             $(".agregarImagenExtra").click(function()

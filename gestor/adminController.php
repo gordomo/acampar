@@ -291,8 +291,8 @@ switch ($action) {
             
         }
         
-        header("Location: tours-edit.php?result=" . $result . "&mensaje=" . $message);
-        
+        echo json_encode(array("result"=>$result , "mensaje"=>$message));
+        exit();
         break;
         
     case 'eliminarEntradaCategorias':

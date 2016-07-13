@@ -87,12 +87,20 @@ if ($resultado['result'] == 'ok') {
                             <a class="page-scroll" href="../index.php#empresa">La Empresa</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="../index.php#contacto">Contacto</a>
+                            <a class="page-scroll" href="#contacto">Contacto</a>
                         </li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>
         </header>
+        <div class="googleTranslate" style="text-align: right;">
+            <div id="google_translate_element"></div>
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                  new google.translate.TranslateElement({pageLanguage: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+                }
+            </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        </div>
         <section>
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
@@ -155,6 +163,8 @@ if ($resultado['result'] == 'ok') {
                     <div class="col-lg-12">
                         <form name="sentMessage" id="contactForm" novalidate>
                             <input type="hidden" name="id_cat" id="id_cat" value="<?= $datos['id'] ?>" />
+                            <input type="hidden" name="url" id="url" value="../includes/controller_ajax.php" />
+                            
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -166,7 +176,7 @@ if ($resultado['result'] == 'ok') {
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder=" Confirma Tu Mail | Your Email *" id="email_cons" required data-validation-required-message="Please enter your email address.">
+                                        <input type="email" class="form-control" placeholder=" Confirma Tu Mail | Confirm Your Email *" id="email_cons_conf" required data-validation-required-message="Please enter your email address.">
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">

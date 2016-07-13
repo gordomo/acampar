@@ -3,7 +3,7 @@ include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 
 $sliders_cabecera = getSliderCabecera($mysqli, false, true);
-$sliders_salidas = getSliderSalidas($mysqli,  false, true);
+$sliders_salidas = getSliderSalidas($mysqli,  false, false);
 ?>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -65,9 +65,11 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                         <li>
                             <a class="page-scroll" href="#tour">Nuestros Tours</a>
                         </li>
+                        <?php if(isset($sliders_salidas['sliders']) && count($sliders_salidas['sliders'])){ ?>
                         <li>
                             <a class="page-scroll" href="#promociones">Próximas Salidas</a>
                         </li>
+                        <?php } ?>
                         <li>
                             <a class="page-scroll" href="#noticias">Noticias</a>
                         </li>
@@ -91,9 +93,15 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>
-
-
         </header>
+        <div class="googleTranslate" style="text-align: right;">
+            <div id="google_translate_element"></div>
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                  new google.translate.TranslateElement({pageLanguage: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+                }
+            </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        </div>
     <div class="cuerpo">
         <section id="carousel">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -130,7 +138,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <h2 class="section-heading">Nuestros Tours</h2>
-                        <h3 class="section-subheading text-muted">Texto descriptivo, general del tipo de actividad, servicio que ofrece, intengibles que voy a experimentar </h3>
+                        <h3 class="section-subheading text-muted">Acampartrek un Mundo de Aventuras, elegí  por destino o por actividad.</h3>
                     </div>
                 </div>
                 <?php
@@ -262,7 +270,18 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 }
                 ?>
         </section>
-
+        <?php if(isset($sliders_salidas['sliders']) && count($sliders_salidas['sliders'])){ ?>
+        <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h2 class="section-heading" style=" font-size: 40px;
+                                                            margin-bottom: 15px;
+                                                            margin-top: 55px;
+                                                            font-weight: 700;
+                                                            color: #fe7800;">
+                            Próximas salidas
+                        </h2>
+                    </div>
+                </div>
         <section id="promociones">
             <div class="container proximas-salidas">
                 <div id="cbp-fwslider" class="cbp-fwslider">
@@ -272,17 +291,17 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                         foreach ($sliders_salidas['sliders'] as $slider) {?>
                         <li>
                             <ul>
-                                <li>
+                                <li style="width: 100%;">
                                     <a href="tour.php?id=<?= $slider['categoria_id'] ?>">
-                                        <img src="<?=$slider['url']?>" class="img-responsive"/>
-                                        <div class="carousel-caption hidden-xs">
+                                        <img src="<?=$slider['url']?>" style="max-height: 350px;" class="img-responsive"/>
+                                        <div class="carousel-caption hidden-xs hidden-md hidden-sm">
                                             <h3><?=$slider['titulo']?></h3>
                                             <h4><?=$slider['descripcion']?></h4>
                                         </div>
                                     </a>
                                 </li>
                                 <li style="width: 100%; text-align: center">
-                                    <div class="hidden-lg hidden-md hidden-sm text-center">
+                                    <div class="hidden-lg text-center">
                                             <h3><?=$slider['titulo']?></h3>
                                             <h4><?=$slider['descripcion']?></h4>
                                     </div>
@@ -297,7 +316,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 </div>
             </div>
         </section>
-
+        <?php } ?>
 
         <!-- Services Section -->
         <section id="noticias">
@@ -305,14 +324,14 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <h2 class="section-heading">Noticias</h2>
-                        <h3 class="section-subheading text-muted">Texto descriptivo, general del tipo actividad, servicio que ofrece intangibles, que voy a experimentar.</h3>
+                        <h3 class="section-subheading text-muted">Novedades, datos, imágenes, destinos,  personajes y más…</h3>
                     </div>
                 </div>
                 <div class="row text-center">
                     <div class="flexslider">
                         <ul class="slides">
                             <?php
-                            $noticias = getNoticias($mysqli, false, true);
+                            $noticias = getNoticias($mysqli, false, false);
                             foreach ($noticias['noticias'] as $slider) {
                             ?>
                             <li>
@@ -345,7 +364,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <h2 class="section-heading">Calendario</h2>
-                        <h3 class="section-subheading text-muted">Texto descriptivo, general del tipo actividad, servicio que ofrece intangibles, que voy a experimentar.</h3>
+                        <h3 class="section-subheading text-muted">365 días de Experiencias Inolvidables… buscá  la fecha y comenzá a viajar.</h3>
                     </div>
                 </div>
 
@@ -474,6 +493,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                 <div class="row">
                     <div class="col-lg-12">
                         <form name="sentMessage" id="contactForm" novalidate>
+                            <input type="hidden" name="url" id="url" value="includes/controller_ajax.php" />
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -485,7 +505,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                                         <p class="help-block text-danger"></p>
                                     </div>
                                       <div class="form-group">
-                                        <input type="email" class="form-control" placeholder=" Confirma Tu Mail | Your Email *" id="email_cons" required data-validation-required-message="Please enter your email address.">
+                                        <input type="email" class="form-control" placeholder=" Confirma Tu Mail | Confirm Your Email *" id="email_cons_conf" required data-validation-required-message="Please enter your email address.">
                                         <p class="help-block text-danger"></p>
                                     </div>
                                     <div class="form-group">
@@ -567,7 +587,6 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, true);
                     case '1':
                         triggerTour = 'ciclo';
                 }
-                console.log(triggerTour + " - " + id_padre);
                 $('#'+id_padre).click();
                 setTimeout(
                 function() 

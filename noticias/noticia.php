@@ -7,7 +7,7 @@ include_once '../includes/functions.php';
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="LifeWeb">
+        <meta name="author" content="Grupo Veta SRL">
         <link rel="shortcut icon" href="images/favicon.png">
         <title>Noticias - Acampartrek</title>
         <link rel="stylesheet" href="stylesheets/363f9277.main.css"/>
@@ -80,9 +80,9 @@ include_once '../includes/functions.php';
                     </div> 
                 </nav>
 
-                <div class="hidden-xs hidden-sm">
+<!--                <div class="hidden-xs hidden-sm">
                     <a href="#" class="search__container  js--toggle-search-mode"> <span class="glyphicon  glyphicon-search"></span></a>
-                </div>
+                </div>-->
             </div>
         </header>
         <div class="search-panel">
@@ -98,6 +98,14 @@ include_once '../includes/functions.php';
             </div>
         </div>
         <div class="container">
+            <div class="googleTranslate" style="text-align: right;">
+                <div id="google_translate_element"></div>
+                <script type="text/javascript">
+                    function googleTranslateElementInit() {
+                      new google.translate.TranslateElement({pageLanguage: 'es', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
+                    }
+                </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            </div>
             <div class="row">
                 <div class="col-xs-12 col-md-8">
                     <div class="boxed sticky push-down-45">
@@ -250,9 +258,6 @@ include_once '../includes/functions.php';
                 <div class="row">
                     <div class="col-xs-12  col-sm-6">&nbsp;</div>
                     <div class="col-xs-12  col-sm-6">
-                        <div class="copyrights--right">
-                            <a href="http://lifeweb.com.ar/" target="_blank">LifeWeb</a>
-                        </div>
                     </div>
                 </div>
             </div>
