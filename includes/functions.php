@@ -60,7 +60,7 @@ function getYacanto($mysqli) {
     }
 
     $stmt2->bind_result($id_img_categoria, $url_img_categoria);
-
+    $img_categorias = [];
     while ($stmt2->fetch()) {
         $img_categorias[] = array("id" => $id_img_categoria, "url" => $url_img_categoria);
     }
