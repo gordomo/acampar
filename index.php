@@ -453,7 +453,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, false);
                             que ha logrado reunir, durante más de 20 años de trayectoria, un notable Staff de guías, asistentes y colaboradores que logran transmitir el amor y la
                             pasión por su profesión en cada actividad propuesta, con un trato personal y afectivo.
                         </h3>
-                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='qsomos/index.html'">Logística y Condiciones</button>
+                        <button type="button" class="btn btn-xl btn-submit-consulta" onclick="location.href='qsomos/index.php'">Logística y Condiciones</button>
                     </div>
 
                 </div>

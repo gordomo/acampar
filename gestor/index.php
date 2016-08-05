@@ -119,6 +119,17 @@ if ($logged == 'out') {
                                 </div>
                             </div>
                         </div>
+                        <!-- PANEL 7 -->
+                        <div class="col-md-4 mb">
+                            <div class="panel-7 pn">
+                                <div class="panel-7-header">
+                                    <h5>SOBRE NOSOTROS</h5>
+                                </div>
+                                <div class="centered">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -143,6 +154,9 @@ if ($logged == 'out') {
             });
             $('.panel-6').click(function () {
                 location.href = 'seguimiento-satelital-edit.php';
+            });
+            $('.panel-7').click(function () {
+                location.href = 'nosotros-edit.php';
             });
         </script>
 

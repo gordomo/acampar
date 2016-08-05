@@ -1229,3 +1229,30 @@ function getSeguimientoSatelital($mysqli) {
         return array("result" => $result, "mensaje" => $message, "texto" => $texto);
     }
 }
+
+function getEmpresa($mysqli) {
+
+    $result = 'ok';
+    $texto = '';
+    $img_1 = '';
+    $img_2 = '';
+    $img_3 = '';
+    $message = '';
+            
+    $prep_stmt = "SELECT texto, img_1, img_2, img_3 FROM `nosotros`";
+
+    if ($stmt = $mysqli->prepare($prep_stmt)) {
+        if (!$stmt->execute()) {
+            $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+            $result = "ko";
+
+            return array("result" => $result, "mensaje" => $message, "respuesta" => "");
+        }
+
+        $stmt->execute();
+        $stmt->bind_result($texto, $img_1, $img_2, $img_3);
+        $stmt->fetch();
+        $nosotros = ["texto"=>$texto, "images" => [$img_1, $img_2, $img_3]];
+        return array("result" => $result, "mensaje" => $message, "nosotros" => $nosotros);
+    }
+}

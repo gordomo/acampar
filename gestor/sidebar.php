@@ -42,6 +42,12 @@ MAIN SIDEBAR MENU
                     <span>Seguimiento Satelital</span>
                 </a>
             </li>
+            <li class="sub-menu">
+                <a href="nosotros-edit.php">
+                    <i class="fa fa-check"></i>
+                    <span>Quienes Somos</span>
+                </a>
+            </li>
         </ul>
         <!-- sidebar menu end-->
     </div>

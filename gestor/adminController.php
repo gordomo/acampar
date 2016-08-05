@@ -1574,4 +1574,141 @@ switch ($action) {
         
         header("Location: seguimiento-satelital-edit.php?result=" . $result . "&mensaje=" . $message);
         break;
+        
+    case "editNosotros":
+        
+        $texto = $_POST['texto'];
+        $img_1 = ($_POST['img_1'] == 'img/categorias/no-image.gif') ? '' : $_POST['img_1'];
+        $img_2 = ($_POST['img_2'] == 'img/categorias/no-image.gif') ? '' : $_POST['img_2'];
+        $img_3 = ($_POST['img_3'] == 'img/categorias/no-image.gif') ? '' : $_POST['img_3'];
+        
+        foreach ($_FILES as $key => $value) 
+        {
+            if(isset($value['name']) && $value['name'] != '')
+            {
+                //if no errors...
+                if(!$value['error'])
+                {
+                    $valid_file = true;
+                    //now is the time to modify the future file name and validate the file
+                    $new_file_name = strtolower($value['name']); //rename file
+                    $Length = 10;
+                    $RandomString = substr(str_shuffle(md5(time())), 0, $Length);
+
+                    $new_file_name = $RandomString . "_" .  str_replace(' ', '-', $new_file_name);
+                    if($value['size'] > (6144000)) //can't be larger than 6 MB
+                    {
+                        $valid_file = false;
+                        $message = 'Oops!  Your file\'s size is to large.';
+                        $result  = "ko";
+                        header("Location: nosotros-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
+
+                    $pos = strpos($value['type'], "image");
+                    if ($pos === FALSE)
+                    {
+                        $valid_file = false;
+                        $message = 'Oops!  El archivo no es una imagen.';
+                        $result  = "ko";
+                        header("Location: nosotros-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
+                    //if the file has passed the test
+                    if($valid_file)
+                    {
+                        //move it to where we want it to be
+                        $rutaTmp = '../img/qsomos/'.$new_file_name;
+                        //ruta de los thumbs
+
+                        move_uploaded_file($value['tmp_name'], $rutaTmp);
+
+                        $ruta[$key] = substr($rutaTmp, 3);
+                    }
+                    //if there is an error...
+                    else
+                    {
+                        //set that to be the returned message
+                        $message = 'Ooops!  Your upload triggered the following error:  invalid file';
+                        $result  = "ko";
+                        header("Location: nosotros-edit.php?result=" . $result . "&mensaje=" . $message);
+                    }
+                }
+                //if there is an error...
+                else
+                {
+                    //set that to be the returned message
+                    $message = 'Ooops!  Your upload triggered the following error:  '.$value['error'];
+                    $result  = "ko";
+                    header("Location: nosotros-edit.php?result=" . $result . "&mensaje=" . $message);
+                }
+            }
+        }
+        if(isset($ruta['photo1'])){
+            $selectQuery = 'SELECT img_1 from nosotros';
+            buscarYborrar($mysqli, $selectQuery);
+            $img_1 = $ruta['photo1'];
+        }
+        if(isset($ruta['photo2'])){
+            $selectQuery = 'SELECT img_2 from nosotros';
+            buscarYborrar($mysqli, $selectQuery);
+            $img_2 = $ruta['photo2'];
+        }
+        if(isset($ruta['photo3'])){
+            $selectQuery = 'SELECT img_3 from nosotros';
+            buscarYborrar($mysqli, $selectQuery);
+            $img_3 = $ruta['photo3'];
+        }
+        
+        if ($stmt = $mysqli->prepare("UPDATE nosotros SET texto = ?, img_1 = ?, img_2 = ?, img_3 = ?")) 
+        {
+            
+            $stmt->bind_param("ssss", $texto, $img_1, $img_2, $img_3);
+
+            if (!$stmt->execute()) 
+            {
+                $message = "Falló la ejecución: (" . $stmt->errno . ") " . $stmt->error;
+                $result = "ko";
+            }
+
+            $stmt->close();
+        } 
+        else
+        {
+            $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+            $result  = "ko";
+        }
+        
+        header("Location: nosotros-edit.php?result=" . $result . "&mensaje=" . $message);
+        break;
+}
+
+function buscarYborrar($mysqli, $selectQuery, $callback = "nosotros"){
+
+    if ($stmt1 = $mysqli->prepare($selectQuery)) 
+        {
+            if (!$stmt1->execute())
+            {
+                $message = "Falló la ejecución: (" . $stmt1->errno . ") " . $stmt1->error;
+                $result = "ko";
+                header("Location: " . $callback ."-edit.php?result=" . $result . "&mensaje=" . $message);
+                exit();
+            }
+
+            $stmt1->bind_result($url);
+
+            $stmt1->fetch();
+            /* cerrar sentencia */
+            $stmt1->close();
+            
+            if($url != '' && file_exists("../".$url))
+            {
+                unlink("../".$url);
+            }
+         }
+         else
+         {
+            $message = "Falló la preparación: (" . $mysqli->errno . ") " . $mysqli->error;
+            $result = "ko";
+            header("Location: " . $callback ."-edit.php?result=" . $result . "&mensaje=" . $message);
+            exit();
+        }
 }

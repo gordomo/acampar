@@ -1,5 +1,18 @@
-<!DOCTYPE html>
-<!DOCTYPE html>
+<?php
+include_once '../includes/db_connect.php';
+include_once '../includes/functions.php';
+
+$empresa = getEmpresa($mysqli,  false, false);
+$texto = 'No hay texto para Empresa';
+$images = [];
+
+if(isset($empresa['result']) && $empresa['result'] == 'ok'){
+    $texto = (isset($empresa['nosotros']['texto'])) ?  $empresa['nosotros']['texto'] : '';
+    $images = (isset($empresa['nosotros']['images'])) ?  $empresa['nosotros']['images'] : [];
+}
+
+?>
+
 <html lang="en" class="no-js">
 
     <head>
@@ -90,108 +103,42 @@
                 }
             </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
         </div>
+        <?php if(isset($images) && $images[0] != ''){ ?>
         <section id="carousel">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <?php foreach($images as $k => $img){
+                        if($img != ''){
+                        ?>
+                            <li data-target="#carousel-example-generic" data-slide-to="<?= $k ?>" class="<?php  if($k == 0) {echo 'active';} ?>"></li>
+                     <?php }
+                        } ?>
                 </ol>
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="../img/qsomos/QS1.jpg" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item">
-                        <img src="../img/qsomos/QS2.jpg" alt="..." class="img-responsive">
-                    </div>
-                    <div class="item">
-                        <img src="../img/qsomos/QS3.jpg" alt="..." class="img-responsive">
-                    </div>
+                    <?php foreach($images as $k => $img){
+                        if($img != ''){
+                        ?>
+                    
+                        <div class="item <?php  if($k == 0) {echo 'active';} ?>">
+                            <!--<img src="../img/qsomos/QS1.jpg" alt="..." class="img-responsive">-->
+                            <img src="../<?=$img?>" alt="..." class="img-responsive">
+                        </div>
+                    <?php }
+                        } ?>
                 </div>
             </div> <!-- Carousel -->
         </section>
-
+        <?php } ?>
         <section id="empresa">
             <div class="container ">
                 <div class="row ">
                     <div class="article col-sm-8 col-sm-offset-2">
-                        <h2>Acampar Trek</h2>
-
-                        <p>Tratamos de acercar a nuestros clientes a sus metas, a la vivencia de experiencias únicas, irrepetibles e inolvidables en pleno contacto con la naturaleza y la comunidad local en cada 
-                            destino elegido.<br>
-                            Trabajamos para el continuo desarrollo, innovando y creando propuestas con un alto valor
-                            agregado social, histórico y geográfico.
-                        </p>
-
-                        <h2>Porque elegirnos</h2>
-
-                        <ul>
-                            <li>
-                                La profesionalidad de nuestros guías.
-                            </li>
-                            <li>
-                                Nos avalan más de 20 años de experiencia.
-                            </li>
-                            <li>
-                                Brindamos la mayor seguridad.
-                            </li>
-                            <li>
-                                La atención personalizada.
-                            </li>
-                            <li>
-                                Nuestro compromiso con el medio ambiente.
-                            </li>
-                            <li>
-                                Nuestro objetivo es superar las expectativas de cada participante.
-                            </li>
-                            <li>
-                                Nos adaptamos a tus necesidades e intereses.
-                            </li>
-                        </ul>
-                        <p></p>
-                        <h2>Habilitaciones y credenciales</h2>
-
-                        <p>Los guías, se encuentran capacitados por la Asociación Argentina de Guías de Montaña (AAGM), 
-                            Escuela Mendocina de Guías de Alta Montaña y Trekking (EPGAMT) y Socorristas para 
-                            Excursionistas en Zonas Agrestes (SE)
-                            Los mismos están inscriptos en el Registro Provincial de Prestadores de Servicios de Turismo 
-                            Alternativo – de la AGENCIA CÓRDOBA D.A.C. y T. – GOBIERNO DE CÓRDOBA.
-                            Estamos habilitados como Prestador de Servicios Turísticos del Parque Nacional Qª del Condorito 
-                            (según lo previsto por la Resolución H.D. Nº 68/2002).
-                            Además, contamos con las respectivas habilitaciones del Parque Provinciales y Parque Nacionales 
-                            donde operamos.</p>
-
-                        <h2>Seguros</h2>
-                        <p>
-                            En función a lo dispuesto por la Administración de Parques Nacionales, la Dirección de Recursos Renovables de la Provincia de Mendoza  y el Gobierno de Córdoba (Ley Provincial Nº 8801), se cuenta con los respectivos seguros de Responsabilidad Civil (RC) y Accidentes Personales (AP) para el Turismo de Aventura.
-                            Algunas de las propuestas no incluyen seguros AP, en este caso es responsabilidad del pasajero contratar una póliza de seguro.
-                        </p>
+                        <?= $texto ?>
                         
-                        <h2>Términos y Condiciones</h2>
-                        <p>
-                            <strong>Reservas:</strong><br>
-                            Para inscribirse en un programa de Acampartrek®,  se deberá realizar una reserva NO retornable, mediante un depósito o transferencia del 30% del valor  total de la propuesta. El saldo restante deberá abonarse 10 días antes de la fecha de salida. 
-                            Al momento de la reserva se completará una solicitud de participación y una ficha medica con carácter de declaración jurada.
-                            Los Programas a Medida, involucran un trabajo de Planificación y Organización particular, en tal caso se solicitará un pago compromiso a convenir, sin devolución.
-                            Los precios pueden sufrir modificaciones sin previo aviso.
-                        </p>
-                        <p>
-                            <strong>Cancelación / Devoluciones:</strong><br>
-                            En todo momento el pasajero tiene derecho a desistir del programa contratado. Esto no dará derecho a exigir la devolución del  monto depositado en concepto de reserva. En el caso que hubiera abonado el total de programa, se debitará el 30%  en concepto de gastos operativos y el saldo restante se acreditará, por el término de un año, para una próxima salida.
-                            La realización de los viajes se garantiza con un mínimo de pasajeros, de no llegar al cupo requerido, el mismo podrá ser cancelado hasta una semana antes de la salida prevista. En este caso se  reintegrará el 100% del monto recibido.
-                            La eventual cancelación del viaje por no haber llegado al mínimo de pasajeros no implica ningún resarcimiento por ninguna causa, ni al pasajero ni a la agencia contratante.
-                            Los precios pueden sufrir modificaciones sin previo aviso.
-                        </p>
-                        <p>
-                            <strong>Información General:</strong><br>
-                            Los itinerarios y servicios detallados en el sitio son a modo de ejemplo. Los mismos se definen al momento de contratar un programa, según necesidad del pasajero y disponibilidad.
-                            El punto y la hora de encuentro será informado al momento de confirmar el programa. La tolerancia de espera es de 30 minutos, luego de la misma, el pasajero deberá hacerse cargo de los gastos ocasionados por traslados y demás servicios.
-                        </p>
-                        <p>Acampartrek® se guarda para sí el derecho de cambiar el itinerario o suspender alguna de las actividades cuando causas climáticas o de cualquier otra índole lo justifique,  a favor de la seguridad de cada integrante del grupo.</p>
-
+                         
                     </div>
 
                 </div>

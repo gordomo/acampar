@@ -1206,6 +1206,34 @@ PANELS CONFIGURATIONS
 	font-weight: 700;
 }
 
+.panel-7 {
+    background: url(../../../img/quienes-somos-2.gif);
+    text-align: center;
+    background-size: cover;
+    cursor: pointer;
+}
+.panel-7 .panel-7-header {
+	background: rgba(120, 121, 123, 0.6);
+	padding: 3px;
+	margin-bottom: 15px;
+}
+.panel-7 h1 {
+	color: #f2f2f2;
+}
+.panel-7 h5 {
+	font-weight: 200;
+	margin-top: 10px;
+	color: white;
+}
+.panel-7 footer {
+	color: white;
+}
+.panel-7 footer h5 {
+	margin-left:10px; 
+	margin-right: 10px;
+	font-weight: 700;
+}
+
 /*Green Panel*/
 .green-panel {
 	text-align: center;
