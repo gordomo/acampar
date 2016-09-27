@@ -59,23 +59,23 @@ $noticias = getNoticias($mysqli, false, true);
                             <div class="form-panel">
                                 <h4><i class="fa fa-angle-right"></i> Nueva Entrada</h4>
                                 <section id="editor_grilla_nueva">
-                                    <form id='newNoticias' class="form" enctype="multipart/form-data" method="POST" action="adminController.php">
+                                    <form id='newNoticias' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" novalidate>
                                         <input type="hidden" value="newNoticias" name="action" id="action">
                                         <div class="form-group">
                                             <label class="col-sm-2 col-sm-2 control-label">Titulo: </label>
-                                            <input type="text" id="titulo" name="titulo" class="form-control" required="true">
+                                            <input type="text" id="titulo" name="titulo" class="form-control" >
                                         </div>
                                         <div class="form-group">
                                             <label style="padding-right: 15px;padding-left: 15px;">Texto: </label>
-                                            <textarea rows="7" name="texto" id="texto" class="form-control" required="true"></textarea>
+                                            <textarea rows="7" name="texto" id="texto" class="form-control" ></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class=" col-md-12 control-label">Imagen: </label>
-                                            <input type="file" accept="file_extension|image"  id="photo" name="photo" autofocus>
+                                            <input type="file" accept="file_extension|image"  id="photo" name="photo" >
                                         </div>
                                         <div class="form-group">
                                             <label class=" col-md-12 control-label">Video: </label>
-                                            <input type="text" id="video" name="video" autofocus>
+                                            <input type="text" id="video" name="video" >
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-12">Habilitado: </label>
@@ -101,21 +101,21 @@ $noticias = getNoticias($mysqli, false, true);
                         </div>        
                         <section id="editor_grilla_nueva">
                             <?php foreach ($noticias['noticias'] as $slider) { ?>
-                            <form id='editEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" style="width: 45%; border: 1px solid; padding: 4px; float: left; margin: 5px">
+                            <form id='editEntrada' class="form" enctype="multipart/form-data" method="POST" action="adminController.php" novalidate style="width: 45%; border: 1px solid; padding: 4px; float: left; margin: 5px">
                                     <input type="hidden" value="editNoticias" name="action" id="action">
                                     <input type="hidden" value="<?=$slider['id']?>" name="id" id="id">
                                     <input type="hidden" value="<?=$slider['url']?>" name="foto" id="foto<?=$slider['id']?>">
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Titulo: </label>
-                                        <input type="text" id="titulo" name="titulo" class="form-control" required="true" value="<?=$slider['titulo']?>">
+                                        <input type="text" id="titulo" name="titulo" class="form-control"  value="<?=$slider['titulo']?>">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 col-sm-2 control-label">Texto: </label>
-                                        <textarea name="texto" id="texto" rows="10" class="form-control" required="true"><?=$slider['texto']?>"</textarea>
+                                        <textarea name="texto" id="texto" rows="10" class="form-control" ><?=$slider['texto']?>"</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label class=" col-md-12 control-label">Imagen: </label>
-                                        <input type="file" accept="file_extension|image"  id="photo" name="photo" autofocus>
+                                        <input type="file" accept="file_extension|image"  id="photo" name="photo" >
                                         <img class="img-responsive" src="../<?=$slider['url']?>">
                                     </div>
                                     <div class="form-group">

@@ -19,7 +19,7 @@ if (login_check($mysqli) == true) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Salon de fiestas y eventos">
-        <meta name="author" content="grupo veta srl">
+        <meta name="author" content="Acampartrek">
         <title>ACAMPAR TREK</title>
         <!-- Bootstrap core CSS -->
         <link href="assets/css/bootstrap.css" rel="stylesheet">

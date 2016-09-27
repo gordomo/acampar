@@ -1,14 +1,6 @@
 <?php
 include_once '../includes/db_connect.php';
 include_once '../includes/functions.php';
-
-if (!filter_var($_GET['noticia'], FILTER_VALIDATE_INT)) {
-    header("Location:index.php");
-    exit();
-}
-
-$res = getNoticias($mysqli, $_GET['noticia']);
-$noticia = $res['noticias'][0];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,15 +8,6 @@ $noticia = $res['noticias'][0];
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="author" content="ACAMPAR TREK">
-        
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>" />
-        <meta property="og:title" content="<?=$noticia['titulo']?>" />
-        <meta property="og:description" content="<?=$noticia['titulo']?>" />
-        <meta property="og:image" content="http://<?=$_SERVER['HTTP_HOST']."/".$noticia['url']?>" />
-        <meta property="og:image:width" content="250" />
-        <meta property="og:image:height" content="140" />
-        
         <link rel="shortcut icon" href="images/favicon.png">
         <title>Noticias - Acampartrek</title>
         <link rel="stylesheet" href="stylesheets/363f9277.main.css"/>
@@ -56,7 +39,15 @@ $noticia = $res['noticias'][0];
             }
         </style>
     </head>
-    
+    <?php
+    if (!filter_var($_GET['noticia'], FILTER_VALIDATE_INT)) {
+        header("Location:index.php");
+        exit();
+    }
+
+    $res = getNoticias($mysqli, $_GET['noticia']);
+    $noticia = $res['noticias'][0];
+    ?>
     <body>
         <header class="header push-down-45">
             <div class="container">
@@ -169,10 +160,9 @@ $noticia = $res['noticias'][0];
                                     <div class="col-xs-12  col-sm-6"><div class="post-comments">&nbsp;</div></div>
                                     <div class="col-xs-12  col-sm-6">
                                         <div class="social-icons">
-                                            <a style="cursor: pointer" class="compartir social-icons__container" data-href="https://www.facebook.com/sharer/sharer.php?u=<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>"> <span class="zocial-facebook"></span> </a>
-                                            <!--<a href="https://twitter.com/Acampartrek"" class="social-icons__container"> <span class="zocial-twitter"></span> </a>-->
-                                            <a class="compartir_tw social-icons__container" href="http://twitter.com/share"><span class="zocial-twitter"></span></a>
-                                            <!--<a href="http://acampartrek.com.ar/#contacto" class="social-icons__container"> <span class="zocial-email"></span> </a>-->
+                                            <a href="https://www.facebook.com/acampartrek" class="social-icons__container"> <span class="zocial-facebook"></span> </a>
+                                            <a href="https://twitter.com/Acampartrek"" class="social-icons__container"> <span class="zocial-twitter"></span> </a>
+                                            <a href="http://acampartrek.com.ar/#contacto" class="social-icons__container"> <span class="zocial-email"></span> </a>
                                         </div>
                                     </div>
                                 </div>
@@ -287,25 +277,6 @@ $noticia = $res['noticias'][0];
                 $("#video").hide();
             });
             
-            $('.compartir').click(function (){
-                window.open($(this).data('href'), '_blank', "width=850, height=400, resizable=no, left=100, top=100");
-                return false;
-            });
-            
-            $('.compartir_tw').click(function (){
-                var width  = 400,
-                    height = 300,
-                    left   = ($(window).width()  - width)  / 2,
-                    top    = ($(window).height() - height) / 2,
-                    url    = this.href,
-                    opts   = 'status=1' +
-                            ',width='  + width  +
-                            ',height=' + height +
-                            ',top='    + top    +
-                            ',left='   + left;
-                    window.open(url, 'twitter', opts);
-                    return false;
-            });
         </script>
     </body>
 </html>

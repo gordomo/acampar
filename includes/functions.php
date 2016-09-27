@@ -1112,7 +1112,7 @@ function esc_url($url) {
 
 function getCalendario($mysqli, $mes = false) {
     if ($mes) {
-        if ($stmt = $mysqli->prepare("SELECT * FROM calendario WHERE mes=?")) {
+        if ($stmt = $mysqli->prepare("SELECT * FROM calendario WHERE mes=? order by mes")) {
             /* ligar parámetros para marcadores */
             $stmt->bind_param("i", $mes);
 
@@ -1135,7 +1135,7 @@ function getCalendario($mysqli, $mes = false) {
             return $calendario;
         }
     } else {
-        if ($stmt = $mysqli->prepare("SELECT * FROM calendario")) {
+        if ($stmt = $mysqli->prepare("SELECT * FROM calendario order by mes, dias")) {
             $calendarios = array();
             /* ejecutar la consulta */
             if (!$stmt->execute()) {
@@ -1255,4 +1255,9 @@ function getEmpresa($mysqli) {
         $nosotros = ["texto"=>$texto, "images" => [$img_1, $img_2, $img_3]];
         return array("result" => $result, "mensaje" => $message, "nosotros" => $nosotros);
     }
+}
+
+function my_ofset($text){
+    preg_match('/^\D*(?=\d)/', $text, $m);
+    return isset($m[0]) ? strlen($m[0]) : false;
 }

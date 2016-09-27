@@ -2,7 +2,7 @@
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
 
-$sliders_cabecera = getSliderCabecera($mysqli, false, true);
+$sliders_cabecera = getSliderCabecera($mysqli, false, false);
 $sliders_salidas = getSliderSalidas($mysqli,  false, false);
 ?>
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, false);
         ?>
     </head>
 
-    <body>
+    <body style="overflow-x: hidden;">
         <div id="fb-root"></div>
         <!-- Header -->
         <header id="nav-header">
@@ -301,7 +301,7 @@ $sliders_salidas = getSliderSalidas($mysqli,  false, false);
                                     </a>
                                 </li>
                                 <li style="width: 100%; text-align: center">
-                                    <div class="hidden-lg text-center">
+                                    <div class="hidden-lg text-center" style="white-space: normal;">
                                             <h3><?=$slider['titulo']?></h3>
                                             <h4><?=$slider['descripcion']?></h4>
                                     </div>

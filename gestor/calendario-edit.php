@@ -147,7 +147,8 @@ $categorias = getCategorias($mysqli);
                                         <?php foreach ($categorias['categorias'] as $categoria) { ?>
 
                                             <option 
-                                                <?php if(in_array($categoria['id'], $calendario['id_excursiones'])){?>
+                                                <?php 
+                                                if(isset($calendario['id_excursiones']) && in_array($categoria['id'], $calendario['id_excursiones'])){?>
                                                 selected="true" 
                                                 <?php } ?>
                                                 value="<?= $categoria['id'] ?>"><?= $categoria['nombre'] ?>

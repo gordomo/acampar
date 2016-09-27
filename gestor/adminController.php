@@ -1259,10 +1259,10 @@ switch ($action) {
         $result  = "ok";
         $message = "Entrada agregada correctamente";
         
-        $titulo = $_POST['titulo'];
-        $texto = $_POST['texto'];
-        $video = $_POST['video'];
-        $habilitado = $_POST['habilitado'];
+        $titulo = (isset($_POST['titulo'])) ? $_POST['titulo'] : "";
+        $texto = (isset($_POST['texto'])) ? $_POST['texto'] : "";
+        $video = (isset($_POST['video'])) ? $_POST['video'] : "";
+        $habilitado = (isset($_POST['habilitado'])) ? $_POST['habilitado'] : "";
         $fecha = date("Y-m-d");
         
         if(isset($_FILES['photo']['name']) && $_FILES['photo']['name'] != '')

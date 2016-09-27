@@ -7,7 +7,7 @@ include_once '../includes/functions.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Grupo Veta SRL">
+    <meta name="author" content="Acampartrek">
     <link rel="shortcut icon" href="images/favicon.png">
     <title>Noticias - Acampartrek</title>
     <link rel="stylesheet" href="stylesheets/363f9277.main.css"/>
@@ -184,15 +184,6 @@ include_once '../includes/functions.php';
                             <?php
                             }
                             ?>
-                            <div class="tags  widget-tags">
-                                <h6>Tags</h6>
-                                <hr/>
-                                <a href="#" class="tags__link">Tech</a>
-                                <a href="#" class="tags__link">Web</a>
-                                <a href="#" class="tags__link">UI/UX</a>
-                                <a href="#" class="tags__link">Tutorials</a>
-                                <a href="#" class="tags__link">Workflow</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,8 +202,8 @@ include_once '../includes/functions.php';
                         <br/>
                         <br/>
                         <div class="social-icons  widget-social-icons">
-                            <a href="#" class="social-icons__container"> <span class="zocial-facebook"></span> </a>
-                            <a href="#" class="social-icons__container"> <span class="zocial-twitter"></span> </a>
+                            <a href="https://www.facebook.com/acampartrek/" class="social-icons__container"> <span class="zocial-facebook"></span> </a>
+                            <a href="https://twitter.com/Acampartrek" class="social-icons__container"> <span class="zocial-twitter"></span> </a>
                         </div>
                     </div>
                 </div>
