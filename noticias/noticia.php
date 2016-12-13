@@ -161,7 +161,7 @@ $noticia = $res['noticias'][0];
                         </div>
                         <div class="row">
                             <div class="col-xs-10 col-xs-offset-1">
-                                <div class="post-content--front-page">
+                                <div class="post-content--front-page notice-text">
                                     <h2 class="front-page-title"><?= $noticia['titulo'] ?></h2>
                                     <p><?= $noticia['texto'] ?></p>
                                 </div>
@@ -170,9 +170,9 @@ $noticia = $res['noticias'][0];
                                     <div class="col-xs-12  col-sm-6">
                                         <div class="social-icons">
                                             <a style="cursor: pointer" class="compartir social-icons__container" data-href="https://www.facebook.com/sharer/sharer.php?u=<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>"> <span class="zocial-facebook"></span> </a>
-                                            <!--<a href="https://twitter.com/Acampartrek"" class="social-icons__container"> <span class="zocial-twitter"></span> </a>-->
                                             <a class="compartir_tw social-icons__container" href="http://twitter.com/share"><span class="zocial-twitter"></span></a>
-                                            <!--<a href="http://acampartrek.com.ar/#contacto" class="social-icons__container"> <span class="zocial-email"></span> </a>-->
+                                            <a href="https://www.instagram.com/acampartrek2016/" class="social-icons__container" target="_blank"> <span class="zocial-instagram"></span> </a>
+                                            <button id="mailToButton" class="social-icons__container"><span class="zocial-email"></span> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -222,6 +222,7 @@ $noticia = $res['noticias'][0];
                         <div class="social-icons  widget-social-icons">
                             <a href="https://www.facebook.com/acampartrek/" class="social-icons__container"> <span class="zocial-facebook"></span> </a>
                             <a href="https://twitter.com/Acampartrek" class="social-icons__container"> <span class="zocial-twitter"></span> </a>
+                            <a href="https://www.instagram.com/acampartrek2016/" class="social-icons__container" target="_blank"> <span class="zocial-instagram"></span> </a>
                         </div>
                     </div>
                 </div>
@@ -305,6 +306,20 @@ $noticia = $res['noticias'][0];
                             ',left='   + left;
                     window.open(url, 'twitter', opts);
                     return false;
+            });
+            
+            $('#mailToButton').on('click', function (event) {
+                event.preventDefault();
+                var css = "<style>p{font-family: 'Open Sans',sans-serif;} .front-page-title{font-family: 'Open Sans',sans-serif;color: #2f343b;} .wp-post-image {margin-botton:60px;max-width: 500px; height: auto; border-top-right-radius: 6px; border-top-left-radius: 6px;} body{text-align: center;}</style>";
+                var email = 'ejemplo@ejemplo.com';
+                var subject = $('.front-page-title').text();
+                var emailBody = '<html><head>';
+                emailBody += css;
+                emailBody += "</head><h1>Noticias - AcamparTrek</h1>"
+                emailBody += $('#foto').html().replace('../','http://localhost/acampar/');
+                emailBody += $('.notice-text').html();
+                emailBody += '</html></body>';
+                window.location = 'mailto:' + email + '?subject=Noticias - AcamparTrek - ' + subject + '&body=' +   emailBody;
             });
         </script>
     </body>

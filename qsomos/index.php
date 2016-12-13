@@ -205,6 +205,7 @@ if(isset($empresa['result']) && $empresa['result'] == 'ok'){
                             <li><a href="https://twitter.com/Acampartrek"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="https://www.facebook.com/acampartrek"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="https://www.youtube.com/user/acampartrek"><i class="fa fa-youtube-play"></i></a></li>
+                            <li><a href="https://www.instagram.com/acampartrek2016/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                         </ul>
                         <span class="copyright">Copyright &copy; Acampartrek 2016</span>
                     </div>
