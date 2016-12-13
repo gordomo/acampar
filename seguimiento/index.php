@@ -1,6 +1,7 @@
 <?php
     include_once '../includes/db_connect.php';
     include_once '../includes/functions.php';
+    include_once '../includes/analyticstracking.php';
     $textoSeguimiento = getSeguimientoSatelital($mysqli);
 ?>    
 <!DOCTYPE html>

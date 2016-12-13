@@ -1,6 +1,7 @@
 <?php
 include_once '../includes/db_connect.php';
 include_once '../includes/functions.php';
+include_once '../includes/analyticstracking.php';
 
 if (!filter_var($_GET['noticia'], FILTER_VALIDATE_INT)) {
     header("Location:index.php");
@@ -171,7 +172,7 @@ $noticia = $res['noticias'][0];
                                         <div class="social-icons">
                                             <a style="cursor: pointer" class="compartir social-icons__container" data-href="https://www.facebook.com/sharer/sharer.php?u=<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>"> <span class="zocial-facebook"></span> </a>
                                             <a class="compartir_tw social-icons__container" href="http://twitter.com/share"><span class="zocial-twitter"></span></a>
-                                            <a href="https://www.instagram.com/acampartrek2016/" class="social-icons__container" target="_blank"> <span class="zocial-instagram"></span> </a>
+                                            <a href="https://www.instagram.com/acampartrek_ok/" class="social-icons__container" target="_blank"> <span class="zocial-instagram"></span> </a>
                                             <button id="mailToButton" class="social-icons__container"><span class="zocial-email"></span> </button>
                                         </div>
                                     </div>
@@ -222,7 +223,7 @@ $noticia = $res['noticias'][0];
                         <div class="social-icons  widget-social-icons">
                             <a href="https://www.facebook.com/acampartrek/" class="social-icons__container"> <span class="zocial-facebook"></span> </a>
                             <a href="https://twitter.com/Acampartrek" class="social-icons__container"> <span class="zocial-twitter"></span> </a>
-                            <a href="https://www.instagram.com/acampartrek2016/" class="social-icons__container" target="_blank"> <span class="zocial-instagram"></span> </a>
+                            <a href="https://www.instagram.com/acampartrek_ok/" class="social-icons__container" target="_blank"> <span class="zocial-instagram"></span> </a>
                         </div>
                     </div>
                 </div>

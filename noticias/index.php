@@ -1,6 +1,7 @@
 <?php
 include_once '../includes/db_connect.php';
 include_once '../includes/functions.php';
+include_once '../includes/analyticstracking.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -204,7 +205,7 @@ include_once '../includes/functions.php';
                         <div class="social-icons  widget-social-icons">
                             <a href="https://www.facebook.com/acampartrek/" class="social-icons__container"> <span class="zocial-facebook"></span> </a>
                             <a href="https://twitter.com/Acampartrek" class="social-icons__container"> <span class="zocial-twitter"></span> </a>
-                            <a href="https://www.instagram.com/acampartrek2016/" target="_blank" class="social-icons__container"> <span class="zocial-instagram"></span> </a>
+                            <a href="https://www.instagram.com/acampartrek_ok/" target="_blank" class="social-icons__container"> <span class="zocial-instagram"></span> </a>
                         </div>
                     </div>
                 </div>

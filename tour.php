@@ -1,6 +1,7 @@
 <?php
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
+include_once 'includes/analyticstracking.php';
 
 $resultado = getCategorias($mysqli, '', '', $_GET['id']);
 if ($resultado['result'] == 'ok') {
